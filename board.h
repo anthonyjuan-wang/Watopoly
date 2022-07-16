@@ -1,27 +1,28 @@
 #include <string>
 #include <vector>
-#include "player.h"
 
 #ifndef __BOARD_H__
 #define __BOARD_H__
+class tile;
 
-using namespace std;
-
+class Player;
 class Board {
-    Board::Board();
-    Board::~Board();
-
+    private:
+        std::vector<tile> board;
+        std::vector<Player*> players;
+    
     public:
-        void loadGame(string input);
-        void saveGame(string input);
+        Board::Board();
+        virtual Board::~Board();
+        void loadGame(std::string input);
+        void saveGame(std::string input);
         void init(int input);
         void play();
-        void tradeGive(Player *, string, int);
-        void tradeReceive(Player *, string, int);
-        vector<int> rollDice(Player *);
-        vector<Player*> getPlayers();
+        void tradeGive(Player *, std::string, int);
+        void tradeReceive(Player *, std::string, int);
+        std::vector<int> rollDice(Player *); // maybe virtual
+        std::vector<Player*> getPlayers(); // maybe virtual
         void setTestingMode();
 };
 
 #endif
-
