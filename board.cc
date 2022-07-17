@@ -13,23 +13,22 @@ void Board::init(int input) {
         players.clear();
     }
 
-    bool pieceFound = false;
-    char c;
     vector<string> pieces = {"G: Goose", "B: GRT Bus", "D: Tim Hortons Doughnut", "P: Professor", "S: Student", "M: Money", "L: Laptop", "P: Pink Tie"};
     
     for (int i = 1; i <= input; i++) {
-        // get a valid playerName
         string playerName;
+        char playerPiece;
+
+        // get a valid playerName
         while(true) {
             cout << "Hi Player " << i << " enter your name: ";
             cin >> playerName;
 
             // check if the playerName already exists
-            bool nameTaken = false;
             if (playerName == "Bank") {
-                cout << "This name is not valid";
-                break;
+                cout << "This name is not valid" << endl;
             } else {
+                bool nameTaken = false;
                 int size = players.size();
                 for (int j = 0; j < size; i++) {
                     if (players[j]->getName() == playerName) {
@@ -37,12 +36,11 @@ void Board::init(int input) {
                         break;
                     }
                 }
-            }
-
-            if(nameTaken == false) {
-                break;
-            } else {
-                cout << "The playerName chosen has already been taken";
+                if(nameTaken == false) {
+                    break;
+                } else {
+                    cout << "The playerName chosen has already been taken" << endl;
+                }
             }
         }
 
@@ -53,24 +51,24 @@ void Board::init(int input) {
             for (auto p: pieces) {
                 cout << p << endl;
             }
-            cin >> c;
+            cin >> playerPiece;
 
-            for (unsigned int j = 0; j < pieces.size(); j++) {
-                if (j[0] == c) {
+            int size = pieces.size();
+            bool pieceFound = false;
+            for (int j = 0; j < size; j++) {
+                if (pieces[j][0] == playerPiece) {
                     pieceFound == true;
                     pieces.erase(j);
                     break;
+                }
             }
+
+            if (pieceFound == true) {
+                break;
+            } else {
+                cout << "The piece doesn't exist or has already been chosen." << endl;
             }
         }
-
-
-
-        if (pieceFound == true) {
-            players.emplace_back(Player(c));
-            pieceFound == f
-        } else {
-            i--;
-        }
+        players.emplace_back(Player(playerName, playerPiece));
     } 
 }
