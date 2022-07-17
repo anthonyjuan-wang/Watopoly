@@ -16,6 +16,7 @@ class Board {
         void loadGame(std::string input);
         void saveGame(std::string input);
         void init(int input);
+        void initTiles();
         void play();
         void tradeGive(Player *, std::string, int);
         void tradeReceive(Player *, std::string, int);
