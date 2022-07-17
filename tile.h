@@ -12,10 +12,11 @@ class tile : Board {
         std::string monopolyType;
         int purchaseCost;
         int improvementCost;
-        std::vector <std::vector <int>> tuitionWithExpenses;
-
+        std::vector<int> tuitionWithExpenses;
+        
     public:
-        tile();
+        tile(std::string blockName, std::string monopolyType, int purchaseCost, int imporvementCost,
+           std::vector <int> tuitionWithExpenses);
         ~tile();
 };
 
