@@ -1,8 +1,7 @@
-#include <string>
-#include <vector>
-
 #ifndef __BOARD_H__
 #define __BOARD_H__
+#include <string>
+#include <vector>
 class tile;
 
 class Player;
