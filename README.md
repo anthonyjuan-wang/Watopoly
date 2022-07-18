@@ -1,2 +1,2 @@
 # Watopoly
-Monopoly, but waterloo
+Monopoly, but ~~waterloo~~ gay
