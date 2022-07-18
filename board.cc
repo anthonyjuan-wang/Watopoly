@@ -60,7 +60,7 @@ void Board::init(int input) {
             for (int j = 0; j < size; j++) {
                 if (pieces[j][0] == playerPiece) {
                     pieceFound == true;
-                    pieces.erase(j);
+                    pieces.erase(pieces.begin()+j);
                     break;
                 }
             }
