@@ -2,6 +2,6 @@
 #include <string>
 #include <iostream>
 
-DcTimsLine::DcTimsLine() {}
+DcTimsLine::DcTimsLine(int position) : position{position} {}
 
 DcTimsLine::~DcTimsLine() {}

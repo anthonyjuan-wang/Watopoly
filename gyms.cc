@@ -3,6 +3,7 @@
 #include <iostream>
 
 using namespace std;
-Gyms::Gyms(string blockName) : blockName{blockName} {}
+
+Gyms::Gyms(int position, string blockName) : position{position}, blockName{blockName} {}
 
 Gyms::~Gyms() {}

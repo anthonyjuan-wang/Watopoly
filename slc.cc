@@ -1,7 +1,5 @@
 #include "slc.h"
-#include <string>
-#include <iostream>
 
-Slc::Slc() {}
+Slc::Slc(int position) : position{position} {}
 
-Slc::Slc() {}
+Slc::~Slc() {}

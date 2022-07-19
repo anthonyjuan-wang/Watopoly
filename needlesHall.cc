@@ -1,5 +1,5 @@
 #include "needlesHall.h"
 
-NeedlesHall::NeedlesHall() {}
+NeedlesHall::NeedlesHall(int position) : position{position} {}
 
 NeedlesHall::~NeedlesHall() {}

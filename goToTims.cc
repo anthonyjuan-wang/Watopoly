@@ -2,6 +2,6 @@
 #include <string>
 #include <iostream>
 
-GoToTims::GoToTims() {}
+GoToTims::GoToTims(int position) : position{position} {}
 
 GoToTims::~GoToTims() {}

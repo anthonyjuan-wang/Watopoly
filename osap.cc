@@ -2,6 +2,6 @@
 #include <iostream>
 #include <string>
 
-Osap::Osap() {}
+Osap::Osap(int position) : position{position} {}
 
 Osap::~Osap() {}

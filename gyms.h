@@ -2,11 +2,15 @@
 #ifndef __GYMS_H__
 #define __GYMS_H__
 
-class Gyms : Tile {
-    private:
-        std::string blockName;
-    public:
-        Gyms(std::string Blockname);
+class Gyms : Tile
+{
+private:
+    int position;
+    std::string blockName;
+
+public:
+    Gyms(int position, std::string blockName);
+    ~Gyms();
 };
 
 #endif

@@ -2,6 +2,6 @@
 #include <string>
 #include <iostream>
 
-Coop::Coop() {}
+Coop::Coop(int position) : position{position} {}
 
 Coop::~Coop() {}
