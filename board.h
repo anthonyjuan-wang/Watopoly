@@ -7,12 +7,12 @@ class Tile;
 class Player;
 class Board {
     private:
+
         std::vector<std::shared_ptr<Tile*>>board;
         std::vector<Player*> players;
-    
     public:
-        Board::Board();
-        virtual Board::~Board();
+        Board();
+        virtual ~Board();
         void loadGame(std::string input);
         void saveGame(std::string input);
         void init(int input);
@@ -23,6 +23,7 @@ class Board {
         std::vector<int> rollDice(Player *); // maybe virtual
         std::vector<Player*> getPlayers(); // maybe virtual
         void setTestingMode();
+        void print();
 };
 
 #endif

@@ -1,10 +1,10 @@
+#ifndef __ACADEMIC_H__
+#define __ACADEMIC_H__
 #include <iostream>
 #include <string>
 #include "tile.h"
 
-#ifndef __ACADEMIC_H__
-#define __ACADEMIC_H__
-
+class Tile;
 class Academic : Tile {
     std::string blockName;
     std::string monopolyType;

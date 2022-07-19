@@ -20,69 +20,91 @@ Board::Board() {}
 
 Board::~Board() {}
 
-void Board::init(int input) {
-    if (!(players.empty())) {
+
+void Board::init(int input)
+{
+    if (!(players.empty()))
+    {
         players.clear();
     }
 
     vector<string> pieces = {"G: Goose", "B: GRT Bus", "D: Tim Hortons Doughnut", "P: Professor", "S: Student", "M: Money", "L: Laptop", "P: Pink Tie"};
-    
-    for (int i = 1; i <= input; i++) {
+
+    for (int i = 1; i <= input; i++)
+    {
         string playerName;
         char playerPiece;
 
         // get a valid playerName
-        while(true) {
+        while (true)
+        {
             cout << "Hi Player " << i << " enter your name: ";
             cin >> playerName;
 
             // check if the playerName already exists
-            if (playerName == "Bank") {
+            if (playerName == "Bank")
+            {
                 cout << "This name is not valid" << endl;
-            } else {
+            }
+            else
+            {
                 bool nameTaken = false;
                 int size = players.size();
-                for (int j = 0; j < size; i++) {
-                    if (players[j]->getName() == playerName) {
+                for (int j = 0; j < size; i++)
+                {
+                    if (players[j]->getName() == playerName)
+                    {
                         nameTaken = true;
                         break;
                     }
                 }
-                if(nameTaken == false) {
+                if (nameTaken == false)
+                {
                     break;
-                } else {
+                }
+                else
+                {
                     cout << "The playerName chosen has already been taken" << endl;
                 }
             }
         }
 
         // get a valid player piece
-        while(true) {
+        while (true)
+        {
             cout << "Player " << i << " enter the char of the player piece you'd like to choose" << endl;
             cout << "The list of pieces available are" << endl;
-            for (auto p: pieces) {
+            for (auto p : pieces)
+            {
                 cout << p << endl;
             }
             cin >> playerPiece;
 
             int size = pieces.size();
             bool pieceFound = false;
-            for (int j = 0; j < size; j++) {
-                if (pieces[j][0] == playerPiece) {
+            for (int j = 0; j < size; j++)
+            {
+                if (pieces[j][0] == playerPiece)
+                {
                     pieceFound == true;
+
                     pieces.erase(pieces.begin()+j);
+
                     break;
                 }
             }
 
-            if (pieceFound == true) {
+            if (pieceFound == true)
+            {
                 break;
-            } else {
+            }
+            else
+            {
                 cout << "The piece doesn't exist or has already been chosen." << endl;
             }
         }
         players.emplace_back(Player(playerName, playerPiece));
-    } 
+    }
 }
 
 void Board::initTiles() {
@@ -126,4 +148,6 @@ void Board::initTiles() {
     board.emplace_back(Academic("MC", "Math", 350, 200, {35, 175, 500, 1100, 1300, 1500}));
     board.emplace_back(Coop());
     board.emplace_back(Academic("DC", "Math", 400, 200, {50, 200, 600, 1400, 1700, 2000}));
+
 }
+

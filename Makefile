@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -std=c++14 -Wall -MMD -g -Werror=vla
-EXEC = fakea4q3
-OBJECTS = main.o board.o
+EXEC = watopoly
+OBJECTS = main.o board.o boarddisplay.o
 DEPENDS = ${OBJECTS:.o=.d}
 
 ${EXEC}: ${OBJECTS}
