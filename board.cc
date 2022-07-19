@@ -137,6 +137,15 @@ void Board::play() {
             continue;
         }
 
+        // checks if your in jail
+        if (currPlayer->getJailStatus() == true) {
+            cout << "You are in jail. Here are your options:" << endl;
+            board[jailPos]->action(currPlayer);
+            currPlayer = (currPlayerIndex + 1) % playerCount;
+            continue;
+        }
+
+
         // outputs the possible user commands
         cout << "It is " << currPlayer->getName() << "'s turn. Enter a command from the following: " << endl;
         for (auto i : cmdInterpreter) {
@@ -145,10 +154,6 @@ void Board::play() {
 
         // switch to check all the possible player command inputs
         if (commands[0] == "roll") {
-            if (currPlayer->getJailStatus() == true) {
-                cout << "You will not be able to roll the dice. You are in the DC Tims Line" << endl;
-                continue;
-            }
             vector<int> dice = rollDice();
             int total = currPlayer->getPos() + dice[0] + dice[1];
             currPlayer->move(total);
@@ -169,6 +174,8 @@ void Board::play() {
             } else if (pos == goToJailPos) {
                 currPlayer->setPos(jailPos);
                 currPlayer->setJailStatus(true);
+                currPlayer->setJailCount(0);
+                continue;
             }
 
             // check if the player is almostBankrupt or Bankrupt
@@ -181,6 +188,7 @@ void Board::play() {
             }
 
             if (dice[0] != dice[1] || currPlayer->getJailStatus() || currPlayer->getBankruptStatus()) {
+                cout << currPlayer->getName() << ", your turn is now finished." << endl;
                 doubles = 0;
                 currPlayer = (currPlayerIndex + 1) % playerCount;
                 board->print();
@@ -201,15 +209,18 @@ void Board::play() {
             }
 
         } else if (commands[0] == "next") {
+            if (doubles == 0) {
+                cout << "You haven't rolled yet." << endl;
+            } else {
+                cout << currPlayer->getName() << ", your turn is now finished." << endl;
+                doubles = 0;
+                currPlayer = (currPlayerIndex + 1) % playerCount;
+                board->print();
+            }
+        } else if (commands[0] == "improve" && commands.size() == 3) {
 
         }
 
-
-        // check if almostBankrupt is true and check moneyOwed
-        currPlayerIndex++;
-        if (playersCount == currPlayerIndex) {
-            currPlayerIndex = 0;
-        }
     }
 }
 
