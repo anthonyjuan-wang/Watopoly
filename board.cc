@@ -1,12 +1,20 @@
 #include "board.h"
 #include <iostream>
-#include <vector>
-#include <string>
+//#include <vector>
+//#include <string>
 using namespace std;
 
 Board::Board() {}
 
 Board::~Board() {}
+
+void Board::loadGame(string input) {
+
+}
+
+void Board::saveGame(string input) {
+
+}
 
 void Board::init(int input) {
     if (!(players.empty())) {
@@ -71,4 +79,89 @@ void Board::init(int input) {
         }
         players.emplace_back(Player(playerName, playerPiece));
     } 
+}
+
+void Board::play() {
+    int playersCount = 0;
+    int currPlayerNum = 0;
+
+    // ask the user for the number of players
+    while(true) {
+        cout << "How many players are there? ";
+        cin >> playersCount;
+
+        if (playersCount >= 2 && playersCount <= 8) {
+            init(playersCount);
+            break;
+        }
+    }
+
+    // play game - continues until there are < 2 players
+    while(true) {
+        player *currPlayer = players[currPlayerNum];
+        string input{};
+        string cmd;
+        vector<string> commands{};
+        vector<string> cmdInterpreter = {"roll", "next", "trade", "improve", "mortgage", "unmortgage", "bankrupt", "assets", "all", "save"};
+
+        // checks if the # of players are < 2 
+        if (currPlayerNum < 2) {
+            cout << "Congratulations " << players[0]->getName << " you are the winner! The game is now over" << endl; 
+        }
+
+        // stores the line of input into a vector 'commands'
+        getline(cin, input);
+        istringstream iss{input};
+        while(iss >> cmd) {
+            commands.emplaceback(cmd);
+        }
+
+        if (commands.size() < 1) { // user needs to enter command again
+            continue;
+        }
+
+
+        // outputs the possible user commands
+        cout << "It is " << currPlayer->getName() << " turn. Enter a command from the following: " << endl;
+        for (auto i: cmdInterpreter) {
+            cout << i << endl;
+        }
+
+        // switch to check all the possible player command inputs
+        switch (commands[0]) {
+            case "roll":
+                if (currPlayer->getJailStatus() == true) {
+                    cout << "You will not be able to roll the dice. You are in the DC Tims Line" << endl;
+                    continue;
+                } 
+                vector<int> dice = rollDice();
+                int total = currPlayer->getPos + dice[0] + dice[1];
+                currPlayer->move(total);
+                
+                break;
+        }
+    }
+}
+
+void Board::tradeGive(Player *p, string s, int n) {
+
+}
+
+void Board::tradeReceive(Player *p, string s, int n) {
+
+}
+
+vector<int> Board::rollDice() {
+    int die1 = (rand() % 6) + 1;
+    int die2 = (rand() % 6) + 1;
+    vector<int> dice = {die1, die2};
+    return dice; 
+}
+
+vector<Player*> Board::getPlayers() {
+    return players;
+}
+
+void Board::setTestingMode() {
+
 }
