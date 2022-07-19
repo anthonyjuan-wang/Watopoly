@@ -4,8 +4,10 @@
 #include <iostream>
 #include "tile"
 
-class Player {
+class Player
+{
     // Prob will need a private class for money, roll, etc
+
     string name;
     char piece;
     int money;
@@ -40,6 +42,7 @@ class Player {
         void setJailCount(int n);
         void addTile(tile t);
         std::vector<shared_ptr<tile*>> getTiles();
+
 };
 
 #endif

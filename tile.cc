@@ -1,5 +1,6 @@
 #include "tile.h"
 
-tile::tile() {}
 
-tile::~tile() {}
+using namespace std;
+Tile::Tile() {}
+Tile::~Tile() {}
