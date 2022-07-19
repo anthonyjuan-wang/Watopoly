@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 
-Residences::Residences() {}
+using namespace std;
+Residences::Residences(string blockName) : blockName{blockName} {}
 
 Residences::~Residences() {}

@@ -4,8 +4,10 @@
 #define __RESIDENCES_H__
 
 class Residences : Tile {
+    private:
+        std::string blockName;
     public:
-        Residences();
+        Residences(std::string blockName);
         ~Residences();
 };
 
