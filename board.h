@@ -22,7 +22,7 @@ class Board {
         void tradeGive(Player *p, std::string s, int n);
         void tradeReceive(Player *p, std::string s, int n);
         std::vector<int> rollDice(); // maybe virtual
-        std::vecto<Player*> getPlayers(); // maybe virtual
+        std::vector<Player*> getPlayers(); // maybe virtual
         void setTestingMode();
         void print();
 };

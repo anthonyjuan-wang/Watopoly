@@ -2,13 +2,14 @@
 using namespace std;
 
 Player::Player(std::string name, char piece, int money = 1500, int pos = 0) : name{name}, piece{piece}, money{money},
-pos{pos}, bankrupt{false}, rollUpCount{0}, isInJail{false}, inJailCounter{0}, tilesOwned{} {}
+pos{pos}, bankrupt{false}, almostBankrupt{false}, rollUpCount{0}, isInJail{false}, inJailCounter{0}, tilesOwned{},
+moneyOwed{0} {}
 
 void Player::move(int n) {
     pos += n;
     if (pos >= 40) {
         pos -= 40;
-        // if tile is not dcTimsLine, collect $200 from OSAP
+        // if tile is not dcTimsLine, collect $200 from OSAP (maybe check this in play tho)
     }
 }
 
@@ -25,21 +26,18 @@ void Player::addMoney(int n) {
     }
 }
 
-void Player::subtractMoney(int n, vector<shared_ptr<Player*>> players) {
+void Player::subtractMoney(int n) {
     if (n >= money) {
         money -= n;
         cout << "You have successfully subtracted $" << n << " fron your account. You now have $" << money << endl;
     } else {
-        bankruptcy(n - money, players);
+        moneyOwed = n;
+        almostBankrupt = true;
     }
 }
 
 void Player::declareBankruptcy() {
-
-}
-
-void Player::bankruptcy(int owed, vector<shared_ptr<Player*>> players) {
-    cout << 
+    bankrupt = true;
 }
 
 int Player::getRollUpCount() {

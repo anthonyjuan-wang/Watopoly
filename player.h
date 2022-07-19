@@ -16,19 +16,18 @@ class Player
     bool almostBankrupt;
     int rollUpCount;
     bool isInJail;
-    int inJailCounter;
+    int moneyOwed;
     std::vector<std::shared_ptr<tile*>> tilesOwned;
     
 
     public:
-        Player(std::string name, char piece);
+        Player(std::string name, char piece, int money, int pos);
         ~Player();
         void move(int n);
         int getMoney();
         void addMoney (int n);
-        void subtractMoney(int n, std::vector<std::shared_ptr<Player*>> players);
+        void subtractMoney(int n);
         void declareBankruptcy();
-        void bankruptcy(int owed, std::vector<std::shared_ptr<Player*>> players);
         int getRollUpCount();
         void addRollUpCount();
         void useRollUpCount();
