@@ -7,7 +7,8 @@ class Tile;
 class Player;
 class Board {
     private:
-        std::vector<Tile*> board;
+
+        std::vector<std::shared_ptr<Tile*>>board;
         std::vector<Player*> players;
     public:
         Board();

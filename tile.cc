@@ -2,4 +2,5 @@
 
 
 using namespace std;
+Tile::Tile() {}
 Tile::~Tile() {}

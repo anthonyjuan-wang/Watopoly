@@ -1,5 +1,4 @@
 #include <iostream>
-#include "board.h"
 #include <vector>
 
 #ifndef __TILE_H_
@@ -25,6 +24,7 @@ public:
     virtual bool isOwnable() = 0;
     virtual int getPos() = 0;
     virtual int getPrice() = 0;
+
 };
 
 #endif
