@@ -2,12 +2,12 @@
 #define __BOARD_H__
 #include <string>
 #include <vector>
-class tile;
+class Tile;
 
 class Player;
 class Board {
     private:
-        std::vector<tile> board;
+        std::vector<std::shared_ptr<Tile*>>board;
         std::vector<Player*> players;
     
     public:
