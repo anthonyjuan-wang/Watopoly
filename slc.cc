@@ -2,4 +2,6 @@
 #include <string>
 #include <iostream>
 
+Slc::Slc() {}
 
+Slc::Slc() {}
