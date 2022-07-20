@@ -102,7 +102,7 @@ void Board::init(int input)
                 cout << "The piece doesn't exist or has already been chosen." << endl;
             }
         }
-        players.emplace_back(Player(playerName, playerPiece));
+        players.emplace_back(Player(playerName, playerPiece, 1500, 0));
     }
 }
 
@@ -258,5 +258,4 @@ void Board::initTiles()
     board.emplace_back(make_shared<Academic>(37, "MC", "Math", 350, 200, vector<int>{35, 175, 500, 1100, 1300, 1500}));
     board.emplace_back(make_shared<Coop>(38, "Coop"));
     board.emplace_back(make_shared<Academic>(39, "DC", "Math", 400, 200, vector<int>{50, 200, 600, 1400, 1700, 2000}));
-}
 }

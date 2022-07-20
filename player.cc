@@ -4,7 +4,7 @@
 #include <memory>
 using namespace std;
 
-Player::Player(string name, char piece, int money = 1500, int pos = 0) : impl{make_shared<PlayerImpl>()}
+Player::Player(string name, char piece, int money, int pos) : impl{make_shared<PlayerImpl>()}
 {
     impl->name = name;
     impl->piece = piece;
@@ -133,7 +133,7 @@ void Player::setJailCount(int n)
     impl->inJailCounter = n;
 }
 
-void Player::addTile(Tile t)
+void Player::addTile(Tile *t)
 {
     impl->tilesOwned.emplace_back(t);
 }
