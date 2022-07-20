@@ -1,7 +1,7 @@
 #include <string>
 #include <iostream>
 #include "tile.h"
-
+#include <memory>
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 

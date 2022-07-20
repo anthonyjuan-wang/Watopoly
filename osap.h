@@ -3,15 +3,13 @@
 
 #ifndef __OSAP_H__
 #define __OSAP_H__
-class Osap : Tile
-{
+class Osap : Tile {
 
-private:
-    int position;
+    private:
 
-public:
-    Osap(int position);
-    ~Osap();
+    public:
+        Osap(int position, string name);
+        ~Osap();
 };
 
 #endif
