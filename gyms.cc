@@ -1,8 +1,12 @@
 #include "gyms.h"
 #include <string>
-#include <iostream>
 
 using namespace std;
-Gyms::Gyms(string blockName) : blockName{blockName} {}
+
+Gyms::Gyms(int position, string blockName) : impl{make_shared<TileImpl>()}
+{
+    impl->pos = position;
+    impl->name = blockName;
+}
 
 Gyms::~Gyms() {}

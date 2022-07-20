@@ -5,17 +5,15 @@
 #include "tile.h"
 
 class Tile;
-class Academic : Tile {
-    std::string blockName;
-    std::string monopolyType;
-    int purchaseCost;
-    int improvementCost;
-    std::vector<int> tuitionWithExpenses;
+class Academic : public Tile
+{
 
-    public:
-        Academic(std::string blockName, std::string monopolyType, int purchaseCost, int imporvementCost,
-           std::vector <int> tuitionWithExpenses);
-        ~Academic();
+    std::shared_ptr<TileImpl> impl;
+
+public:
+    Academic(int position, std::string blockName, std::string monopolyType, int purchaseCost, int improvementCost,
+             std::vector<int> tuitionWithExpenses);
+    ~Academic();
 };
 
 #endif
