@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <memory>
 
 #ifndef __BOARD_H__
 #define __BOARD_H__
