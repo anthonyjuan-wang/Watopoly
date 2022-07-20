@@ -1,13 +1,12 @@
 #include "tile.h"
 #ifndef __GOOSENESTING_H__
 #define __GOOSENESTING_H__
-class GooseNesting : Tile
+class GooseNesting : public Tile
 {
-private:
-    int position;
+    std::shared_ptr<TileImpl> impl;
 
 public:
-    GooseNesting(int position);
+    GooseNesting(int position, string blockName);
     ~GooseNesting();
 };
 

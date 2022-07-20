@@ -1,15 +1,20 @@
+<<<<<<< HEAD
 #include <string>
 #include <iostream>
 #include "tile.h"
 #include <memory>
+=======
+>>>>>>> main
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
-
-class Player
+#include <string>
+#include <iostream>
+#include <memory>
+#include <vector>
+#include "tile.h"
+struct PlayerImpl
 {
-    // Prob will need a private class for money, roll, etc
-
-    string name;
+    std::string name;
     char piece;
     int money;
     int pos;
@@ -18,22 +23,27 @@ class Player
     int rollUpCount;
     bool isInJail;
     int inJailCounter;
-    std::vector<std::shared_ptr<Tile *>> tilesOwned;
+    std::vector<std::shared_ptr<Tile>> tilesOwned;
+    int moneyOwed;
+};
+class Player
+{
+    // Prob will need a private class for money, roll, etc
+    std::shared_ptr<PlayerImpl> impl;
 
 public:
-    Player(std::string name, char piece);
+    Player(std::string name, char piece, int money, int pos);
     ~Player();
     void move(int n);
     int getMoney();
     void addMoney(int n);
-    void subtractMoney(int n, std::vector<std::shared_ptr<Player *>> players);
+    void subtractMoney(int n);
     void declareBankruptcy();
-    void bankruptcy(int owed, std::vector<std::shared_ptr<Player *>> players);
     int getRollUpCount();
     void addRollUpCount();
     void useRollUpCount();
     void displayAssets();
-    string getName();
+    std::string getName();
     int getPos();
     void setPos(int n);
     bool getJailStatus();
@@ -41,7 +51,7 @@ public:
     int getJailCount();
     void setJailCount(int n);
     void addTile(Tile t);
-    std::vector<shared_ptr<Tile *>> getTiles();
+    std::vector<std::shared_ptr<Tile>> getTiles();
 };
 
 #endif

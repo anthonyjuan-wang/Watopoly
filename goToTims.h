@@ -2,13 +2,12 @@
 #ifndef __GOTOTIMS_H__
 #define __GOTOTIMS_H__
 
-class GoToTims : Tile
+class GoToTims : public Tile
 {
-private:
-    int position;
+    std::shared_ptr<TileImpl> impl;
 
 public:
-    GoToTims(int position);
+    GoToTims(int position, string blockName);
     ~GoToTims();
 };
 

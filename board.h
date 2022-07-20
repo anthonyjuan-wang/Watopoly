@@ -1,10 +1,9 @@
+#ifndef __BOARD_H__
+#define __BOARD_H__
 #include <string>
 #include <vector>
 #include <sstream>
 #include <memory>
-
-#ifndef __BOARD_H__
-#define __BOARD_H__
 
 class Tile;
 class Player;
@@ -12,8 +11,8 @@ class Player;
 class Board
 {
 private:
-    std::vector<std::shared_ptr<Tile *>> board;
-    std::vector<Player *> players;
+    std::vector<std::shared_ptr<Tile>> board;
+    std::vector<std::shared_ptr<Player>> players;
 
 public:
     Board();

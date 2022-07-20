@@ -1,12 +1,10 @@
-#include "tile.h"
 #ifndef __GYMS_H__
 #define __GYMS_H__
-
-class Gyms : Tile
+#include "tile.h"
+#include <string>
+class Gyms : public Tile
 {
-private:
-    int position;
-    std::string blockName;
+    std::shared_ptr<TileImpl> impl;
 
 public:
     Gyms(int position, std::string blockName);

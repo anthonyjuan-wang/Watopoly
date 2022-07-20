@@ -1,14 +1,15 @@
-#include "tile.h"
 #ifndef __COOP_H__
 #define __COOP_H__
+#include "tile.h"
+#include <string>
 
-class Coop : Tile
+class Coop : public Tile
 {
-private:
-    int position;
+
+    std::shared_ptr<TileImpl> impl;
 
 public:
-    Coop(int position);
+    Coop(int position, std::string blockName);
     ~Coop();
 };
 

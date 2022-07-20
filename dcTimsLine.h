@@ -1,13 +1,12 @@
 #include "tile.h"
 #ifndef __DCTIMSLINE_H__
 #define __DCTIMSLINE_H__
-class DcTimsLine : Tile
+class DcTimsLine : public Tile
 {
-private:
-    int position;
+    std::shared_ptr<TileImpl> impl;
 
 public:
-    DcTimsLine(int position);
+    DcTimsLine(int position, string blockName);
     ~DcTimsLine();
 };
 #endif
