@@ -1,7 +1,12 @@
 #include "goToTims.h"
 #include <string>
-#include <iostream>
 
-GoToTims::GoToTims(int position) : position{position} {}
+using namespace std;
+
+GoToTims::GoToTims(int position, string blockName) : impl{make_shared<TileImpl>()}
+{
+    impl->pos = position;
+    impl->name = blockName;
+}
 
 GoToTims::~GoToTims() {}

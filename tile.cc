@@ -4,17 +4,9 @@
 
 using namespace std;
 
-struct TileImpl {
-    Board *theBoard;
-    Player *Owner;
-    std::string name;
-    bool isOwnable;
-    bool isImprovable;
-    int pos;
-    int cost;
-};
+Tile::~Tile() {}
 
-Tile::Tile(string name, int pos) : name{name}, pos{pos} {}
+// Tile::Tile(string name, int pos) : name{name}, pos{pos} {}
 
 /*
 virtual Tile::Board *getBoard() {
@@ -36,7 +28,7 @@ void virtual Tile::setImprovement(int x) {
 
 }
 
-void virtual Tile::action(Player *player) {
+void virtual Tile::action(std::shared_ptr<Player>) {
 
 }
 
@@ -45,7 +37,7 @@ void virtual Tile::mortgage(Player *player) {
 }
 
 void virtual Tile::auction() {
-    
+
 }
 
 bool virtual Tile::isMortgaged() {
@@ -63,6 +55,8 @@ int virtual Tile::getPos() {
 int virtual Tile::getPrice() {
 
 }
-*/
 
-Tile::~Tile() {}
+string Tile::getName() {
+    return name;
+}
+*/

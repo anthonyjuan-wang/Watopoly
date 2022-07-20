@@ -1,15 +1,17 @@
-#include <string>
-#include "tile.h"
-
 #ifndef __OSAP_H__
 #define __OSAP_H__
+#include <string>
+#include <memory>
+#include "tile.h"
 
-class Osap : Tile {
-    make_shared<TileImpl> impl;
+class Osap : public Tile
+{
+    std::shared_ptr<TileImpl> impl;
 
 public:
-    Osap(int position);
-    ~Osap();
+    Osap(int position, std::string str);
+    void action() override;
+    TileImpl *getImpl ~Osap();
 };
 
 #endif

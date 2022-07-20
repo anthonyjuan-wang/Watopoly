@@ -1,14 +1,15 @@
 #include "tile.h"
+#include <string>
 #ifndef __NEEDLESHALL_H__
 #define __NEEDLESHALL_H__
 
-class NeedlesHall : Tile
+class NeedlesHall : public Tile
 {
-private:
-    int pos;
+
+    std::shared_ptr<TileImpl> impl;
 
 public:
-    NeedlesHall(int pos);
+    NeedlesHall(int position, std::string blockName);
     ~NeedlesHall();
 };
 

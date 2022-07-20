@@ -4,10 +4,8 @@
 #ifndef __SLC_H__
 #define __SLC_H__
 
-class Slc : Tile
+class Slc : public Tile
 {
-private:
-    int position;
 
 public:
     Slc(int position);

@@ -1,7 +1,12 @@
 #include "dcTimsLine.h"
 #include <string>
-#include <iostream>
 
-DcTimsLine::DcTimsLine(int position) : position{position} {}
+using namespace std;
+
+DcTimsLine::DcTimsLine(int position, string blockName) : impl{make_shared<TileImpl>()}
+{
+    impl->pos = position;
+    impl->name = blockName;
+}
 
 DcTimsLine::~DcTimsLine() {}
