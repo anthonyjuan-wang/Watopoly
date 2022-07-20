@@ -28,19 +28,19 @@ Board Academic::*getBoard() {
 }
 
 Player Academic::*getOwner() {
-
+    
 }
 
 void Academic::setOwner(Player *player) {
-
+    impl->Owner = player;
 }
 
 int Academic::getImprovement() { // returns the improvement #
-
-} 
+    return impl->improvement;
+}
 
 void Academic::setImprovement(int x) {
-
+    impl->improvement = x;
 }
 
 void Academic::action(shared_ptr<Player> player) {
@@ -60,17 +60,17 @@ bool Academic::isMortgaged() {
 }
 
 bool Academic::isOwned() {
-
+    return impl->isOwnable;
 }
 
 int Academic::getPos() {
-
+    return impl->pos;
 }
 
 int Academic::getPrice() {
-
+    return impl->purchase;
 }
 
 string Academic::getName() {
-
+    return impl->name;
 }

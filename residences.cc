@@ -55,17 +55,17 @@ bool Residences::isMortgaged() {
 }
 
 bool Residences::isOwned() {
-
+    return impl->isOwnable;
 }
 
 int Residences::getPos() {
-
+    return impl->pos;
 }
 
 int Residences::getPrice() {
-
+    return impl->purchase;
 }
 
 string Residences::getName() {
-
+    return impl->name;
 }

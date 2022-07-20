@@ -58,7 +58,7 @@ bool GoToTims::isOwned() {
 }
 
 int GoToTims::getPos() {
-
+    return impl->pos;
 }
 
 int GoToTims::getPrice() {
@@ -66,5 +66,5 @@ int GoToTims::getPrice() {
 }
 
 string GoToTims::getName() {
-
+    return impl->name;
 }

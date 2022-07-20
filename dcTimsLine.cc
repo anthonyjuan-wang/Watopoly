@@ -60,7 +60,7 @@ bool DcTimsLine::isOwned() {
 }
 
 int DcTimsLine::getPos() {
-
+    return impl->pos;
 }
 
 int DcTimsLine::getPrice() {
@@ -68,5 +68,5 @@ int DcTimsLine::getPrice() {
 }
 
 string DcTimsLine::getName() {
-
+    return impl->name;
 }

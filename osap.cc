@@ -64,7 +64,7 @@ bool Osap::isOwned() {
 }
 
 int Osap::getPos() {
-
+    return impl->pos;
 }
 
 int Osap::getPrice() {
@@ -72,5 +72,5 @@ int Osap::getPrice() {
 }
 
 string Osap::getName() {
-
+    return impl->name;
 }

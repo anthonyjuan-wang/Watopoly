@@ -28,12 +28,12 @@ Player Gyms::*getOwner() {
 }
 
 void Gyms::setOwner(Player *player) {
-
+    impl->Owner = player;
 }
 
 int Gyms::getImprovement() { // returns the improvement #
 
-} 
+}
 
 void Gyms::setImprovement(int x) {
 
@@ -56,17 +56,17 @@ bool Gyms::isMortgaged() {
 }
 
 bool Gyms::isOwned() {
-
+    return impl->isOwnable;
 }
 
 int Gyms::getPos() {
-
+    return impl->pos;
 }
 
 int Gyms::getPrice() {
-
+    return impl->purchase;
 }
 
 string Gyms::getName() {
-
+    return impl->name;
 }

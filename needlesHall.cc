@@ -60,7 +60,7 @@ bool NeedlesHall::isOwned() {
 }
 
 int NeedlesHall::getPos() {
-
+    return impl->pos;
 }
 
 int NeedlesHall::getPrice() {
@@ -68,5 +68,5 @@ int NeedlesHall::getPrice() {
 }
 
 string NeedlesHall::getName() {
-
+    return impl->name;
 }

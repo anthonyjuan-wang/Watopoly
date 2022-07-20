@@ -58,7 +58,7 @@ bool Slc::isOwned() {
 }
 
 int Slc::getPos() {
-
+    return impl->pos;
 }
 
 int Slc::getPrice() {
@@ -66,5 +66,5 @@ int Slc::getPrice() {
 }
 
 string Slc::getName() {
-
+    return impl->name;
 }

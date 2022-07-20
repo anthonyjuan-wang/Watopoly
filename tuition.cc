@@ -59,7 +59,7 @@ bool Tuition::isOwned() {
 }
 
 int Tuition::getPos() {
-
+    return impl->pos;
 }
 
 int Tuition::getPrice() {
@@ -67,5 +67,5 @@ int Tuition::getPrice() {
 }
 
 string Tuition::getName() {
-
+    return impl->name;
 }

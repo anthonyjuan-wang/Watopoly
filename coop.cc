@@ -60,7 +60,7 @@ bool Coop::isOwned() {
 }
 
 int Coop::getPos() {
-
+    return impl->pos;
 }
 
 int Coop::getPrice() {
@@ -68,5 +68,5 @@ int Coop::getPrice() {
 }
 
 string Coop::getName() {
-
+    return impl->name;
 }

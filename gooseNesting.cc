@@ -60,7 +60,7 @@ bool GooseNesting::isOwned() {
 }
 
 int GooseNesting::getPos() {
-
+    return impl->pos;
 }
 
 int GooseNesting::getPrice() {
@@ -68,5 +68,5 @@ int GooseNesting::getPrice() {
 }
 
 string GooseNesting::getName() {
-
+    return impl->name;
 }
