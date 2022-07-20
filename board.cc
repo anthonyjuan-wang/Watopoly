@@ -129,8 +129,7 @@ void Board::play()
     }
 
     // play game - continues until there are < 2 players
-    while (true)
-    {
+    while (true) {
         shared_ptr<Player> currPlayer = players[currPlayerNum];
         string input{};
         string cmd;
@@ -138,8 +137,7 @@ void Board::play()
         vector<string> cmdInterpreter = {"roll", "next", "trade", "improve", "mortgage", "unmortgage", "bankrupt", "assets", "all", "save"};
 
         // checks if the # of players are < 2
-        if (currPlayerNum < 2)
-        {
+        if (currPlayerNum < 2) {
             cout << "Congratulations " << players[0]->getName() << " you are the winner! The game is now over" << endl;
             break;
         }
@@ -147,27 +145,23 @@ void Board::play()
         // stores the line of input into a vector 'commands'
         getline(cin, input);
         istringstream iss{input};
-        while (iss >> cmd)
-        {
+        while (iss >> cmd) {
             commands.emplace_back(cmd);
         }
 
-        if (commands.size() < 1)
-        { // user needs to enter command again
+        if (commands.size() < 1) { // user needs to enter command again
             cout << "Please enter a non-empty command" << endl;
             continue;
         }
 
         // outputs the possible user commands
         cout << "It is " << currPlayer->getName() << " turn. Enter a command from the following: " << endl;
-        for (auto i : cmdInterpreter)
-        {
+        for (auto i : cmdInterpreter) {
             cout << i << endl;
         }
 
         // switch to check all the possible player command inputs
-        switch (commands[0])
-        {
+        switch (commands[0]) {
         case "roll":
             if (currPlayer->getJailStatus() == true)
             {
@@ -200,16 +194,15 @@ void Board::play()
     }
 }
 
-void Board::tradeGive(Player *p, string s, int n)
-{
+void Board::tradeGive(Player *p, string s, int n) {
+
 }
 
-void Board::tradeReceive(Player *p, string s, int n)
-{
+void Board::tradeReceive(Player *p, string s, int n) {
+
 }
 
-vector<int> Board::rollDice()
-{
+vector<int> Board::rollDice() {
     int die1 = (rand() % 6) + 1;
     int die2 = (rand() % 6) + 1;
     vector<int> dice = {die1, die2};
