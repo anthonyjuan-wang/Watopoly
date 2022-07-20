@@ -21,7 +21,7 @@ public:
     // Tile(std::string name, int pos);
     Tile();
     virtual ~Tile();
-    virtual Board *getBoard();
+    //virtual Board *getBoard();
     virtual Player *getOwner() = 0;
     virtual void setOwner(Player *player);
     virtual int getImprovement() = 0;
@@ -30,9 +30,12 @@ public:
     virtual void mortgage(Player *player) = 0;
     virtual void auction() = 0;
     virtual bool isMortgaged() = 0;
-    virtual bool isOwnable() = 0;
+    virtual bool isOwned() = 0;
     virtual int getPos() = 0;
     virtual int getPrice() = 0;
+    // improve buy
+    // improve cell
+
 };
 
 #endif

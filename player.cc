@@ -8,7 +8,7 @@ void Player::move(int n) {
     pos += n;
     if (pos >= 40) {
         pos -= 40;
-        // if tile is not dcTimsLine, collect $200 from OSAP
+        // if tile is not dcTimsLine, collect $200 from OSAP (maybe could check this in play tho)
     }
 }
 
