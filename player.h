@@ -1,4 +1,4 @@
-#include <string>
+    #include <string>
 #include <iostream>
 #include "tile.h"
 
@@ -18,7 +18,7 @@ class Player
     int rollUpCount;
     bool isInJail;
     int inJailCounter;
-    std::vector<std::shared_ptr<Tile *>> tilesOwned;
+    std::vector<std::shared_ptr<Tile>> tilesOwned;
 
 public:
     Player(std::string name, char piece);

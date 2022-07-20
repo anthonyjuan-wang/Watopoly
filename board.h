@@ -10,8 +10,8 @@ class Player;
 
 class Board {
     private:
-        std::vector<std::shared_ptr<Tile*>>board;
-        std::vector<std::shared_ptr<Player*>> players;
+        std::vector<std::shared_ptr<Tile>>board;
+        std::vector<std::shared_ptr<Player>> players;
     public:
         Board();
         virtual ~Board();

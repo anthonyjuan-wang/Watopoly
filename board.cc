@@ -108,7 +108,7 @@ void Board::play() {
 
     // play game - continues until there are < 2 players
     while(true) {
-        player *currPlayer = players[currPlayerNum];
+        shared_ptr<Player> currPlayer = players[currPlayerNum];
         string input{};
         string cmd;
         vector<string> commands{};
@@ -128,7 +128,7 @@ void Board::play() {
         }
 
         if (commands.size() < 1) { // user needs to enter command again
-            cout << "Please enter a command" << endl;
+            cout << "Please enter a non-empty command" << endl;
             continue;
         }
 
@@ -149,9 +149,14 @@ void Board::play() {
                 vector<int> dice = rollDice();
                 int total = currPlayer->getPos + dice[0] + dice[1];
                 currPlayer->move(total);
+                int pos = currPlayer->getPos();
                 
-                if (board[total]->isOwned() == true) {
-                    shared_ptr<Player>
+                cout << "You rolled " << dice[0] << " and " << dice[1] << endl;
+                if (board[pos]->isOwned == true) {
+                    //shared_ptr<Player[> tileOwner = board[pos]->getOwner();
+                    board[pos]->action(currPlayer); // might have to pass the owner of the tile too
+                } else {
+
                 }
                 break;
         }

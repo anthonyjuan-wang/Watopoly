@@ -3,11 +3,9 @@
 
 #ifndef __OSAP_H__
 #define __OSAP_H__
-class Osap : Tile
-{
 
-private:
-    int position;
+class Osap : Tile {
+    make_shared<TileImpl> impl;
 
 public:
     Osap(int position);
