@@ -15,6 +15,7 @@ private:
     int osapPos = 0;
     int jailPos = 10;
     int goToJailPos = 30;
+    int playerCount;
     std::vector<std::shared_ptr<Tile>> board;
     std::vector<std::shared_ptr<Player>> players;
 
