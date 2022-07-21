@@ -102,7 +102,7 @@ void Board::init(int input)
                 cout << "The piece doesn't exist or has already been chosen." << endl;
             }
         }
-        players.emplace_back(Player(playerName, playerPiece));
+        players.emplace_back(Player(playerName, playerPiece, 1500, 0));
     }
 }
 
@@ -129,8 +129,7 @@ void Board::play()
     }
 
     // play game - continues until there are < 2 players
-    while (true)
-    {
+    while (true) {
         shared_ptr<Player> currPlayer = players[currPlayerNum];
         string input{};
         string cmd;
@@ -138,8 +137,7 @@ void Board::play()
         vector<string> cmdInterpreter = {"roll", "next", "trade", "improve", "mortgage", "unmortgage", "bankrupt", "assets", "all", "save"};
 
         // checks if the # of players are < 2
-        if (currPlayerNum < 2)
-        {
+        if (currPlayerNum < 2) {
             cout << "Congratulations " << players[0]->getName() << " you are the winner! The game is now over" << endl;
             break;
         }
@@ -147,27 +145,23 @@ void Board::play()
         // stores the line of input into a vector 'commands'
         getline(cin, input);
         istringstream iss{input};
-        while (iss >> cmd)
-        {
+        while (iss >> cmd) {
             commands.emplace_back(cmd);
         }
 
-        if (commands.size() < 1)
-        { // user needs to enter command again
+        if (commands.size() < 1) { // user needs to enter command again
             cout << "Please enter a non-empty command" << endl;
             continue;
         }
 
         // outputs the possible user commands
         cout << "It is " << currPlayer->getName() << " turn. Enter a command from the following: " << endl;
-        for (auto i : cmdInterpreter)
-        {
+        for (auto i : cmdInterpreter) {
             cout << i << endl;
         }
 
         // switch to check all the possible player command inputs
-        switch (commands[0])
-        {
+        switch (commands[0]) {
         case "roll":
             if (currPlayer->getJailStatus() == true)
             {
@@ -200,16 +194,15 @@ void Board::play()
     }
 }
 
-void Board::tradeGive(Player *p, string s, int n)
-{
+void Board::tradeGive(Player *p, string s, int n) {
+
 }
 
-void Board::tradeReceive(Player *p, string s, int n)
-{
+void Board::tradeReceive(Player *p, string s, int n) {
+
 }
 
-vector<int> Board::rollDice()
-{
+vector<int> Board::rollDice() {
     int die1 = (rand() % 6) + 1;
     int die2 = (rand() % 6) + 1;
     vector<int> dice = {die1, die2};
@@ -258,5 +251,4 @@ void Board::initTiles()
     board.emplace_back(make_shared<Academic>(37, "MC", "Math", 350, 200, vector<int>{35, 175, 500, 1100, 1300, 1500}));
     board.emplace_back(make_shared<Coop>(38, "Coop"));
     board.emplace_back(make_shared<Academic>(39, "DC", "Math", 400, 200, vector<int>{50, 200, 600, 1400, 1700, 2000}));
-}
 }
