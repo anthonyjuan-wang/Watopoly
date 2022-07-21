@@ -4,26 +4,14 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include "tileimpl.h"
 
 class Player;
 class Board;
 
-struct TileImpl
-{
-    Board *theBoard;
-    Player *Owner;
-    std::string name;
-    bool isOwnable;
-    bool isImprovable;
-    int pos;
-    int purchase;
-    int improvement;
-    std::string monopoly;
-    std::vector<int> tuition;
-};
 
-class Tile
-{
+
+class Tile {
 public:
     Tile();
     virtual TileImpl *getImpl() = 0;

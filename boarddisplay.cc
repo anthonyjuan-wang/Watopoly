@@ -3,23 +3,41 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "tile.h"
+#include "player.h"
+
 
 using namespace std;
 
- void BoardDisplay::print(){
- cout << setfill('_') << setw(90) << "" << endl;
+void BoardDisplay::printImprovements(std::shared_ptr<Tile> tile){
+ int counter = 0;
+int improvement = tile->getImprovement();
+for (int i = 0; i < 6; i++){
+   if (i < improvement) cout << "X";
+   else cout << "_";
+    } cout << " ";   
+}
+void BoardDisplay::printPlayers(std::vector<std::shared_ptr<Player>> players, int index){
+    for (int i = 0; i < players.size(); i++){
+      if (players[i]->getPos() == index) cout << ""
+    }
+}
+
+void BoardDisplay::print() {
+    cout << setfill('_') << setw(90) << "" << endl;
     cout << "|Goose  |       |NEEDLES|       |       |V1     |       |       |CIF    |       |GO TO  |" << endl;
     cout << "|NESTING|       |HALL   |       |       |       |       |       |       |       |TIMS   |" << endl;
     cout << "|       |EV1    |       |EV2    |EV2    |       |PHYS   |B1     |       |B2     |       |" << endl;
-    for (int i = 0; i < 11; i++)
-    {
+    for (int i = 0; i < 11; i++) {
         cout << "|" << setfill(' ') << setw(7) << "";
     }
+    
     cout << "|" << endl;
-    for (int i = 0; i < 11; i++)
-    {
+
+    for (int i = 0; i < 11; i++) {
         cout << "|" << setfill('_') << setw(7) << "";
     }
+
     cout << "|" << endl;
     cout << "|       |" << setfill(' ') << setw(80) << "|       |" << endl;
     cout << "|-------|" << setfill(' ') << setw(80) << "|-------|" << endl;
@@ -32,10 +50,11 @@ using namespace std;
     cout << "|       |" << setfill(' ') << setw(80) << "|       |" << endl;
     cout << "|_______|" << setfill(' ') << setw(80) << "|_______|" << endl;
     cout << "|SLC    |" << setfill(' ') << setw(80) << "|SLC    |" << endl;
-    for (int i = 0; i < 3; i++)
-    {
+
+    for (int i = 0; i < 3; i++) {
         cout << "|       |" << setfill(' ') << setw(80) << "|       |" << endl;
     }
+    
     cout << "|_______|" << setfill(' ') << setw(80) << "|_______|" << endl;
     cout << "|       |" << setfill(' ') << setw(80) << "|       |" << endl;
     cout << "|-------|" << setfill(' ') << setw(80) << "|-------|" << endl;
@@ -79,26 +98,24 @@ using namespace std;
     cout << "|       |" << setfill(' ') << setw(80) << "|       |" << endl;
     cout << "|_______|" << setfill('_') << setw(80) << "|_______|" << endl;
     cout << "|DC Tims|       |       |NEEDLES|       |MKV    |TUITION|       |SLC    |       |COLLECT|" << endl;
-    //
-    cout << "|Line   |       |       |HALL   |       |MKV    |       |       |SLC    |       |OSAP   |" << endl;
+    
+    
+    //cout << "|Line   |" << printImprovements((board->getBoard()[]))/
+
+    cout << "|       |HALL   |       |       |       |       |       |       |OSAP   |" << endl;
     cout << "|       |HH     |PASS   |       |ECH    |       |       |B1     |       |B2     |       |" << endl;
 
-    for (int i = 0; i < 11; i++)
-{
+    for (int i = 0; i < 11; i++) {
         cout << "|" << setfill(' ') << setw(7) << "";
-    }     cout << "|" << endl; 
-    for (int i = 0; i < 11; i++)
-    {
+    }     
+
+    cout << "|" << endl;
+    
+    for (int i = 0; i < 11; i++) {
         cout << "|" << setfill('_') << setw(7) << "";
-    }    cout << "|" << endl; 
- 
+    }
     
-
-    
-
-
-
-    
+    cout << "|" << endl; 
 
 
     /*
@@ -109,4 +126,4 @@ using namespace std;
     cout <<"                         _|            ____/ " << endl;
     */
 
- }
+}

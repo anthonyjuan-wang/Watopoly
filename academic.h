@@ -2,6 +2,7 @@
 #define __ACADEMIC_H__
 #include <string>
 #include "tile.h"
+#include "tileimpl.h"
 class Player;
 class Board;
 
