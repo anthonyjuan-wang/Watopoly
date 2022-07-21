@@ -14,7 +14,6 @@ public:
     ~Osap();
 
     void action();
-    TileImpl *getImpl;
      
     virtual TileImpl *getImpl();
     virtual Board *getBoard();
