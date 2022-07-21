@@ -22,83 +22,69 @@ Board::Board() {}
 
 Board::~Board() {}
 
+
 void Board::init(int input)
 {
-    if (!(players.empty()))
-    {
+    if (!(players.empty())) {
         players.clear();
     }
 
     vector<string> pieces = {"G: Goose", "B: GRT Bus", "D: Tim Hortons Doughnut", "P: Professor", "S: Student", "M: Money", "L: Laptop", "P: Pink Tie"};
 
-    for (int i = 1; i <= input; i++)
-    {
+    for (int i = 1; i <= input; i++) {
         string playerName;
         char playerPiece;
 
         // get a valid playerName
-        while (true)
-        {
+        while (true) {
             cout << "Hi Player " << i << " enter your name: ";
             cin >> playerName;
 
             // check if the playerName already exists
-            if (playerName == "Bank")
-            {
+            if (playerName == "Bank") {
                 cout << "This name is not valid" << endl;
             }
-            else
-            {
+            else {
                 bool nameTaken = false;
                 int size = players.size();
-                for (int j = 0; j < size; i++)
-                {
-                    if (players[j]->getName() == playerName)
-                    {
+                for (int j = 0; j < size; i++) {
+                    if (players[j]->getName() == playerName) {
                         nameTaken = true;
                         break;
                     }
                 }
-                if (nameTaken == false)
-                {
+                if (nameTaken == false) {
                     break;
                 }
-                else
-                {
+                else {
                     cout << "The playerName chosen has already been taken" << endl;
                 }
             }
         }
 
         // get a valid player piece
-        while (true)
-        {
+        while (true) {
             cout << "Player " << i << " enter the char of the player piece you'd like to choose" << endl;
             cout << "The list of pieces available are" << endl;
-            for (auto p : pieces)
-            {
+            for (auto p : pieces) {
                 cout << p << endl;
             }
             cin >> playerPiece;
 
             int size = pieces.size();
             bool pieceFound = false;
-            for (int j = 0; j < size; j++)
-            {
-                if (pieces[j][0] == playerPiece)
-                {
-                    pieceFound == true;
+            for (int j = 0; j < size; j++) {
+                if (pieces[j][0] == playerPiece) {
+                    pieceFound = true;
                     pieces.erase(pieces.begin() + j);
                     break;
                 }
             }
 
-            if (pieceFound == true)
-            {
+            if (pieceFound == true) {
                 break;
             }
-            else
-            {
+            else {
                 cout << "The piece doesn't exist or has already been chosen." << endl;
             }
         }
@@ -106,38 +92,35 @@ void Board::init(int input)
     }
 }
 
-void Board::play()
-{
+
+void Board::play() {
     int playersCount = 0;
-    int currPlayerNum = 0;
+    int currPlayerIndex = 0;
 
     // ask the user for the number of players
-    while (true)
-    {
+    while (true) {
         cout << "How many players are there? ";
         cin >> playersCount;
 
-        if (playersCount >= 2 && playersCount <= 8)
-        {
+        if (playersCount >= 2 && playersCount <= 8) {
             init(playersCount);
             break;
         }
-        else
-        {
+        else {
             cout << "The number of players you entered is invalid" << endl;
         }
     }
 
-    // play game - continues until there are < 2 players
+    // play game - continues until there are > 2 players
     while (true) {
-        shared_ptr<Player> currPlayer = players[currPlayerNum];
+        shared_ptr<Player> currPlayer = players[currPlayerIndex];
         string input{};
         string cmd;
         vector<string> commands{};
         vector<string> cmdInterpreter = {"roll", "next", "trade", "improve", "mortgage", "unmortgage", "bankrupt", "assets", "all", "save"};
 
         // checks if the # of players are < 2
-        if (currPlayerNum < 2) {
+        if (playersCount < 2) {
             cout << "Congratulations " << players[0]->getName() << " you are the winner! The game is now over" << endl;
             break;
         }
@@ -154,55 +137,103 @@ void Board::play()
             continue;
         }
 
+        // checks if your in jail
+        if (currPlayer->getJailStatus() == true) {
+            cout << "You are in jail. Here are your options:" << endl;
+            board[jailPos]->action(currPlayer);
+            currPlayer = (currPlayerIndex + 1) % playerCount;
+            continue;
+        }
+
+
         // outputs the possible user commands
-        cout << "It is " << currPlayer->getName() << " turn. Enter a command from the following: " << endl;
+        cout << "It is " << currPlayer->getName() << "'s turn. Enter a command from the following: " << endl;
         for (auto i : cmdInterpreter) {
             cout << i << endl;
         }
 
         // switch to check all the possible player command inputs
-        switch (commands[0]) {
-        case "roll":
-            if (currPlayer->getJailStatus() == true)
-            {
-                cout << "You will not be able to roll the dice. You are in the DC Tims Line" << endl;
-                continue;
-            }
+        if (commands[0] == "roll") {
             vector<int> dice = rollDice();
             int total = currPlayer->getPos() + dice[0] + dice[1];
             currPlayer->move(total);
             int pos = currPlayer->getPos();
+ 
 
             cout << "You rolled " << dice[0] << " and " << dice[1] << endl;
-            if (board[pos]->isOwned() == true)
-            {
-                // shared_ptr<Player[> tileOwner = board[pos]->getOwner();
-                board[pos]->action(currPlayer); // might have to pass the owner of the tile too
+            cout << "You just landed on " << board[pos]->getName() << endl;
+            
+            if (pos != osapPos && pos != goToJailPos) {
+                // add $200 if you pass osap
+                if (total > 40 && currPlayer->getJailStatus() == false) {
+                    currPlayer->addMoney(200);
+                }
+                board[pos]->action(currPlayer);
+            } else if (pos == osapPos) {
+                currPlayer->addMoney(200);
+            } else if (pos == goToJailPos) {
+                currPlayer->setPos(jailPos);
+                currPlayer->setJailStatus(true);
+                currPlayer->setJailCount(0);
+                continue;
             }
-            else
-            {
+
+            // check if the player is almostBankrupt or Bankrupt
+            if (currPlayer->getAlmostBankruptStatus() == true) {
+
             }
-            break;
+
+            if (currPlayer->getBankruptStatus() == true) {
+                
+            }
+
+            if (dice[0] != dice[1] || currPlayer->getJailStatus() || currPlayer->getBankruptStatus()) {
+                cout << currPlayer->getName() << ", your turn is now finished." << endl;
+                doubles = 0;
+                currPlayer = (currPlayerIndex + 1) % playerCount;
+                board->print();
+            } else {
+                doubles++;
+
+                if (doubles == 3) {
+                    cout << "You have rolled 3 doubles. You are now going to jail." << endl;
+                    currPlayer->setPos(jailPos);
+                    currPlayer->setJailStatus(true);
+                    currPlayer->setJailCount(0);
+                    
+                    doubles = 0;
+                    currPlayer = (currPlayerIndex + 1) % playerCount;
+                } else {
+                    cout << "You have rolled doubles. It is your turn again" << endl;
+                }
+            }
+
+        } else if (commands[0] == "next") {
+            if (doubles == 0) {
+                cout << "You haven't rolled yet." << endl;
+            } else {
+                cout << currPlayer->getName() << ", your turn is now finished." << endl;
+                doubles = 0;
+                currPlayer = (currPlayerIndex + 1) % playerCount;
+                board->print();
+            }
+        } else if (commands[0] == "improve" && commands.size() == 3) {
+
         }
 
-        // check if almostBankrupt is true and check moneyOwed
-        currPlayerNum++;
-        if (playersCount == currPlayerNum)
-        {
-            currPlayerNum = 0;
-        }
     }
 }
 
-void Board::tradeGive(Player *p, string s, int n) {
-
+void Board::tradeGive(Player *p, string s, int n)
+{
 }
 
-void Board::tradeReceive(Player *p, string s, int n) {
-
+void Board::tradeReceive(Player *p, string s, int n)
+{
 }
 
-vector<int> Board::rollDice() {
+vector<int> Board::rollDice()
+{
     int die1 = (rand() % 6) + 1;
     int die2 = (rand() % 6) + 1;
     vector<int> dice = {die1, die2};
@@ -251,4 +282,4 @@ void Board::initTiles()
     board.emplace_back(make_shared<Academic>(37, "MC", "Math", 350, 200, vector<int>{35, 175, 500, 1100, 1300, 1500}));
     board.emplace_back(make_shared<Coop>(38, "Coop"));
     board.emplace_back(make_shared<Academic>(39, "DC", "Math", 400, 200, vector<int>{50, 200, 600, 1400, 1700, 2000}));
-}
+} 
