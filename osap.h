@@ -11,9 +11,11 @@ class Osap : public Tile {
 
 public:
     Osap(int position, std::string str);
-    void action() override;
-    TileImpl *getImpl ~Osap();
+    ~Osap();
 
+    void action();
+    TileImpl *getImpl;
+     
     virtual TileImpl *getImpl();
     virtual Board *getBoard();
     virtual Player *getOwner();

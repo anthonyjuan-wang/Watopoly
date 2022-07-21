@@ -7,8 +7,7 @@ class Board;
 
 using namespace std;
 
-DcTimsLine::DcTimsLine(int position, string blockName) : impl{make_shared<TileImpl>()}
-{
+DcTimsLine::DcTimsLine(int position, string blockName) : impl{make_shared<TileImpl>()} {
     impl->pos = position;
     impl->name = blockName;
 }
