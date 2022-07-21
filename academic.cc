@@ -1,5 +1,6 @@
 #include "academic.h"
 #include "tile.h"
+#include "tileimpl.h"
 #include <string>
 #include <memory>
 class Player;
