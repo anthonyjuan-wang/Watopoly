@@ -11,6 +11,10 @@ class Player;
 class Board
 {
 private:
+    int doubles = 0;
+    int osapPos = 0;
+    int jailPos = 10;
+    int goToJailPos = 30;
     std::vector<std::shared_ptr<Tile>> board;
     std::vector<std::shared_ptr<Player>> players;
 
@@ -27,7 +31,7 @@ public:
     std::vector<int> rollDice();        // maybe virtual
     std::vector<Player *> getPlayers(); // maybe virtual
     void setTestingMode();
-    void print();
+    virtual void print() = 0; // calls board display
 };
 
 #endif
