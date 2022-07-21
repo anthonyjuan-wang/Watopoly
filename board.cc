@@ -163,7 +163,7 @@ void Board::play()
         {
             cout << "You are in jail. Here are your options:" << endl;
             board[jailPos]->action(currPlayer);
-            currPlayer = (currPlayerIndex + 1) % playerCount;
+            currPlayer = (currPlayerIndex + 1) % playersCount;
             continue;
         }
 
@@ -219,7 +219,7 @@ void Board::play()
             {
                 cout << currPlayer->getName() << ", your turn is now finished." << endl;
                 doubles = 0;
-                currPlayer = (currPlayerIndex + 1) % playerCount;
+                currPlayer = (currPlayerIndex + 1) % playersCount;
                 board->print();
             }
             else
@@ -234,7 +234,7 @@ void Board::play()
                     currPlayer->setJailCount(0);
 
                     doubles = 0;
-                    currPlayer = (currPlayerIndex + 1) % playerCount;
+                    currPlayer = (currPlayerIndex + 1) % playersCount;
                 }
                 else
                 {
@@ -252,7 +252,7 @@ void Board::play()
             {
                 cout << currPlayer->getName() << ", your turn is now finished." << endl;
                 doubles = 0;
-                currPlayer = (currPlayerIndex + 1) % playerCount;
+                currPlayer = (currPlayerIndex + 1) % playersCount;
                 board->print();
             }
         }
