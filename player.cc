@@ -15,7 +15,7 @@ Player::Player(string name, char piece, int money = 1500, int pos = 0) : impl{ma
     impl->rollUpCount = 0;
     impl->isInJail = false;
     impl->inJailCounter = 0;
-    // impl->tilesOwned{nullptr};
+    impl->tilesOwned{nullptr};
     impl->moneyOwed = 0;
 }
 
@@ -133,7 +133,19 @@ void Player::setJailCount(int n)
     impl->inJailCounter = n;
 }
 
-void Player::addTile(Tile t)
+bool Player::getAlmostBankruptStatus() {
+    return impl->almostBankrupt;
+}
+
+bool Player::getBankruptStatus() {
+    return impl->bankrupt;
+}
+
+void Player::setBankruptStatus(bool status) {
+    bankrupt = status;
+}
+
+void Player::addTile(std::shared_ptr<Tile> t)
 {
     impl->tilesOwned.emplace_back(t);
 }

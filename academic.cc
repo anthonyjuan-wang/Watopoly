@@ -16,3 +16,18 @@ Academic::Academic(int position, string blockName, string monopolyType, int purc
 }
 
 Academic::~Academic() {}
+
+void Academic::action(std::shared_ptr<Player> player) {
+    /*
+    if (isOwned() == true) {
+                // get price and make player pay
+    } else {
+                cout << "Would you like to purchase this building? Enter 'yes' or 'no'." << endl;
+                string s;
+                cin >> s;
+
+                
+            }
+            break;
+    */
+}

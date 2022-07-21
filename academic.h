@@ -14,6 +14,7 @@ public:
     Academic(int position, std::string blockName, std::string monopolyType, int purchaseCost, int improvementCost,
              std::vector<int> tuitionWithExpenses);
     ~Academic();
+    void action(std::shared_ptr<Player> player) override;
 };
 
 #endif

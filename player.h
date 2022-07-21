@@ -43,7 +43,10 @@ public:
     void setJailStatus(bool status);
     int getJailCount();
     void setJailCount(int n);
-    void addTile(Tile t);
+    bool getAlmostBankruptStatus();
+    bool getBankruptStatus();
+    void setBankruptStatus(bool status);
+    void addTile(std::shared_ptr<Tile> t);
     std::vector<std::shared_ptr<Tile>> getTiles();
 };
 
