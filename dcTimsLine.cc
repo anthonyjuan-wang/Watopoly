@@ -14,19 +14,15 @@ DcTimsLine::DcTimsLine(int position, string blockName) : impl{make_shared<TileIm
 
 DcTimsLine::~DcTimsLine() {}
 
-TileImpl DcTimsLine::*getImpl() {
+std::shared_ptr<TileImpl> DcTimsLine::getImpl() {
 
 }
 
-Board DcTimsLine::*getBoard() {
+std::shared_ptr<Player> DcTimsLine::getOwner() {
 
 }
 
-Player DcTimsLine::*getOwner() {
-
-}
-
-void DcTimsLine::setOwner(Player *player) {
+void DcTimsLine::setOwner(shared_ptr<Player> player) {
 
 }
 
@@ -42,7 +38,7 @@ void DcTimsLine::action(shared_ptr<Player> player) {
 
 }
 
-void DcTimsLine::mortgage(Player *player) {
+void DcTimsLine::mortgage(shared_ptr<Player> player) {
 
 }
 
@@ -68,4 +64,24 @@ int DcTimsLine::getPrice() {
 
 string DcTimsLine::getName() {
     return impl->name;
+}
+
+void improveBuy(std::shared_ptr<Player> player) {
+
+}
+
+void improveSell(std::shared_ptr<Player> player) {
+    
+}
+
+int getImproveCost() {
+    
+}
+
+std::string getMonopolyName() {
+    
+}
+
+void unmortgage(std::shared_ptr<Player> player) {
+
 }

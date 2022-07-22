@@ -2,12 +2,13 @@
 #define __TILEIMPL__H__
 #include <vector>
 #include <string>
-class Board;
-class Player;
+#include "player.h"
+//class Board;
+//class Player;
 
 struct TileImpl {
-    Board *theBoard;
-    Player *Owner;
+    //Board *theBoard;
+    std::shared_ptr<Player> Owner;
     std::string name;
     bool isOwnable;
     bool isImprovable;

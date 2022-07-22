@@ -3,7 +3,8 @@
 #include "tileimpl.h"
 #include <string>
 #include <memory>
-class Player;
+
+#include "player.h"
 class Board;
 
 using namespace std;
@@ -20,19 +21,15 @@ Academic::Academic(int position, string blockName, string monopolyType, int purc
 
 Academic::~Academic() {}
 
-TileImpl Academic::*getImpl() {
-
+std::shared_ptr<TileImpl> Academic::getImpl() {
+    return impl;
 }
 
-Board Academic::*getBoard() {
-
+std::shared_ptr<Player> Academic::getOwner() {
+    return impl->Owner;
 }
 
-Player Academic::*getOwner() {
-    
-}
-
-void Academic::setOwner(Player *player) {
+void Academic::setOwner(std::shared_ptr<Player> player) {
     impl->Owner = player;
 }
 
@@ -45,10 +42,12 @@ void Academic::setImprovement(int x) {
 }
 
 void Academic::action(shared_ptr<Player> player) {
+    // Check if tile is owned
+        // If is owned, Pay Tuition
 
 }
 
-void Academic::mortgage(Player *player) {
+void Academic::mortgage(std::shared_ptr<Player> player) {
 
 }
 
@@ -77,11 +76,17 @@ string Academic::getName() {
 }
 
 void Academic::improveBuy(std::shared_ptr<Player> player) {
-    
+    int improveNum = getImprovement();
+    int price = getPrice();
+    setImprovement(improveNum + 1);
+    player->subtractMoney(price);
 }
 
 void Academic::improveSell(std::shared_ptr<Player> player) {
-
+    int improveNum = getImprovement();
+    int price = getPrice();
+    setImprovement(improveNum - 1);
+    player->addMoney(price/2);
 }
 
 int Academic::getImproveCost() {
@@ -90,4 +95,24 @@ int Academic::getImproveCost() {
 
 string Academic::getMonopolyName() {
     return impl->monopoly;
+}
+
+void improveBuy(std::shared_ptr<Player> player) {
+
+}
+
+void improveSell(std::shared_ptr<Player> player) {
+    
+}
+
+int getImproveCost() {
+    
+}
+
+std::string getMonopolyName() {
+    
+}
+
+void unmortgage(std::shared_ptr<Player> player) {
+
 }

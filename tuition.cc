@@ -6,27 +6,22 @@ class Board;
 
 using namespace std;
 
-Tuition::Tuition(int position, string blockName) : impl{make_shared<TileImpl>()}
-{
+Tuition::Tuition(int position, string blockName) : impl{make_shared<TileImpl>()} {
     impl->pos = position;
     impl->name = blockName;
 }
 
 Tuition::~Tuition() {}
 
-TileImpl Tuition::*getImpl() {
+std::shared_ptr<TileImpl> Tuition::getImpl() {
 
 }
 
-Board Tuition::*getBoard() {
+std::shared_ptr<Player> Tuition::getOwner() {
 
 }
 
-Player Tuition::*getOwner() {
-
-}
-
-void Tuition::setOwner(Player *player) {
+void Tuition::setOwner(std::shared_ptr<Player> player) {
 
 }
 
@@ -42,7 +37,7 @@ void Tuition::action(shared_ptr<Player> player) {
 
 }
 
-void Tuition::mortgage(Player *player) {
+void Tuition::mortgage(std::shared_ptr<Player> player) {
 
 }
 
@@ -68,4 +63,24 @@ int Tuition::getPrice() {
 
 string Tuition::getName() {
     return impl->name;
+}
+
+void improveBuy(std::shared_ptr<Player> player) {
+
+}
+
+void improveSell(std::shared_ptr<Player> player) {
+    
+}
+
+int getImproveCost() {
+    
+}
+
+std::string getMonopolyName() {
+    
+}
+
+void unmortgage(std::shared_ptr<Player> player) {
+
 }

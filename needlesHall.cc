@@ -15,19 +15,15 @@ NeedlesHall::NeedlesHall(int position, string blockName) : impl{make_shared<Tile
 
 NeedlesHall::~NeedlesHall() {}
 
-TileImpl NeedlesHall::*getImpl() {
+std::shared_ptr<TileImpl> NeedlesHall::getImpl() {
 
 }
 
-Board NeedlesHall::*getBoard() {
+std::shared_ptr<Player> NeedlesHall::getOwner() {
 
 }
 
-Player NeedlesHall::*getOwner() {
-
-}
-
-void NeedlesHall::setOwner(Player *player) {
+void NeedlesHall::setOwner(std::shared_ptr<Player> player) {
 
 }
 
@@ -43,7 +39,7 @@ void NeedlesHall::action(shared_ptr<Player> player) {
 
 }
 
-void NeedlesHall::mortgage(Player *player) {
+void NeedlesHall::mortgage(std::shared_ptr<Player> player) {
 
 }
 
@@ -69,4 +65,24 @@ int NeedlesHall::getPrice() {
 
 string NeedlesHall::getName() {
     return impl->name;
+}
+
+void improveBuy(std::shared_ptr<Player> player) {
+
+}
+
+void improveSell(std::shared_ptr<Player> player) {
+    
+}
+
+int getImproveCost() {
+    
+}
+
+std::string getMonopolyName() {
+    
+}
+
+void unmortgage(std::shared_ptr<Player> player) {
+
 }

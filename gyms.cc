@@ -15,19 +15,15 @@ Gyms::Gyms(int position, string blockName) : impl{make_shared<TileImpl>()}
 
 Gyms::~Gyms() {}
 
-TileImpl Gyms::*getImpl() {
+std::shared_ptr<TileImpl> Gyms::getImpl() {
 
 }
 
-Board Gyms::*getBoard() {
+std::shared_ptr<Player> Gyms::getOwner() {
 
 }
 
-Player Gyms::*getOwner() {
-
-}
-
-void Gyms::setOwner(Player *player) {
+void Gyms::setOwner(std::shared_ptr<Player> player) {
     impl->Owner = player;
 }
 
@@ -43,7 +39,7 @@ void Gyms::action(shared_ptr<Player> player) {
 
 }
 
-void Gyms::mortgage(Player *player) {
+void Gyms::mortgage(std::shared_ptr<Player> player) {
 
 }
 
@@ -69,4 +65,24 @@ int Gyms::getPrice() {
 
 string Gyms::getName() {
     return impl->name;
+}
+
+void improveBuy(std::shared_ptr<Player> player) {
+
+}
+
+void improveSell(std::shared_ptr<Player> player) {
+    
+}
+
+int getImproveCost() {
+    
+}
+
+std::string getMonopolyName() {
+    
+}
+
+void unmortgage(std::shared_ptr<Player> player) {
+
 }

@@ -7,27 +7,22 @@ class Board;
 
 using namespace std;
 
-Coop::Coop(int position, string blockName) : impl{make_shared<TileImpl>()}
-{
+Coop::Coop(int position, string blockName) : impl{make_shared<TileImpl>()} {
     impl->pos = position;
     impl->name = blockName;
 }
 
 Coop::~Coop() {}
 
-TileImpl Coop::*getImpl() {
+std::shared_ptr<TileImpl> Coop::getImpl() {
 
 }
 
-Board Coop::*getBoard() {
+std::shared_ptr<Player> Coop::getOwner() {
 
 }
 
-Player Coop::*getOwner() {
-
-}
-
-void Coop::setOwner(Player *player) {
+void Coop::setOwner(std::shared_ptr<Player> player) {
 
 }
 
@@ -43,7 +38,7 @@ void Coop::action(shared_ptr<Player> player) {
 
 }
 
-void Coop::mortgage(Player *player) {
+void Coop::mortgage(std::shared_ptr<Player> player) {
 
 }
 
@@ -69,4 +64,44 @@ int Coop::getPrice() {
 
 string Coop::getName() {
     return impl->name;
+}
+
+void improveBuy(std::shared_ptr<Player> player) {
+
+}
+
+void improveSell(std::shared_ptr<Player> player) {
+    
+}
+
+int getImproveCost() {
+    
+}
+
+std::string getMonopolyName() {
+    
+}
+
+void unmortgage(std::shared_ptr<Player> player) {
+
+}
+
+void improveBuy(std::shared_ptr<Player> player) {
+
+}
+
+void improveSell(std::shared_ptr<Player> player) {
+    
+}
+
+int getImproveCost() {
+    
+}
+
+std::string getMonopolyName() {
+    
+}
+
+void unmortgage(std::shared_ptr<Player> player) {
+
 }

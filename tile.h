@@ -9,20 +9,18 @@
 class Player;
 class Board;
 
-
-
 class Tile {
 public:
     Tile();
-    virtual TileImpl *getImpl() = 0;
+    virtual std::shared_ptr<TileImpl> getImpl() = 0;
     virtual ~Tile();
-    virtual Board *getBoard() = 0;
-    virtual Player *getOwner() = 0;
-    virtual void setOwner(Player *player) = 0;
+
+    virtual std::shared_ptr<Player> getOwner() = 0;
+    virtual void setOwner(std::shared_ptr<Player> player) = 0;
     virtual int getImprovement() = 0; // returns the improvement #
     virtual void setImprovement(int x) = 0;
     virtual void action(std::shared_ptr<Player> player) = 0;
-    virtual void mortgage(Player *player) = 0;
+    virtual void mortgage(std::shared_ptr<Player> player) = 0;
     virtual void auction() = 0;
     virtual bool isMortgaged() = 0;
     virtual bool isOwned() = 0;
@@ -34,6 +32,7 @@ public:
     virtual void improveSell(std::shared_ptr<Player> player) = 0;
     virtual int getImproveCost() = 0;
     virtual std::string getMonopolyName() = 0;
+    virtual void unmortgage(std::shared_ptr<Player> player) = 0;
 };
 
 #endif

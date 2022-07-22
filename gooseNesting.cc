@@ -15,19 +15,15 @@ GooseNesting::GooseNesting(int position, string blockName) : impl{make_shared<Ti
 
 GooseNesting::~GooseNesting() {}
 
-TileImpl GooseNesting::*getImpl() {
+std::shared_ptr<TileImpl> GooseNesting::getImpl() {
 
 }
 
-Board GooseNesting::*getBoard() {
+std::shared_ptr<Player> GooseNesting::getOwner() {
 
 }
 
-Player GooseNesting::*getOwner() {
-
-}
-
-void GooseNesting::setOwner(Player *player) {
+void GooseNesting::setOwner(shared_ptr<Player> player) {
 
 }
 
@@ -43,7 +39,7 @@ void GooseNesting::action(shared_ptr<Player> player) {
 
 }
 
-void GooseNesting::mortgage(Player *player) {
+void GooseNesting::mortgage(shared_ptr<Player> player) {
 
 }
 
@@ -69,4 +65,24 @@ int GooseNesting::getPrice() {
 
 string GooseNesting::getName() {
     return impl->name;
+}
+
+void improveBuy(std::shared_ptr<Player> player) {
+
+}
+
+void improveSell(std::shared_ptr<Player> player) {
+    
+}
+
+int getImproveCost() {
+    
+}
+
+std::string getMonopolyName() {
+    
+}
+
+void unmortgage(std::shared_ptr<Player> player) {
+
 }
