@@ -12,9 +12,9 @@ class Board;
 class Tile {
 public:
     Tile();
-    virtual ~Tile();
-    
     virtual std::shared_ptr<TileImpl> getImpl() = 0;
+    virtual ~Tile();
+
     virtual std::shared_ptr<Player> getOwner() = 0;
     virtual void setOwner(std::shared_ptr<Player> player) = 0;
     virtual int getImprovement() = 0; // returns the improvement #
