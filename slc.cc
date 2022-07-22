@@ -13,19 +13,15 @@ Slc::Slc(int position, string blockName) : impl{make_shared<TileImpl>()} {
 
 Slc::~Slc() {}
 
-TileImpl Slc::*getImpl() {
+std::shared_ptr<TileImpl> Slc::getImpl() {
 
 }
 
-Board Slc::*getBoard() {
+std::shared_ptr<Player> Slc::getOwner() {
 
 }
 
-Player Slc::*getOwner() {
-
-}
-
-void Slc::setOwner(Player *player) {
+void Slc::setOwner(std::shared_ptr<Player> player) {
 
 }
 
@@ -41,7 +37,7 @@ void Slc::action(shared_ptr<Player> player) {
 
 }
 
-void Slc::mortgage(Player *player) {
+void Slc::mortgage(std::shared_ptr<Player> player) {
 
 }
 
@@ -67,4 +63,24 @@ int Slc::getPrice() {
 
 string Slc::getName() {
     return impl->name;
+}
+
+void improveBuy(std::shared_ptr<Player> player) {
+
+}
+
+void improveSell(std::shared_ptr<Player> player) {
+    
+}
+
+int getImproveCost() {
+    
+}
+
+std::string getMonopolyName() {
+    
+}
+
+void unmortgage(std::shared_ptr<Player> player) {
+
 }

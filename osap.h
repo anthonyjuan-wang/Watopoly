@@ -15,20 +15,24 @@ public:
 
     void action();
      
-    virtual TileImpl *getImpl();
-    virtual Board *getBoard();
-    virtual Player *getOwner();
-    virtual void setOwner(Player *player);
-    virtual int getImprovement(); // returns the improvement #
-    virtual void setImprovement(int x);
-    virtual void action(std::shared_ptr<Player> player);
-    virtual void mortgage(Player *player);
-    virtual void auction();
-    virtual bool isMortgaged();
-    virtual bool isOwned();
-    virtual int getPos();
-    virtual int getPrice();
-    virtual std::string getName();
+    std::shared_ptr<TileImpl> getImpl() override;
+    std::shared_ptr<Player> getOwner() override;
+    virtual void setOwner(std::shared_ptr<Player> player) override;
+    virtual int getImprovement() override; // returns the improvement #
+    virtual void setImprovement(int x) override;
+    virtual void action(std::shared_ptr<Player> player) override;
+    virtual void mortgage(std::shared_ptr<Player> player) override;
+    virtual void auction() override;
+    virtual bool isMortgaged() override;
+    virtual bool isOwned() override;
+    virtual int getPos() override;
+    virtual int getPrice() override;
+    virtual std::string getName() override;
+    void improveBuy(std::shared_ptr<Player> player) override;
+    void improveSell(std::shared_ptr<Player> player) override;
+    int getImproveCost() override;
+    std::string getMonopolyName() override;
+    void unmortgage(std::shared_ptr<Player> player) override;
 };
 
 #endif

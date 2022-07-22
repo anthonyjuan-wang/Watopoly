@@ -13,19 +13,15 @@ GoToTims::GoToTims(int position, string blockName) : impl{make_shared<TileImpl>(
 
 GoToTims::~GoToTims() {}
 
-TileImpl GoToTims::*getImpl() {
+std::shared_ptr<TileImpl> GoToTims::getImpl() {
 
 }
 
-Board GoToTims::*getBoard() {
+std::shared_ptr<Player> GoToTims::getOwner() {
 
 }
 
-Player GoToTims::*getOwner() {
-
-}
-
-void GoToTims::setOwner(Player *player) {
+void GoToTims::setOwner(shared_ptr<Player> player) {
 
 }
 
@@ -41,7 +37,7 @@ void GoToTims::action(shared_ptr<Player> player) {
 
 }
 
-void GoToTims::mortgage(Player *player) {
+void GoToTims::mortgage(shared_ptr<Player> player) {
 
 }
 
@@ -67,4 +63,24 @@ int GoToTims::getPrice() {
 
 string GoToTims::getName() {
     return impl->name;
+}
+
+void improveBuy(std::shared_ptr<Player> player) {
+
+}
+
+void improveSell(std::shared_ptr<Player> player) {
+    
+}
+
+int getImproveCost() {
+    
+}
+
+std::string getMonopolyName() {
+    
+}
+
+void unmortgage(std::shared_ptr<Player> player) {
+
 }

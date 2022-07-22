@@ -50,7 +50,7 @@ void Player::addMoney(int n) {
 void Player::subtractMoney(int n) {
     if (n >= impl->money) {
         impl->money -= n;
-        cout << "You have successfully subtracted $" << n << " fron your account. You now have $" << impl->money << endl;
+        cout << "You have successfully subtracted $" << n << " from your account. You now have $" << impl->money << endl;
     }
     else {
         impl->moneyOwed = n;
@@ -88,6 +88,10 @@ void Player::displayAssets() {
     for (int i = 0; i < size; i++) {
         cout << myTiles[i]->getName() << ": " << myTiles[i]->getPrice() << "\t Improvements: " << myTiles[i]->getImprovement() << endl;
     }
+}
+
+char Player::getPiece(){
+    return impl->piece;
 }
 
 string Player::getName() {
@@ -136,4 +140,29 @@ void Player::addTile(std::shared_ptr<Tile> t) {
 
 std::vector<shared_ptr<Tile>> Player::getTiles() {
     return impl->tilesOwned;
+}
+
+void Player::transferProp(std::shared_ptr<Player> otherPlayer, std::shared_ptr<Tile> tile) {
+    int tileIndex = -1;
+    int size = impl->tilesOwned.size();
+    for (int i = 0; i < size; i++) {
+        if (impl->tilesOwned[i]->getName() == tile->getName()) {
+            tileIndex = i;
+            break;
+        }
+    }
+
+    if (tileIndex == -1) {
+        cout << "You do not own this property. Transferring property cancelled" << endl;
+    }
+
+    if (tile->isMortgaged()) {
+        cout << tile->getName() << " is mortgaged so " << otherPlayer->getName() << " must pay 10%." << endl;
+        otherPlayer->subtractMoney(0.1 * tile->getPrice());
+    }
+
+    impl->tilesOwned.erase(impl->tilesOwned.begin() + tileIndex);
+    tile->setOwner(otherPlayer);
+    otherPlayer->addTile(tile);
+    cout << tile->getName() << " has been transferred from " << getName() << " to " << otherPlayer->getName() << "." << endl;
 }

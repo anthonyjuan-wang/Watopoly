@@ -7,8 +7,7 @@ class Board;
 
 using namespace std;
 
-Osap::Osap(int position, std::string str) : impl{make_shared<TileImpl>()}
-{
+Osap::Osap(int position, std::string str) : impl{make_shared<TileImpl>()} {
     impl->pos = position;
     impl->name = str;
 }
@@ -18,19 +17,15 @@ void Osap::action() {
     impl->Owner->addMoney(200);
 }
 
-TileImpl Osap::*getImpl() {
+std::shared_ptr<TileImpl> Osap::getImpl() {
 
 }
 
-Board Osap::*getBoard() {
+std::shared_ptr<Player> Osap::getOwner() {
 
 }
 
-Player Osap::*getOwner() {
-
-}
-
-void Osap::setOwner(Player *player) {
+void Osap::setOwner(std::shared_ptr<Player> player) {
 
 }
 
@@ -46,7 +41,7 @@ void Osap::action(shared_ptr<Player> player) {
 
 }
 
-void Osap::mortgage(Player *player) {
+void Osap::mortgage(std::shared_ptr<Player> player) {
 
 }
 
@@ -72,4 +67,24 @@ int Osap::getPrice() {
 
 string Osap::getName() {
     return impl->name;
+}
+
+void improveBuy(std::shared_ptr<Player> player) {
+
+}
+
+void improveSell(std::shared_ptr<Player> player) {
+    
+}
+
+int getImproveCost() {
+    
+}
+
+std::string getMonopolyName() {
+    
+}
+
+void unmortgage(std::shared_ptr<Player> player) {
+
 }

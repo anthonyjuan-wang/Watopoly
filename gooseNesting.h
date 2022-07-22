@@ -6,28 +6,31 @@
 class Player;
 class Board;
 
-class GooseNesting : public Tile
-{
+class GooseNesting : public Tile {
     std::shared_ptr<TileImpl> impl;
 
 public:
     GooseNesting(int position, std::string blockName);
     ~GooseNesting();
 
-    virtual TileImpl *getImpl();
-    virtual Board *getBoard();
-    virtual Player *getOwner();
-    virtual void setOwner(Player *player);
-    virtual int getImprovement(); // returns the improvement #
-    virtual void setImprovement(int x);
-    virtual void action(std::shared_ptr<Player> player);
-    virtual void mortgage(Player *player);
-    virtual void auction();
-    virtual bool isMortgaged();
-    virtual bool isOwned();
-    virtual int getPos();
-    virtual int getPrice();
-    virtual std::string getName();
+    std::shared_ptr<TileImpl> getImpl() override;
+    std::shared_ptr<Player> getOwner() override;
+    void setOwner(shared_ptr<Player> player) override;
+    int getImprovement() override; // returns the improvement #
+    void setImprovement(int x) override;
+    void action(std::shared_ptr<Player> player) override;
+    void mortgage(shared_ptr<Player> player) override;
+    void auction() override;
+    bool isMortgaged() override;
+    bool isOwned() override;
+    int getPos() override;
+    int getPrice() override;
+    std::string getName() override;
+    void improveBuy(std::shared_ptr<Player> player) override;
+    void improveSell(std::shared_ptr<Player> player) override;
+    int getImproveCost() override;
+    std::string getMonopolyName() override;
+    void unmortgage(std::shared_ptr<Player> player) override;
 };
 
 #endif

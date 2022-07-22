@@ -4,8 +4,9 @@
 #include <iostream>
 #include <memory>
 #include <vector>
-#include "tile.h"
 
+
+class Tile;
 class PlayerImpl;
 
 class Player
@@ -27,6 +28,7 @@ public:
     void displayAssets();
     std::string getName();
     int getPos();
+    char getPiece();
     void setPos(int n);
     bool getJailStatus();
     void setJailStatus(bool status);
@@ -37,6 +39,7 @@ public:
     void setBankruptStatus(bool status);
     void addTile(std::shared_ptr<Tile> t);
     std::vector<std::shared_ptr<Tile>> getTiles();
+    void transferProp(std::shared_ptr<Player> otherPlayer, std::shared_ptr<Tile> tile);
 };
 
 #endif
