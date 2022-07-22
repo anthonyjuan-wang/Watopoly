@@ -4,9 +4,10 @@
 #include <vector>
 #include <sstream>
 #include <memory>
-
-class Tile;
-class Player;
+#include "tile.h"
+#include "player.h"
+//class Tile;
+//class Player;
 
 class Board
 {
@@ -15,6 +16,8 @@ private:
     int osapPos = 0;
     int jailPos = 10;
     int goToJailPos = 30;
+    int numSquares = 40;
+    bool isTurnOver = false;
     std::vector<std::shared_ptr<Tile>> board;
     std::vector<std::shared_ptr<Player>> players;
 
@@ -32,6 +35,7 @@ public:
     std::vector<Player *> getPlayers(); // maybe virtual
     void setTestingMode();
     virtual void print() = 0; // calls board display
+    bool hasMonopoly(std::shared_ptr<Tile> currTile);
 };
 
 #endif

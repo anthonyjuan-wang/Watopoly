@@ -5,20 +5,9 @@
 #include <memory>
 #include <vector>
 #include "tile.h"
-struct PlayerImpl
-{
-    std::string name;
-    char piece;
-    int money;
-    int pos;
-    bool bankrupt;
-    bool almostBankrupt;
-    int rollUpCount;
-    bool isInJail;
-    int inJailCounter;
-    std::vector<std::shared_ptr<Tile>> tilesOwned;
-    int moneyOwed;
-};
+
+class PlayerImpl;
+
 class Player
 {
     // Prob will need a private class for money, roll, etc

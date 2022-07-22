@@ -75,3 +75,19 @@ int Academic::getPrice() {
 string Academic::getName() {
     return impl->name;
 }
+
+void Academic::improveBuy(std::shared_ptr<Player> player) {
+    
+}
+
+void Academic::improveSell(std::shared_ptr<Player> player) {
+
+}
+
+int Academic::getImproveCost() {
+    return impl->improvement;
+}
+
+string Academic::getMonopolyName() {
+    return impl->monopoly;
+}

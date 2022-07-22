@@ -2,17 +2,9 @@
 #define __TILEIMPL__H__
 #include <vector>
 #include <string>
-
 class Board;
 class Player;
 
-
-class TileImpl {
-    public:
-
-}
-
-// Make this into a class ... 
 struct TileImpl {
     Board *theBoard;
     Player *Owner;
@@ -24,8 +16,6 @@ struct TileImpl {
     int improvement;
     std::string monopoly;
     std::vector<int> tuition;
-    class Private;
-    Private *TilepImpl;
 };
 
 #endif

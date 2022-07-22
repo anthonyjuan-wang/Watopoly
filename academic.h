@@ -29,6 +29,10 @@ public:
     virtual int getPos();
     virtual int getPrice();
     virtual std::string getName();
+    virtual void improveBuy(std::shared_ptr<Player> player);
+    virtual void improveSell(std::shared_ptr<Player> player);
+    virtual int getImproveCost();
+    virtual std::string getMonopolyName();
 };
 
 #endif
