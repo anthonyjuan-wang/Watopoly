@@ -166,4 +166,4 @@ void Player::transferProp(std::shared_ptr<Player> otherPlayer, std::shared_ptr<T
     tile->setOwner(otherPlayer);
     otherPlayer->addTile(tile);
     cout << tile->getName() << " has been transferred from " << getName() << " to " << otherPlayer->getName() << "." << endl;
-}*/
+}

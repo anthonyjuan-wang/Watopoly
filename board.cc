@@ -320,7 +320,7 @@ void Board::play() {
                 print();
             }
         } else if (commands[0] == "trade" && commands.size() == 4) {
-            //trade(commands, currPlayerIndex);
+            trade(commands, currPlayerIndex);
         } else if (commands[0] == "improve" && commands.size() == 3) {
             string s{};
             int pos = -1;

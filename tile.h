@@ -13,7 +13,7 @@ class Tile {
 public:
     Tile();
     virtual ~Tile();
-
+    
     virtual std::shared_ptr<TileImpl> getImpl() = 0;
     virtual std::shared_ptr<Player> getOwner() = 0;
     virtual void setOwner(std::shared_ptr<Player> player) = 0;
