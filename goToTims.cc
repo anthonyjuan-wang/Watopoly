@@ -19,11 +19,7 @@ void GoToTims::action(std::shared_ptr<Player> player) {
 
 // }
 
-<<<<<<< HEAD
-void GoToTims::setOwner(std::shared_ptr<Player> player) {
-=======
 // std::shared_ptr<Player> GoToTims::getOwner() {
->>>>>>> main
 
 // }
 
