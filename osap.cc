@@ -22,15 +22,17 @@ Osap::Osap(int position, string str) : impl{make_shared<TileImpl>()} {
     //std::vector<int> tuition;
 }
 
+Osap::~Osap() {}
+
 void Osap::action(std::shared_ptr<Player> player) {
     
     cout << "Osap bestows you with some grants. Feel blessed upon this joyous day." << endl;
     getImpl()->Owner->addMoney(200);
 }
 
-// std::shared_ptr<TileImpl> Osap::getImpl() {
+std::shared_ptr<TileImpl> Osap::getImpl() {
 
-// }
+}
 
 std::shared_ptr<Player> Osap::getOwner() {
 
@@ -45,10 +47,6 @@ int Osap::getImprovement() {
 } 
 
 void Osap::setImprovement(int x) {
-
-}
-
-void Osap::action(std::shared_ptr<Player> player) {
 
 }
 
@@ -80,22 +78,22 @@ string Osap::getName() {
     return impl->name;
 }
 
-void improveBuy(std::shared_ptr<Player> player) {
+void Osap::improveBuy(std::shared_ptr<Player> player) {
 
 }
 
-void improveSell(std::shared_ptr<Player> player) {
+void Osap::improveSell(std::shared_ptr<Player> player) {
     
 }
 
-int getImproveCost() {
+int Osap::getImproveCost() {
     
 }
 
-std::string getMonopolyName() {
+std::string Osap::getMonopolyName() {
     
 }
 
-void unmortgage(std::shared_ptr<Player> player) {
+void Osap::unmortgage(std::shared_ptr<Player> player) {
 
 }

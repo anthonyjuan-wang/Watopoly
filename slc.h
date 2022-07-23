@@ -13,7 +13,7 @@ public:
     Slc(int position, std::string blockPosition);
     ~Slc();
 
-    //std::shared_ptr<TileImpl> getImpl() override;
+    std::shared_ptr<TileImpl> getImpl() override;
     std::shared_ptr<Player> getOwner() override;
     void setOwner(std::shared_ptr<Player> player) override;
     int getImprovement() override; // returns the improvement #

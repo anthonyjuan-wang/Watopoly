@@ -11,6 +11,7 @@
 using namespace std;
 
 void BoardDisplay::printImprovements(std::shared_ptr<Tile> tile){
+int counter = 0;
 int improvement = tile->getImprovement();
 for (int i = 0; i < 7; i++){
    if (i < improvement) cout << "X";
@@ -19,7 +20,7 @@ for (int i = 0; i < 7; i++){
 }
 void BoardDisplay::printPlayers(std::vector<std::shared_ptr<Player>> players, int index){
     int counter = 0;
-    for (int i = 0; i < players.size(); i++){
+    for (unsigned int i = 0; i < players.size(); i++){
       if (players[i]->getPos() == index){
             cout << players[i]->getPiece();
             counter++;
@@ -78,9 +79,8 @@ void BoardDisplay::print() {
     cout << "|";
     printImprovements(theBoard->getBoard()[19]);
     cout << "|" <<  setfill(' ') << setw(80);
-    cout << "|";
     printImprovements(theBoard->getBoard()[31]);
-    cout << "|" << endl;
+    cout << endl;
 
 // Line 8
     cout << "|OPT    |" << setfill(' ') << setw(80) << "|EIT    |" << endl;
@@ -91,7 +91,6 @@ void BoardDisplay::print() {
     cout << "|" << setfill (' ') << setw (80);
     cout << "|";
     printPlayers(theBoard->getPlayers(), 31);
-    cout << "|" << endl;
 
 
 
@@ -116,7 +115,7 @@ void BoardDisplay::print() {
     cout << "|" << setfill(' ') << setw(80); 
     cout << "|";
     printPlayers(theBoard->getPlayers(), 32);
-    cout << "|" << endl;
+    cout << "|";
 
 // Line 15
     cout << "|_______|" << setfill(' ') << setw(80) << "|_______|" << endl;
@@ -132,7 +131,7 @@ void BoardDisplay::print() {
     cout << "|" << setfill(' ') << setw(80); 
     cout << "|";
     printPlayers(theBoard->getPlayers(), 33);  
-    cout << "|" << endl;
+    cout << "|";
     
 // 19 
     cout << "|       |" << setfill(' ') << setw(80) << "|       |" << endl;
@@ -146,7 +145,7 @@ void BoardDisplay::print() {
     cout << "|"  << setfill(' ') << setw(80);
     cout << "|";
     printImprovements(theBoard->getBoard()[34]);
-    cout << "|" << endl;
+    cout << "|";
 
  // 21
     // print watopoly sign
@@ -161,7 +160,7 @@ void BoardDisplay::print() {
     cout << "\\ \\  \\   / _` | __|  _ \\  __ \\   _ \\  | |   |  ";
     cout << setw (20) << "|";
     printPlayers(theBoard->getPlayers(), 34);  
-    cout << "|" << endl;    
+    cout << "|";    
 
     // 23, 24, 25
     cout << "|_______|" << setfill (' ') << setw (60);
@@ -181,90 +180,60 @@ void BoardDisplay::print() {
     cout << "|" << setfill(' ') << setw(80); 
     cout << "|";
     printPlayers(theBoard->getPlayers(), 35);  
-    cout << "|" << endl;
+    cout << "|";
     cout << "|       |" << setfill(' ') << setw(80) << "|       |" << endl;
     cout << "|_______|" << setfill(' ') << setw(80) << "|_______|" << endl;
     cout << "|       |" << setfill(' ') << setw(80) << "|NEEDLES|" << endl;
     cout << "|";
-    printImprovements(theBoard->getBoard()[15]);
+    // printImprovements(theBoard->getImprovements()[15]);
     cout << "|" << setfill(' ') << setw(80) << "|HALL   |" << endl;
     cout << "|CPH    |" << setfill(' ') << setw(80) << "|       |" << endl;
-
     cout << "|";
     printPlayers(theBoard->getPlayers(), 14);
     cout << "|" << setfill(' ') << setw(80); 
     cout << "|";
     printPlayers(theBoard->getPlayers(), 36);  
-    cout << "|" << endl;
+    cout << "|";
+    
 
 
     cout << "|_______|" << setfill(' ') << setw(80) << "|_______|" << endl;
-    cout << "|       |" << setfill(' ') << setw(80) << "|       |" << endl;
     cout << "|";
     printImprovements(theBoard->getBoard()[13]);
     cout << '|' << setfill(' ') << setw(80);
-    cout << "|";
-    printImprovements(theBoard->getBoard()[37]);
-    cout << "|" << endl;
-
-
+    cout << "|-------|" << endl;
     cout << "|DWE    |" << setfill(' ') << setw(80) << "|MC     |" << endl;
-    cout << "|";
-    printPlayers(theBoard->getPlayers(), 13);
-    cout << "|" << setfill(' ') << setw(80); 
-    cout << "|";
-    printPlayers(theBoard->getPlayers(), 37);
-    cout << "|" << endl;
+    cout << "|       |" << setfill(' ') << setw(80) << "|       |" << endl;
     cout << "|_______|" << setfill(' ') << setw(80) << "|_______|" << endl;
     cout << "|PAC    |" << setfill(' ') << setw(80) << "|COOP   |"<< endl;
     cout << "|       |" << setfill(' ') << setw(80) << "|FEE    |" << endl;
-    cout << "|";
-    printPlayers(theBoard->getPlayers(), 12);
-    cout << "|" << setfill(' ') << setw(80); 
-    cout << "|";
-    printPlayers(theBoard->getPlayers(), 38);  
-    cout << "|" << endl;
+    cout << "|       |" << setfill(' ') << setw(80) << "|       |" << endl;
     cout << "|       |" << setfill(' ') << setw(80) << "|       |" << endl;
     cout << "|_______|" << setfill(' ') << setw(80) << "|_______|" << endl;
     cout << "|       |" << setfill(' ') << setw(80) << "|       |" << endl;
-    cout << "|";
-    printImprovements(theBoard->getBoard()[11]);
-    cout << '|' << setfill(' ') << setw(80);
-    cout << "|";
-    printImprovements(theBoard->getBoard()[39]);
-    cout << "|" << endl;
+    cout << "|-------|" << setfill(' ') << setw(80) << "|-------|" << endl;
     cout << "|RCH    |" << setfill(' ') << setw(80) << "|DC     |" << endl;
-    cout << "|";
-    printPlayers(theBoard->getPlayers(), 11);
-    cout << "|" << setfill(' ') << setw(80); 
-    cout << "|";
-    printPlayers(theBoard->getPlayers(), 39);  
-    cout << "|" << endl;
+    cout << "|       |" << setfill(' ') << setw(80) << "|       |" << endl;
     cout << "|_______|" << setfill('_') << setw(80) << "|_______|" << endl;
-    cout << "|DC Tims|       |       |NEEDLES|       |MKV    |TUITION|       |SLC    |       |COLLECT|" << endl;    
-    cout << "|Line   |";
-    printImprovements(theBoard->getBoard()[9]);
-    cout << "|"; 
-    printImprovements(theBoard->getBoard()[8]); 
-    cout << "|HALL   |";
-    printImprovements(theBoard->getBoard()[6]); 
-    cout << "|       |        |";
-    printImprovements(theBoard->getBoard()[3]);
-    cout << "|       |";
-    printImprovements(theBoard->getBoard()[1]);
-    cout << "|OSAP   |";
+    cout << "|DC Tims|       |       |NEEDLES|       |MKV    |TUITION|       |SLC    |       |COLLECT|" << endl;
+    
+    
+    //cout << "|Line   |" << printImprovements((board->getBoard()[]))/
+
+    cout << "|       |HALL   |       |       |       |       |       |       |OSAP   |" << endl;
     cout << "|       |HH     |PASS   |       |ECH    |       |       |B1     |       |B2     |       |" << endl;
 
+    for (int i = 0; i < 11; i++) {
+        cout << "|" << setfill(' ') << setw(7) << "";
+    }     
 
-  
-    for (int i = 10; i >= 0; i--) {
-        cout << "|";
-        printPlayers(theBoard->getPlayers(), i);  
-    }       cout << "|" << endl;
+    cout << "|" << endl;
     
     for (int i = 0; i < 11; i++) {
         cout << "|" << setfill('_') << setw(7) << "";
-    } cout << "|" << endl; 
+    }
+    
+    cout << "|" << endl; 
 
 
     /*

@@ -6,6 +6,7 @@
 
 using namespace std;
 
+Tile::Tile() {}
 Tile::~Tile() {}
 
 Tile::Tile(Board* board, string name, bool ownable, bool improvable, int position, int price) : impl{make_shared<TileImpl>()}{

@@ -66,22 +66,22 @@ string NeedlesHall::getName() {
     return impl->name;
 }
 
-void improveBuy(std::shared_ptr<Player> player) {
+void NeedlesHall::improveBuy(std::shared_ptr<Player> player) {
 
 }
 
-void improveSell(std::shared_ptr<Player> player) {
+void NeedlesHall::improveSell(std::shared_ptr<Player> player) {
     
 }
 
-int getImproveCost() {
+int NeedlesHall::getImproveCost() {
     
 }
 
-std::string getMonopolyName() {
+std::string NeedlesHall::getMonopolyName() {
     
 }
 
-void unmortgage(std::shared_ptr<Player> player) {
+void NeedlesHall::unmortgage(std::shared_ptr<Player> player) {
 
 }

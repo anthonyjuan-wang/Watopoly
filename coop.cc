@@ -66,42 +66,42 @@ string Coop::getName() {
     return impl->name;
 }
 
-void improveBuy(std::shared_ptr<Player> player) {
+void Coop::improveBuy(std::shared_ptr<Player> player) {
 
 }
 
-void improveSell(std::shared_ptr<Player> player) {
+void Coop::improveSell(std::shared_ptr<Player> player) {
     
 }
 
-int getImproveCost() {
+int Coop::getImproveCost() {
     
 }
 
-std::string getMonopolyName() {
+std::string Coop::getMonopolyName() {
     
 }
 
-void unmortgage(std::shared_ptr<Player> player) {
+void Coop::unmortgage(std::shared_ptr<Player> player) {
 
 }
 
-void improveBuy(std::shared_ptr<Player> player) {
+void Coop::improveBuy(std::shared_ptr<Player> player) {
 
 }
 
-void improveSell(std::shared_ptr<Player> player) {
+void Coop::improveSell(std::shared_ptr<Player> player) {
     
 }
 
-int getImproveCost() {
+int Coop::getImproveCost() {
     
 }
 
-std::string getMonopolyName() {
+std::string Coop::getMonopolyName() {
     
 }
 
-void unmortgage(std::shared_ptr<Player> player) {
+void Coop::unmortgage(std::shared_ptr<Player> player) {
 
 }

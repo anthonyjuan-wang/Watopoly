@@ -1,10 +1,8 @@
 #ifndef __ACADEMIC_H__
 #define __ACADEMIC_H__
+#include <string>
 #include "tile.h"
 #include "tileimpl.h"
-#include <vector>
-#include <memory>
-#include <string>
 class Player;
 class Board;
 
@@ -17,7 +15,7 @@ public:
              std::vector<int> tuitionWithExpenses);
     ~Academic();
 
-    // std::shared_ptr<TileImpl> getImpl() override;
+    std::shared_ptr<TileImpl> getImpl() override;
     std::shared_ptr<Player> getOwner() override;
     void setOwner(std::shared_ptr<Player> player) override;
     int getImprovement() override; // returns the improvement #

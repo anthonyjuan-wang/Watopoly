@@ -2,11 +2,15 @@
 #define __BOARD_H__
 #include <string>
 #include <vector>
+#include <sstream>
 #include <memory>
+// #include "tile.h"
+// #include "player.h"
 class Tile;
 class Player;
 
-class Board {
+class Board
+{
 private:
     int doubles = 0;
     int osapPos = 0;
@@ -29,7 +33,7 @@ public:
     void play();
     std::vector<int> rollDice();        // maybe virtual // maybe virtual
     void setTestingMode();
-    void print(); // calls board display
+    virtual void print() = 0; // calls board display
     bool hasMonopoly(std::shared_ptr<Tile> currTile);
 };
 

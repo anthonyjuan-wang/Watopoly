@@ -1,5 +1,4 @@
 #include <iostream>
-#include <sstream>
 #include <vector>
 #include <string>
 #include <memory>
@@ -18,8 +17,6 @@
 #include "slc.h"
 #include "tuition.h"
 
-
-
 using namespace std;
 
 Board::Board() {}
@@ -27,11 +24,17 @@ Board::Board() {}
 Board::~Board() {}
 
 
+std::vector<std::shared_ptr<Tile>> Board::getBoard(){
+    return board;
+}
+
+
 void Board::trade(std::vector<std::string> commands, int currPlayerIndex) {
     int otherPlayerIndex = -1;
     int size = players.size();
     int give = -1;
     int receive = -1;
+
     for (int i = 0; i < size; i++) {
         if(players[i]->getName() == commands[1]) {
             otherPlayerIndex = i;
@@ -237,11 +240,6 @@ void Board::trade(std::vector<std::string> commands, int currPlayerIndex) {
 
 std::vector<std::shared_ptr<Player>> Board::getPlayers(){
     return players;
-}
-
-
-std::vector<std::shared_ptr<Tile>> Board::getBoard(){
-    return board;
 }
 
 void Board::init(int input) {
@@ -461,6 +459,7 @@ void Board::play() {
                     break;
                 }
             }
+
             if (pos == -1) {
                 cout << "You can't improve this building. Please enter another comand" << endl;
                 continue;
@@ -573,18 +572,14 @@ vector<int> Board::rollDice() {
     return dice;
 }
 
-void Board::print() {
-
-}
-
 
 void Board::initTiles() {
-    //board.emplace_back(std::make_shared<Osap>(0, "Osap"));
-    // board.emplace_back(make_shared<Academic>(1, "AL", "Arts1", 40, 50, std::vector<int>{2, 10, 30, 90, 50, 150}));
+    board.emplace_back(make_shared<Osap>(0, "Osap"));
+    board.emplace_back(make_shared<Academic>(1, "AL", "Arts1", 40, 50, std::vector<int>{2, 10, 30, 90, 50, 150}));
     board.emplace_back(make_shared<Slc>(2, "SLC"));
-    // board.emplace_back(make_shared<Academic>(3, "ML", "Arts1", 60, 50, vector<int>{4, 20, 60, 180, 320, 450}));
-    // board.emplace_back(make_shared<Tuition>(4, "Tuition"));
-    // board.emplace_back(make_shared<Residences>(5, "MKV"));
+    board.emplace_back(make_shared<Academic>(3, "ML", "Arts1", 60, 50, vector<int>{4, 20, 60, 180, 320, 450}));
+    board.emplace_back(make_shared<Tuition>(4, "Tuition"));
+    board.emplace_back(make_shared<Residences>(5, "MKV"));
     // board.emplace_back(make_shared<Academic>(6, "ECH", "Arts2", 100, 50, vector<int>{6, 30, 90, 270, 400, 550}));
     // board.emplace_back(make_shared<NeedlesHall>(7, "Neeedles Hall"));
     // board.emplace_back(make_shared<Academic>(8, "PAS", "Arts2", 100, 50, vector<int>{6, 30, 90, 270, 400, 550}));

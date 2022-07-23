@@ -65,22 +65,22 @@ string Tuition::getName() {
     return impl->name;
 }
 
-void improveBuy(std::shared_ptr<Player> player) {
+void Tuition::improveBuy(std::shared_ptr<Player> player) {
 
 }
 
-void improveSell(std::shared_ptr<Player> player) {
+void Tuition::improveSell(std::shared_ptr<Player> player) {
     
 }
 
-int getImproveCost() {
+int Tuition::getImproveCost() {
     
 }
 
-std::string getMonopolyName() {
+std::string Tuition::getMonopolyName() {
     
 }
 
-void unmortgage(std::shared_ptr<Player> player) {
+void Tuition::unmortgage(std::shared_ptr<Player> player) {
 
 }

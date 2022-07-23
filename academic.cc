@@ -5,7 +5,7 @@
 #include <memory>
 
 #include "player.h"
-#include "board.h"
+class Board;
 
 using namespace std;
 
@@ -21,9 +21,9 @@ Academic::Academic(int position, string blockName, string monopolyType, int purc
 
 Academic::~Academic() {}
 
-// std::shared_ptr<TileImpl> Academic::getImpl() {
-//     return impl;
-// }
+std::shared_ptr<TileImpl> Academic::getImpl() {
+    return impl;
+}
 
 std::shared_ptr<Player> Academic::getOwner() {
     return impl->Owner;
@@ -41,7 +41,7 @@ void Academic::setImprovement(int x) {
     impl->improvement = x;
 }
 
-void Academic::action(shared_ptr<Player> player) {
+void Academic::action(std::shared_ptr<Player> player) {
     // Check if tile is owned
         // If is owned, Pay Tuition
 
@@ -97,22 +97,6 @@ string Academic::getMonopolyName() {
     return impl->monopoly;
 }
 
-void improveBuy(std::shared_ptr<Player> player) {
-
-}
-
-void improveSell(std::shared_ptr<Player> player) {
-    
-}
-
-int getImproveCost() {
-    
-}
-
-std::string getMonopolyName() {
-    
-}
-
-void unmortgage(std::shared_ptr<Player> player) {
+void Academic::unmortgage(std::shared_ptr<Player> player) {
 
 }

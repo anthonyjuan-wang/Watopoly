@@ -65,22 +65,22 @@ string Slc::getName() {
     return impl->name;
 }
 
-void improveBuy(std::shared_ptr<Player> player) {
+void Slc::improveBuy(std::shared_ptr<Player> player) {
 
 }
 
-void improveSell(std::shared_ptr<Player> player) {
+void Slc::improveSell(std::shared_ptr<Player> player) {
     
 }
 
-int getImproveCost() {
+int Slc::getImproveCost() {
     
 }
 
-std::string getMonopolyName() {
+std::string Slc::getMonopolyName() {
     
 }
 
-void unmortgage(std::shared_ptr<Player> player) {
+void Slc::unmortgage(std::shared_ptr<Player> player) {
 
 }
