@@ -7,81 +7,78 @@
 #include "board.h"
 
 using namespace std;
-Residences::Residences(int position, string blockName) : impl{make_shared<TileImpl>()} {
-    impl->pos = position;
-    impl->name = blockName;
-}
+Residences::Residences(int position, string blockName) : Tile{blockName, true, false, position, 200} {}
 
 Residences::~Residences() {}
-
-std::shared_ptr<TileImpl> Residences::getImpl() {
-
-}
-
-std::shared_ptr<Player> Residences::getOwner() {
-
-}
-
-void Residences::setOwner(std::shared_ptr<Player> player) {
-
-}
-
-int Residences::getImprovement() { // returns the improvement #
-
-} 
-
-void Residences::setImprovement(int x) {
-
-}
 
 void Residences::action(shared_ptr<Player> player) {
 
 }
 
-void Residences::mortgage(std::shared_ptr<Player> player) {
+// std::shared_ptr<TileImpl> Residences::getImpl() {
 
-}
+// }
 
-void Residences::auction() {
+// std::shared_ptr<Player> Residences::getOwner() {
 
-}
+// }
 
-bool Residences::isMortgaged() {
+// void Residences::setOwner(std::shared_ptr<Player> player) {
 
-}
+// }
 
-bool Residences::isOwned() {
-    return impl->isOwnable;
-}
+// int Residences::getImprovement() { // returns the improvement #
 
-int Residences::getPos() {
-    return impl->pos;
-}
+// } 
 
-int Residences::getPrice() {
-    return impl->purchase;
-}
+// void Residences::setImprovement(int x) {
 
-string Residences::getName() {
-    return impl->name;
-}
+// }
 
-void Residences::improveBuy(std::shared_ptr<Player> player) {
+// void Residences::mortgage(std::shared_ptr<Player> player) {
 
-}
+// }
 
-void Residences::improveSell(std::shared_ptr<Player> player) {
+// void Residences::auction() {
+
+// }
+
+// bool Residences::isMortgaged() {
+
+// }
+
+// bool Residences::isOwned() {
+//     return impl->isOwnable;
+// }
+
+// int Residences::getPos() {
+//     return impl->pos;
+// }
+
+// int Residences::getPrice() {
+//     return impl->purchase;
+// }
+
+// string Residences::getName() {
+//     return impl->name;
+// }
+
+// void Residences::improveBuy(std::shared_ptr<Player> player) {
+
+// }
+
+// void Residences::improveSell(std::shared_ptr<Player> player) {
     
-}
+// }
 
-int Residences::getImproveCost() {
+// int Residences::getImproveCost() {
     
-}
+// }
 
-std::string Residences::getMonopolyName() {
+// std::string Residences::getMonopolyName() {
     
-}
+// }
 
-void Residences::unmortgage(std::shared_ptr<Player> player) {
+// void Residences::unmortgage(std::shared_ptr<Player> player) {
 
-}
+// }

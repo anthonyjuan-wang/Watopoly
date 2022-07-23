@@ -3,73 +3,81 @@
 #include "board.h"
 #include <string>
 #include <memory>
+#include "player.h"
 
 using namespace std;
 
-Tile::Tile() {}
-Tile::~Tile() {}
-
-Tile::Tile(Board* board, string name, bool ownable, bool improvable, int position, int price) : impl{make_shared<TileImpl>()}{
-    impl->theBoard = board;
+Tile::Tile(string name, bool ownable, bool improvable, int position, int price) : impl{make_shared<TileImpl>()} {
+    //impl->theBoard = board;
     impl->owner = nullptr;
     impl->name = name;
     impl->ownable = ownable;
     impl->improvable = improvable; 
     impl->mortgaged = false;
     impl->pos = position;
-    impl->cost = price;
+    impl->purchase = price;
 }
 
-std::shared_ptr<Player> Tile::getOwner(){
+Tile::~Tile() {}
+
+std::shared_ptr<Player> Tile::getOwner() {
     return impl->owner;
 }
 
-void Tile::setOwner(std::shared_ptr<Player> player){
+void Tile::setOwner(std::shared_ptr<Player> player) {
     impl->owner = player;
 }
 
-int Tile::getPos(){
+int Tile::getPos() {
     return impl->pos;
 }
 
-int Tile::getPrice(){
-    return impl->cost;
+int Tile::getPrice() {
+    return impl->purchase;
 }
 
-string Tile::getName(){
+string Tile::getName() {
     return impl->name;
 }
 
-bool Tile::isImprovable(){
+bool Tile::isImprovable() {
     return impl->improvable;
 }
 
-bool Tile::isOwnable(){
+bool Tile::isOwnable() {
     return impl->ownable;
 }
 
-bool Tile::isMortgaged(){
+bool Tile::isMortgaged() {
     return impl->mortgaged; 
 }
 
-bool Tile::isOwned(){
+bool Tile::isOwned() {
     if (impl->owner == nullptr) return false;
     else return true;
 }
 
-void Tile::auction(){
+void Tile::auction() {
 
 }
 
-void Tile::mortgage(shared_ptr<Player> player){
-    int cost = getPrice();
-    cout << "You receive " << cost << "$ from mortgaging " << getName();
-    player->addMoney(cost / 2);
+void Tile::mortgage(shared_ptr<Player> player) {
+    int purchase = getPrice();
+    cout << "You receive " << purchase << "$ from mortgaging " << getName() << endl;
+    player->addMoney(purchase / 2);
 
 }
 
+void Tile::unmortgage(shared_ptr<Player> player) {
+    int purchase = getPrice();
+    cout << "You pay " << purchase/2 << "$ + " << purchase*0.1 << "to unmortgage your property" << getName() <<  endl;
+    player->subtractMoney(purchase*0.6);
+}
 
-
-
-
-
+void Tile::action(std::shared_ptr<Player> player){}
+int Tile::getImprovement(){ return -1; }
+void Tile::setImprovement(int x){}
+int Tile::getImproveCost(){ return -1; }
+std::string Tile::getMonopolyName(){ return "noMonopoly"; }
+void Tile::improveBuy(std::shared_ptr<Player> player){}
+void Tile::improveSell(std::shared_ptr<Player> player){}

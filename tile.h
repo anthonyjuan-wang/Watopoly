@@ -10,18 +10,14 @@ class Player;
 class Board;
 // class TileImpl;
 
-class Tile
-{
+class Tile {
     std::shared_ptr<TileImpl> impl;
 
 public:
-    Tile(Board* board, std::string name,
-         bool ownable, bool improvable, int position, int price,
-         int improvement, std::string block);
+    Tile(std::string name, bool ownable, bool improvable, int position, int price);
     virtual ~Tile();
- 
+    
     // General methods
-    std::shared_ptr<TileImpl> getImpl();
     std::shared_ptr<Player> getOwner();
     void setOwner(std::shared_ptr<Player> player);
     int getPos();
@@ -34,16 +30,15 @@ public:
     void auction();
     void mortgage(std::shared_ptr<Player> player);
     void unmortgage(std::shared_ptr<Player> player);
-    virtual void action(std::shared_ptr<Player> player) = 0;
-    // Academic methods
-    virtual int getImprovement() = 0;
-    virtual void setImprovement(int x) = 0;
-    virtual void improveBuy(std::shared_ptr<Player> player) = 0;
-    virtual void improveSell(std::shared_ptr<Player> player) = 0;
-    virtual int getImproveCost() = 0;
-    virtual std::string getMonopolyName() = 0;
+    virtual void action(std::shared_ptr<Player> player);
 
-    
+    // Academic specific methods
+    virtual int getImprovement();
+    virtual void setImprovement(int x);
+    virtual int getImproveCost();
+    virtual std::string getMonopolyName();
+    virtual void improveBuy(std::shared_ptr<Player> player);
+    virtual void improveSell(std::shared_ptr<Player> player);
 };
 
 #endif

@@ -15,7 +15,7 @@ struct TileImpl
     bool improvable;
     bool mortgaged;
     int pos;
-    int cost;
+    int purchase;
     //int improvement;
     //std::string monopoly;
     //std::vector<int> tuition;

@@ -130,8 +130,9 @@ bool Player::getBankruptStatus() {
     return impl->bankrupt;
 }
 
-void Player::setBankruptStatus(bool status) {
+void Player::setBankruptStatus(bool status, int owed) {
     impl->bankrupt = status;
+    impl->moneyOwed = owed;
 }
 
 void Player::addTile(std::shared_ptr<Tile> t) {
