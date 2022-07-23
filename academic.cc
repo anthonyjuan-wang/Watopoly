@@ -5,7 +5,7 @@
 #include <memory>
 
 #include "player.h"
-class Board;
+#include "board.h"
 
 using namespace std;
 
@@ -21,9 +21,9 @@ Academic::Academic(int position, string blockName, string monopolyType, int purc
 
 Academic::~Academic() {}
 
-std::shared_ptr<TileImpl> Academic::getImpl() {
-    return impl;
-}
+// std::shared_ptr<TileImpl> Academic::getImpl() {
+//     return impl;
+// }
 
 std::shared_ptr<Player> Academic::getOwner() {
     return impl->Owner;

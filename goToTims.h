@@ -12,13 +12,13 @@ public:
     GoToTims(int position, std::string blockName);
     ~GoToTims();
 
-    std::shared_ptr<TileImpl> getImpl() override;
+    // std::shared_ptr<TileImpl> getImpl() override;
     std::shared_ptr<Player> getOwner() override;
-    void setOwner(shared_ptr<Player> player) override;
+    void setOwner(std::shared_ptr<Player> player) override;
     int getImprovement() override; // returns the improvement #
     void setImprovement(int x) override;
     void action(std::shared_ptr<Player> player) override;
-    void mortgage(shared_ptr<Player> player) override;
+    void mortgage(std::shared_ptr<Player> player) override;
     void auction() override;
     bool isMortgaged() override;
     bool isOwned() override;

@@ -33,7 +33,7 @@ void Tuition::setImprovement(int x) {
 
 }
 
-void Tuition::action(shared_ptr<Player> player) {
+void Tuition::action(std::shared_ptr<Player> player) {
 
 }
 

@@ -35,7 +35,7 @@ void Gyms::setImprovement(int x) {
 
 }
 
-void Gyms::action(shared_ptr<Player> player) {
+void Gyms::action(std::shared_ptr<Player> player) {
 
 }
 

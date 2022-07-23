@@ -1,25 +1,36 @@
-#include "osap.h"
-#include "tile.h"
 #include <string>
 #include <memory>
+#include "osap.h"
+#include "tile.h"
+#include "tileimpl.h"
 #include "player.h"
-class Board;
+#include "board.h"
 
 using namespace std;
 
-Osap::Osap(int position, std::string str) : impl{make_shared<TileImpl>()} {
+Osap::Osap(int position, string str) : impl{make_shared<TileImpl>()} {
+    // Tile{position, str};
+    // TileImpl impl = getImpl();
     impl->pos = position;
     impl->name = str;
+
+    // impl->isOwnable = false;
+    // impl->isImprovable = false;
+    // impl->purchase = 0;
+    // impl->improvement;
+    // impl->monopoly = {};
+    //std::vector<int> tuition;
 }
 
-void Osap::action() {
+void Osap::action(std::shared_ptr<Player> player) {
+    
     cout << "Osap bestows you with some grants. Feel blessed upon this joyous day." << endl;
-    impl->Owner->addMoney(200);
+    getImpl()->Owner->addMoney(200);
 }
 
-std::shared_ptr<TileImpl> Osap::getImpl() {
+// std::shared_ptr<TileImpl> Osap::getImpl() {
 
-}
+// }
 
 std::shared_ptr<Player> Osap::getOwner() {
 
@@ -29,7 +40,7 @@ void Osap::setOwner(std::shared_ptr<Player> player) {
 
 }
 
-int Osap::getImprovement() { // returns the improvement #
+int Osap::getImprovement() {
 
 } 
 
@@ -37,7 +48,7 @@ void Osap::setImprovement(int x) {
 
 }
 
-void Osap::action(shared_ptr<Player> player) {
+void Osap::action(std::shared_ptr<Player> player) {
 
 }
 

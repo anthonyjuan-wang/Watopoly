@@ -14,9 +14,9 @@ DcTimsLine::DcTimsLine(int position, string blockName) : impl{make_shared<TileIm
 
 DcTimsLine::~DcTimsLine() {}
 
-std::shared_ptr<TileImpl> DcTimsLine::getImpl() {
+// std::shared_ptr<TileImpl> DcTimsLine::getImpl() {
 
-}
+// }
 
 std::shared_ptr<Player> DcTimsLine::getOwner() {
 

@@ -33,7 +33,7 @@ void Slc::setImprovement(int x) {
 
 }
 
-void Slc::action(shared_ptr<Player> player) {
+void Slc::action(std::shared_ptr<Player> player) {
 
 }
 

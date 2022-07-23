@@ -14,9 +14,9 @@ Coop::Coop(int position, string blockName) : impl{make_shared<TileImpl>()} {
 
 Coop::~Coop() {}
 
-std::shared_ptr<TileImpl> Coop::getImpl() {
+// std::shared_ptr<TileImpl> Coop::getImpl() {
 
-}
+// }
 
 std::shared_ptr<Player> Coop::getOwner() {
 

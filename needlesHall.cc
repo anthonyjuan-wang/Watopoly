@@ -7,17 +7,16 @@ class Board;
 
 using namespace std;
 
-NeedlesHall::NeedlesHall(int position, string blockName) : impl{make_shared<TileImpl>()}
-{
+NeedlesHall::NeedlesHall(int position, string blockName) : impl{make_shared<TileImpl>()} {
     impl->pos = position;
     impl->name = blockName;
 }
 
 NeedlesHall::~NeedlesHall() {}
 
-std::shared_ptr<TileImpl> NeedlesHall::getImpl() {
+// std::shared_ptr<TileImpl> NeedlesHall::getImpl() {
 
-}
+// }
 
 std::shared_ptr<Player> NeedlesHall::getOwner() {
 
@@ -35,7 +34,7 @@ void NeedlesHall::setImprovement(int x) {
 
 }
 
-void NeedlesHall::action(shared_ptr<Player> player) {
+void NeedlesHall::action(std::shared_ptr<Player> player) {
 
 }
 

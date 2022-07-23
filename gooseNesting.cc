@@ -15,15 +15,15 @@ GooseNesting::GooseNesting(int position, string blockName) : impl{make_shared<Ti
 
 GooseNesting::~GooseNesting() {}
 
-std::shared_ptr<TileImpl> GooseNesting::getImpl() {
+// std::shared_ptr<TileImpl> GooseNesting::getImpl() {
 
-}
+// }
 
 std::shared_ptr<Player> GooseNesting::getOwner() {
 
 }
 
-void GooseNesting::setOwner(shared_ptr<Player> player) {
+void GooseNesting::setOwner(std::shared_ptr<Player> player) {
 
 }
 
@@ -35,11 +35,11 @@ void GooseNesting::setImprovement(int x) {
 
 }
 
-void GooseNesting::action(shared_ptr<Player> player) {
+void GooseNesting::action(std::shared_ptr<Player> player) {
 
 }
 
-void GooseNesting::mortgage(shared_ptr<Player> player) {
+void GooseNesting::mortgage(std::shared_ptr<Player> player) {
 
 }
 

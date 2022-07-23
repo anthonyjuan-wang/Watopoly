@@ -2,9 +2,9 @@
 #define __TILEIMPL__H__
 #include <vector>
 #include <string>
-#include "player.h"
-//class Board;
-//class Player;
+#include <memory>
+// class Board;
+class Player;
 
 struct TileImpl {
     //Board *theBoard;

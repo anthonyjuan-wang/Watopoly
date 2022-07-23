@@ -1,9 +1,10 @@
 #include "residences.h"
 #include "tile.h"
+#include "tileimpl.h"
 #include <string>
 #include <memory>
-class Player;
-class Board;
+#include "player.h"
+#include "board.h"
 
 using namespace std;
 Residences::Residences(int position, string blockName) : impl{make_shared<TileImpl>()} {

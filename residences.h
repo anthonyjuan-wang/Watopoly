@@ -1,12 +1,14 @@
 #ifndef __RESIDENCES_H__
 #define __RESIDENCES_H__
 #include "tile.h"
+#include "tileimpl.h"
 #include <string>
 #include <memory>
+#include <vector>
 class Player;
 class Board;
 
-class Residences : Tile {
+class Residences : public Tile {
     
     std::shared_ptr<TileImpl> impl;
 
@@ -14,7 +16,7 @@ public:
     Residences(int position, std::string blockName);
     ~Residences();
 
-    std::shared_ptr<TileImpl> getImpl() override;
+    //std::shared_ptr<TileImpl> getImpl() override;
     std::shared_ptr<Player> getOwner() override;
     void setOwner(std::shared_ptr<Player> player) override;
     int getImprovement() override; // returns the improvement #

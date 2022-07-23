@@ -13,15 +13,15 @@ GoToTims::GoToTims(int position, string blockName) : impl{make_shared<TileImpl>(
 
 GoToTims::~GoToTims() {}
 
-std::shared_ptr<TileImpl> GoToTims::getImpl() {
+// std::shared_ptr<TileImpl> GoToTims::getImpl() {
 
-}
+// }
 
 std::shared_ptr<Player> GoToTims::getOwner() {
 
 }
 
-void GoToTims::setOwner(shared_ptr<Player> player) {
+void GoToTims::setOwner(std::shared_ptr<Player> player) {
 
 }
 
@@ -33,11 +33,11 @@ void GoToTims::setImprovement(int x) {
 
 }
 
-void GoToTims::action(shared_ptr<Player> player) {
+void GoToTims::action(std::shared_ptr<Player> player) {
 
 }
 
-void GoToTims::mortgage(shared_ptr<Player> player) {
+void GoToTims::mortgage(std::shared_ptr<Player> player) {
 
 }
 
