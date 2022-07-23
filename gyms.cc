@@ -7,82 +7,78 @@ class Board;
 
 using namespace std;
 
-Gyms::Gyms(int position, string blockName) : impl{make_shared<TileImpl>()}
-{
-    impl->pos = position;
-    impl->name = blockName;
-}
+Gyms::Gyms(int position, string blockName) : Tile{blockName, true, false, position, 150} {}
 
 Gyms::~Gyms() {}
 
-std::shared_ptr<TileImpl> Gyms::getImpl() {
+void Gyms::action(std::shared_ptr<Player> player) {
 
 }
 
-std::shared_ptr<Player> Gyms::getOwner() {
+// std::shared_ptr<TileImpl> Gyms::getImpl() {
 
-}
+// }
 
-void Gyms::setOwner(std::shared_ptr<Player> player) {
-    impl->Owner = player;
-}
+// std::shared_ptr<Player> Gyms::getOwner() {
 
-int Gyms::getImprovement() { // returns the improvement #
+// }
 
-}
+// void Gyms::setOwner(std::shared_ptr<Player> player) {
+//     impl->Owner = player;
+// }
 
-void Gyms::setImprovement(int x) {
+// int Gyms::getImprovement() { // returns the improvement #
 
-}
+// }
 
-void Gyms::action(shared_ptr<Player> player) {
+// void Gyms::setImprovement(int x) {
 
-}
+// }
 
-void Gyms::mortgage(std::shared_ptr<Player> player) {
+// void Gyms::mortgage(std::shared_ptr<Player> player) {
 
-}
+// }
 
-void Gyms::auction() {
+// void Gyms::auction() {
 
-}
+// }
 
-bool Gyms::isMortgaged() {
+// bool Gyms::isMortgaged() {
 
-}
+// }
 
-bool Gyms::isOwned() {
-    return impl->isOwnable;
-}
+// bool Gyms::isOwned() {
+//     return impl->isOwnable;
+// }
 
-int Gyms::getPos() {
-    return impl->pos;
-}
+// int Gyms::getPos() {
+//     return impl->pos;
+// }
 
-int Gyms::getPrice() {
-    return impl->purchase;
-}
+// int Gyms::getPrice() {
+//     return impl->purchase;
+// }
 
-string Gyms::getName() {
-    return impl->name;
-}
+// string Gyms::getName() {
+//     return impl->name;
+// }
 
-void improveBuy(std::shared_ptr<Player> player) {
+// void improveBuy(std::shared_ptr<Player> player) {
 
-}
+// }
 
-void improveSell(std::shared_ptr<Player> player) {
+// void improveSell(std::shared_ptr<Player> player) {
     
-}
+// }
 
-int getImproveCost() {
+// int getImproveCost() {
     
-}
+// }
 
-std::string getMonopolyName() {
+// std::string getMonopolyName() {
     
-}
+// }
 
-void unmortgage(std::shared_ptr<Player> player) {
+// void unmortgage(std::shared_ptr<Player> player) {
 
-}
+// }

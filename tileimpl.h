@@ -2,21 +2,23 @@
 #define __TILEIMPL__H__
 #include <vector>
 #include <string>
-#include "player.h"
-//class Board;
-//class Player;
-
-struct TileImpl {
-    //Board *theBoard;
-    std::shared_ptr<Player> Owner;
+#include <memory>
+// class Board;
+class Player;
+class Board;
+struct TileImpl
+{
+    Board *theBoard;
+    std::shared_ptr<Player> owner;
     std::string name;
-    bool isOwnable;
-    bool isImprovable;
+    bool ownable;
+    bool improvable;
+    bool mortgaged;
     int pos;
     int purchase;
-    int improvement;
-    std::string monopoly;
-    std::vector<int> tuition;
+    //int improvement;
+    //std::string monopoly;
+    //std::vector<int> tuition;
 };
 
 #endif

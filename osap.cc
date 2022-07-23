@@ -1,90 +1,86 @@
-#include "osap.h"
-#include "tile.h"
 #include <string>
 #include <memory>
+#include "osap.h"
+#include "tile.h"
+#include "tileimpl.h"
 #include "player.h"
-class Board;
+#include "board.h"
 
 using namespace std;
 
-Osap::Osap(int position, std::string str) : impl{make_shared<TileImpl>()} {
-    impl->pos = position;
-    impl->name = str;
-}
+Osap::Osap(int position, string blockName) : Tile{blockName, false, false, position, 0} {}
 
-void Osap::action() {
+Osap::~Osap() {}
+
+void Osap::action(std::shared_ptr<Player> player) {
     cout << "Osap bestows you with some grants. Feel blessed upon this joyous day." << endl;
-    impl->Owner->addMoney(200);
+    getOwner()->addMoney(200);
 }
 
-std::shared_ptr<TileImpl> Osap::getImpl() {
+// std::shared_ptr<TileImpl> Osap::getImpl() {
 
-}
+// }
 
-std::shared_ptr<Player> Osap::getOwner() {
+// std::shared_ptr<Player> Osap::getOwner() {
 
-}
+// }
 
-void Osap::setOwner(std::shared_ptr<Player> player) {
+// void Osap::setOwner(std::shared_ptr<Player> player) {
 
-}
+// }
 
-int Osap::getImprovement() { // returns the improvement #
+// int Osap::getImprovement() {
 
-} 
+// } 
 
-void Osap::setImprovement(int x) {
+// void Osap::setImprovement(int x) {
 
-}
+// }
 
-void Osap::action(shared_ptr<Player> player) {
+// void Osap::mortgage(std::shared_ptr<Player> player) {
 
-}
+// }
 
-void Osap::mortgage(std::shared_ptr<Player> player) {
+// void Osap::auction() {
 
-}
+// }
 
-void Osap::auction() {
+// bool Osap::isMortgaged() {
 
-}
+// }
 
-bool Osap::isMortgaged() {
+// bool Osap::isOwned() {
 
-}
+// }
 
-bool Osap::isOwned() {
+// int Osap::getPos() {
+//     return impl->pos;
+// }
 
-}
+// int Osap::getPrice() {
 
-int Osap::getPos() {
-    return impl->pos;
-}
+// }
 
-int Osap::getPrice() {
+// string Osap::getName() {
+//     return impl->name;
+// }
 
-}
+// void Osap::improveBuy(std::shared_ptr<Player> player) {
 
-string Osap::getName() {
-    return impl->name;
-}
+// }
 
-void improveBuy(std::shared_ptr<Player> player) {
-
-}
-
-void improveSell(std::shared_ptr<Player> player) {
+// void Osap::improveSell(std::shared_ptr<Player> player) {
     
-}
+// }
 
-int getImproveCost() {
+// int Osap::getImproveCost() {
     
-}
+// }
 
-std::string getMonopolyName() {
+// std::string Osap::getMonopolyName() {
     
-}
+// }
 
-void unmortgage(std::shared_ptr<Player> player) {
+// void Osap::unmortgage(std::shared_ptr<Player> player) {
 
-}
+// }

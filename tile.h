@@ -8,30 +8,37 @@
 
 class Player;
 class Board;
+// class TileImpl;
 
 class Tile {
-public:
-    Tile();
-    virtual std::shared_ptr<TileImpl> getImpl() = 0;
-    virtual ~Tile();
+    std::shared_ptr<TileImpl> impl;
 
-    virtual std::shared_ptr<Player> getOwner() = 0;
-    virtual void setOwner(std::shared_ptr<Player> player) = 0;
-    virtual int getImprovement() = 0; // returns the improvement #
-    virtual void setImprovement(int x) = 0;
-    virtual void action(std::shared_ptr<Player> player) = 0;
-    virtual void mortgage(std::shared_ptr<Player> player) = 0;
-    virtual void auction() = 0;
-    virtual bool isMortgaged() = 0;
-    virtual bool isOwned() = 0;
-    virtual int getPos() = 0;
-    virtual int getPrice() = 0;
-    virtual std::string getName() = 0;
-    virtual void improveBuy(std::shared_ptr<Player> player) = 0;
-    virtual void improveSell(std::shared_ptr<Player> player) = 0;
-    virtual int getImproveCost() = 0;
-    virtual std::string getMonopolyName() = 0;
-    virtual void unmortgage(std::shared_ptr<Player> player) = 0;
+public:
+    Tile(std::string name, bool ownable, bool improvable, int position, int price);
+    virtual ~Tile();
+    
+    // General methods
+    std::shared_ptr<Player> getOwner();
+    void setOwner(std::shared_ptr<Player> player);
+    int getPos();
+    int getPrice();
+    std::string getName();
+    bool isImprovable();
+    bool isOwnable();
+    bool isMortgaged();
+    bool isOwned();
+    void auction();
+    void mortgage(std::shared_ptr<Player> player);
+    void unmortgage(std::shared_ptr<Player> player);
+    virtual void action(std::shared_ptr<Player> player);
+
+    // Academic specific methods
+    virtual int getImprovement();
+    virtual void setImprovement(int x);
+    virtual int getImproveCost();
+    virtual std::string getMonopolyName();
+    virtual void improveBuy(std::shared_ptr<Player> player);
+    virtual void improveSell(std::shared_ptr<Player> player);
 };
 
 #endif

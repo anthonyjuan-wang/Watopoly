@@ -7,82 +7,78 @@ class Board;
 
 using namespace std;
 
-NeedlesHall::NeedlesHall(int position, string blockName) : impl{make_shared<TileImpl>()}
-{
-    impl->pos = position;
-    impl->name = blockName;
-}
+NeedlesHall::NeedlesHall(int position, string blockName) : Tile{blockName, false, false, position, 0} {}
 
 NeedlesHall::~NeedlesHall() {}
 
-std::shared_ptr<TileImpl> NeedlesHall::getImpl() {
+void NeedlesHall::action(std::shared_ptr<Player> player) {
 
 }
 
-std::shared_ptr<Player> NeedlesHall::getOwner() {
+// std::shared_ptr<TileImpl> NeedlesHall::getImpl() {
 
-}
+// }
 
-void NeedlesHall::setOwner(std::shared_ptr<Player> player) {
+// std::shared_ptr<Player> NeedlesHall::getOwner() {
 
-}
+// }
 
-int NeedlesHall::getImprovement() { // returns the improvement #
+// void NeedlesHall::setOwner(std::shared_ptr<Player> player) {
 
-} 
+// }
 
-void NeedlesHall::setImprovement(int x) {
+// int NeedlesHall::getImprovement() { // returns the improvement #
 
-}
+// } 
 
-void NeedlesHall::action(shared_ptr<Player> player) {
+// void NeedlesHall::setImprovement(int x) {
 
-}
+// }
 
-void NeedlesHall::mortgage(std::shared_ptr<Player> player) {
+// void NeedlesHall::mortgage(std::shared_ptr<Player> player) {
 
-}
+// }
 
-void NeedlesHall::auction() {
+// void NeedlesHall::auction() {
 
-}
+// }
 
-bool NeedlesHall::isMortgaged() {
+// bool NeedlesHall::isMortgaged() {
 
-}
+// }
 
-bool NeedlesHall::isOwned() {
+// bool NeedlesHall::isOwned() {
 
-}
+// }
 
-int NeedlesHall::getPos() {
-    return impl->pos;
-}
+// int NeedlesHall::getPos() {
+//     return impl->pos;
+// }
 
-int NeedlesHall::getPrice() {
+// int NeedlesHall::getPrice() {
 
-}
+// }
 
-string NeedlesHall::getName() {
-    return impl->name;
-}
+// string NeedlesHall::getName() {
+//     return impl->name;
+// }
 
-void improveBuy(std::shared_ptr<Player> player) {
+// void NeedlesHall::improveBuy(std::shared_ptr<Player> player) {
 
-}
+// }
 
-void improveSell(std::shared_ptr<Player> player) {
+// void NeedlesHall::improveSell(std::shared_ptr<Player> player) {
     
-}
+// }
 
-int getImproveCost() {
+// int NeedlesHall::getImproveCost() {
     
-}
+// }
 
-std::string getMonopolyName() {
+// std::string NeedlesHall::getMonopolyName() {
     
-}
+// }
 
-void unmortgage(std::shared_ptr<Player> player) {
+// void NeedlesHall::unmortgage(std::shared_ptr<Player> player) {
 
-}
+// }

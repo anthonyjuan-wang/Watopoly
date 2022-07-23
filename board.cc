@@ -4,7 +4,6 @@
 #include <memory>
 #include "board.h"
 #include "player.h"
-
 #include "academic.h"
 #include "coop.h"
 #include "dcTimsLine.h"
@@ -44,6 +43,12 @@ void Board::trade(std::vector<std::string> commands, int currPlayerIndex) {
 
     if (otherPlayerIndex == -1) {
         cout << "The player, " << commands[1] << ", you want to trade with doesn't exist" << endl;
+        return;
+    }
+
+    if (players[currPlayerIndex]->getName() == players[otherPlayerIndex]->getName()) {
+        cout << "You can't trade with yourself" << endl;
+        return;
     }
 
     shared_ptr<Player> currPlayer = players[currPlayerIndex];
@@ -69,7 +74,7 @@ void Board::trade(std::vector<std::string> commands, int currPlayerIndex) {
 
         vector<shared_ptr<Tile>> ownedTiles = currPlayer->getTiles();
         size = ownedTiles.size();
-        for (unsigned int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             s = ownedTiles[i]->getName();
             if (s == giveBuilding) {
                 tilePos = ownedTiles[i]->getPos();
@@ -81,21 +86,24 @@ void Board::trade(std::vector<std::string> commands, int currPlayerIndex) {
             cout << "You don't own the building " << giveBuilding << "." << endl;
         }
         
-        string monopoloyName = board[tilePos]->getMonopolyName();
-        for (int i = 0; i < numSquares; i++) {
-            if (monopoloyName == board[i]->getMonopolyName() && board[i]->getImprovement() > 0) {
-                cout << giveBuilding << " is in a monopoly and one of the buildings in the monopoly has improvements." << endl;
-                cout << "Therefore, you can't trade " << giveBuilding << "." << endl;
-                return;
-            } 
+        if (board[tilePos]->isImprovable()) {
+            string monopoloyName = board[tilePos]->getMonopolyName();
+            for (int i = 0; i < numSquares; i++) {
+                if (monopoloyName == board[i]->getMonopolyName() && board[i]->getImprovement() > 0) {
+                    cout << giveBuilding << " is in a monopoly and one of the buildings in the monopoly has improvements." << endl;
+                    cout << "Therefore, you can't trade " << giveBuilding << "." << endl;
+                    return;
+                } 
+            }
         }
 
         if (otherPlayer->getMoney() < receive) {
             cout << otherPlayer->getName() << " does not have enough money to trade." << endl;
+            return;
         }
 
         string response;
-        cout << otherPlayer->getName() << " would you like to accept? Enter 'accept' to accept and any other word to decline" << endl;
+        cout << otherPlayer->getName() << " would you like to accept the trade? Enter 'accept' to accept and any other word to decline." << endl;
         cin >> response;
 
         if (response != "accept") {
@@ -106,6 +114,126 @@ void Board::trade(std::vector<std::string> commands, int currPlayerIndex) {
         otherPlayer->subtractMoney(receive);
         currPlayer->addMoney(receive);
         return;
+    } else if (give > -1) {
+        // give money and receive a building
+        string receiveBuilding = commands[3];
+        string s{};
+        int tilePos = -1;
+        
+        vector<shared_ptr<Tile>> otherOwnedTiles = otherPlayer->getTiles();
+        size = otherOwnedTiles.size();
+        for (int i = 0; i < size; i++) {
+            s = otherOwnedTiles[i]->getName();
+            if (s == receiveBuilding) {
+                tilePos = otherOwnedTiles[i]->getPos();
+                break;
+            }
+        }
+
+        if (tilePos == -1) {
+            cout << otherPlayer->getName() << " doesn't own the building " << receiveBuilding << "." << endl;
+            return;
+        }
+
+        if (board[tilePos]->isImprovable()) {
+            string monopoloyName = board[tilePos]->getMonopolyName();
+            for (int i = 0; i < numSquares; i++) {
+                if (monopoloyName == board[i]->getMonopolyName() && board[i]->getImprovement() > 0) {
+                    cout << receiveBuilding << " is in a monopoly and one of the buildings in the monopoly has improvements." << endl;
+                    cout << "Therefore, you can't trade " << receiveBuilding << "." << endl;
+                    return;
+                } 
+            }
+        }
+
+        if (currPlayer->getMoney() < give) {
+            cout << currPlayer->getName() << " does not have enough money to trade." << endl;
+            return;
+        }
+
+        string response;
+        cout << otherPlayer->getName() << " would you like to accept the trade? Enter 'accept' to accept and any other word to decline." << endl;
+        cin >> response;
+
+        if (response != "accept") {
+            cout << otherPlayer->getName() << " has rejected the trade." << endl;
+            return;
+        }
+        otherPlayer->transferProp(currPlayer, board[tilePos]); // other player transfer prop to currPlayer
+        currPlayer->subtractMoney(receive);
+        otherPlayer->addMoney(receive);
+        return;
+    } else {
+        // trade square for square
+        string giveBuilding = commands[2];
+        string receiveBuilding = commands[3];
+        string s{};
+        int currPlayerPos = -1;
+        int otherPlayerPos = -1;
+        
+        // check if currPlayer and otherPlayer own the buildings
+        vector<shared_ptr<Tile>> ownedTiles = currPlayer->getTiles();
+        size = ownedTiles.size();
+        for (int i = 0; i < size; i++) {
+            s = ownedTiles[i]->getName();
+            if (s == giveBuilding) {
+                currPlayerPos = ownedTiles[i]->getPos();
+                break;
+            }
+        }
+
+        vector<shared_ptr<Tile>> otherOwnedTiles = otherPlayer->getTiles();
+        size = otherOwnedTiles.size();
+        for (int i = 0; i < size; i++) {
+            s = otherOwnedTiles[i]->getName();
+            if (s == receiveBuilding) {
+                otherPlayerPos = otherOwnedTiles[i]->getPos();
+                break;
+            }
+        }
+
+        if (currPlayerPos == -1) {
+            cout << currPlayer->getName() << " doesn't own the building " << giveBuilding << "." << endl;
+        }
+
+        if (otherPlayerPos == -1) {
+            cout << otherPlayer->getName() << " doesn't own the building " << receiveBuilding << "." << endl;
+        }
+
+        // check if the building's monopoly have improvements (if they do, trade cancelled)
+        if (board[currPlayerPos]->isImprovable()) {
+            string monopoloyName = board[currPlayerPos]->getMonopolyName();
+            for (int i = 0; i < numSquares; i++) {
+                if (monopoloyName == board[i]->getMonopolyName() && board[i]->getImprovement() > 0) {
+                    cout << giveBuilding << " is in a monopoly and one of the buildings in the monopoly has improvements." << endl;
+                    cout << "Therefore, you can't trade " << giveBuilding << "." << endl;
+                    return;
+                } 
+            }
+        }
+
+        if (board[otherPlayerPos]->isImprovable()) {
+            string monopoloyName = board[otherPlayerPos]->getMonopolyName();
+            for (int i = 0; i < numSquares; i++) {
+                if (monopoloyName == board[i]->getMonopolyName() && board[i]->getImprovement() > 0) {
+                    cout << receiveBuilding << " is in a monopoly and one of the buildings in the monopoly has improvements." << endl;
+                    cout << "Therefore, you can't trade " << receiveBuilding << "." << endl;
+                    return;
+                } 
+            }
+        }
+
+        string response;
+        cout << otherPlayer->getName() << " would you like to accept the trade? Enter 'accept' to accept and any other word to decline." << endl;
+        cin >> response;
+
+        if (response != "accept") {
+            cout << otherPlayer->getName() << " has rejected the trade." << endl;
+            return;
+        }
+        currPlayer->transferProp(otherPlayer, board[currPlayerPos]);
+        otherPlayer->transferProp(currPlayer, board[otherPlayerPos]);
+        return;
     }
 }
 
@@ -113,10 +241,6 @@ std::vector<std::shared_ptr<Player>> Board::getPlayers(){
     return players;
 }
 
-
-std::vector<std::shared_ptr<Tile>> Board::getBoard(){
-    return board;
-}
 void Board::init(int input) {
     if (!(players.empty())) {
         players.clear();
@@ -184,7 +308,6 @@ void Board::init(int input) {
         }
         shared_ptr<Player> person = make_shared<Player>(playerName, playerPiece, 1500, 0);
         players.emplace_back(person);
-        //players.emplace_back(std::shared<Player>(playerName, playerPiece, 1500, 0));
     }
 }
 
@@ -220,10 +343,6 @@ void Board::play() {
             cout << "Congratulations " << players[0]->getName() << " you are the winner! The game is now over" << endl;
             break;
         }
-
-        if(isTurnOver == true) {
-            continue;
-        }
     
         // outputs the possible user commands
         cout << "It is " << currPlayer->getName() << "'s turn. Enter a command from the following: " << endl;
@@ -245,6 +364,10 @@ void Board::play() {
     
         // switch to check all the possible player command inputs
         if (commands[0] == "roll") {
+            if(isTurnOver == true) {
+                continue;
+            }
+
             // checks if your in jail
             if (currPlayer->getJailStatus() == true) {
                 cout << "You are in jail. Here are your options:" << endl;
@@ -309,6 +432,11 @@ void Board::play() {
                 }
             }
         } else if (commands[0] == "next") {
+            if (currPlayer->getBankruptStatus() == true) {
+                cout << "You are bankrupt. The next command you need to type is 'bankrupt'." << endl;
+                continue;
+            }
+
             if (isTurnOver != true) {
                 cout << "You still need to roll. You cannot give control to the next player." << endl;
             }
@@ -320,14 +448,24 @@ void Board::play() {
                 print();
             }
         } else if (commands[0] == "trade" && commands.size() == 4) {
+            if (currPlayer->getBankruptStatus() == true) {
+                cout << "You are bankrupt. The next command you need to type is 'bankrupt'." << endl;
+                continue;
+            }
+
             trade(commands, currPlayerIndex);
         } else if (commands[0] == "improve" && commands.size() == 3) {
+            if (currPlayer->getBankruptStatus() == true) {
+                cout << "You are bankrupt. The next command you need to type is 'bankrupt'." << endl;
+                continue;
+            }
+
             string s{};
             int pos = -1;
 
             vector<shared_ptr<Tile>> ownedTiles = currPlayer->getTiles();
             int size = ownedTiles.size();
-            for (unsigned int i = 0; i < size; i++) {
+            for (int i = 0; i < size; i++) {
                 s = ownedTiles[i]->getName();
                 if (s == commands[1]) {
                     pos = ownedTiles[i]->getPos();
@@ -367,12 +505,17 @@ void Board::play() {
                 cout << "This was an invalid command. Please enter another command" << endl;
             }
         } else if (commands[0] == "mortgage" && commands.size() == 2) {
+            if (currPlayer->getBankruptStatus() == true) {
+                cout << "You are bankrupt. The next command you need to type is 'bankrupt'." << endl;
+                continue;
+            }
+
             string s{};
             int pos = -1;
 
             vector<shared_ptr<Tile>> ownedTiles = currPlayer->getTiles();
             int size = ownedTiles.size();
-            for (unsigned int i = 0; i < size; i++) {
+            for (int i = 0; i < size; i++) {
                 s = ownedTiles[i]->getName();
                 if (s == commands[1]) {
                     pos = ownedTiles[i]->getPos();
@@ -380,19 +523,24 @@ void Board::play() {
                 }
             }
 
-            if (pos == -1 || board[pos]->isMortgaged() == true) {
+            if (pos == -1 || board[pos]->isMortgaged() || board[pos]->getImprovement() > 0) {
                 cout << "You can't mortgage this building. Please enter another comand" << endl;
                 continue;
             }
 
             board[pos]->mortgage(currPlayer);            
         } else if (commands[0] == "unmortgage" && commands.size() == 2) {
+            if (currPlayer->getBankruptStatus() == true) {
+                cout << "You are bankrupt. The next command you need to type is 'bankrupt'." << endl;
+                continue;
+            }
+            
             string s{};
             int pos = -1;
 
             vector<shared_ptr<Tile>> ownedTiles = currPlayer->getTiles();
             int size = ownedTiles.size();
-            for (unsigned int i = 0; i < size; i++) {
+            for (int i = 0; i < size; i++) {
                 s = ownedTiles[i]->getName();
                 if (s == commands[1]) {
                     pos = ownedTiles[i]->getPos();

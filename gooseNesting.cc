@@ -7,82 +7,78 @@ class Board;
 
 using namespace std;
 
-GooseNesting::GooseNesting(int position, string blockName) : impl{make_shared<TileImpl>()}
-{
-    impl->pos = position;
-    impl->name = blockName;
-}
+GooseNesting::GooseNesting(int position, string blockName) : Tile{blockName, false, false, position, 0} {}
 
 GooseNesting::~GooseNesting() {}
 
-std::shared_ptr<TileImpl> GooseNesting::getImpl() {
+void GooseNesting::action(std::shared_ptr<Player> player) {
 
 }
 
-std::shared_ptr<Player> GooseNesting::getOwner() {
+// std::shared_ptr<TileImpl> GooseNesting::getImpl() {
 
-}
+// }
 
-void GooseNesting::setOwner(shared_ptr<Player> player) {
+// std::shared_ptr<Player> GooseNesting::getOwner() {
 
-}
+// }
 
-int GooseNesting::getImprovement() { // returns the improvement #
+// void GooseNesting::setOwner(std::shared_ptr<Player> player) {
 
-} 
+// }
 
-void GooseNesting::setImprovement(int x) {
+// int GooseNesting::getImprovement() { // returns the improvement #
 
-}
+// } 
 
-void GooseNesting::action(shared_ptr<Player> player) {
+// void GooseNesting::setImprovement(int x) {
 
-}
+// }
 
-void GooseNesting::mortgage(shared_ptr<Player> player) {
+// void GooseNesting::mortgage(std::shared_ptr<Player> player) {
 
-}
+// }
 
-void GooseNesting::auction() {
+// void GooseNesting::auction() {
 
-}
+// }
 
-bool GooseNesting::isMortgaged() {
+// bool GooseNesting::isMortgaged() {
 
-}
+// }
 
-bool GooseNesting::isOwned() {
+// bool GooseNesting::isOwned() {
 
-}
+// }
 
-int GooseNesting::getPos() {
-    return impl->pos;
-}
+// int GooseNesting::getPos() {
+//     return impl->pos;
+// }
 
-int GooseNesting::getPrice() {
+// int GooseNesting::getPrice() {
 
-}
+// }
 
-string GooseNesting::getName() {
-    return impl->name;
-}
+// string GooseNesting::getName() {
+//     return impl->name;
+// }
 
-void improveBuy(std::shared_ptr<Player> player) {
+// void GooseNesting::improveBuy(std::shared_ptr<Player> player) {
 
-}
+// }
 
-void improveSell(std::shared_ptr<Player> player) {
+// void GooseNesting::improveSell(std::shared_ptr<Player> player) {
     
-}
+// }
 
-int getImproveCost() {
+// int GooseNesting::getImproveCost() {
     
-}
+// }
 
-std::string getMonopolyName() {
+// std::string GooseNesting::getMonopolyName() {
     
-}
+// }
 
-void unmortgage(std::shared_ptr<Player> player) {
+// void GooseNesting::unmortgage(std::shared_ptr<Player> player) {
 
-}
+// }

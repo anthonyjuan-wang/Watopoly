@@ -2,106 +2,22 @@
 #include "tile.h"
 #include <string>
 #include <memory>
-class Player;
-class Board;
+#include "player.h"
+#include "board.h"
 
 using namespace std;
 
-Coop::Coop(int position, string blockName) : impl{make_shared<TileImpl>()} {
-    impl->pos = position;
-    impl->name = blockName;
-}
+Coop::Coop(int position, string blockName) : Tile{blockName, false, false, position, 0} {}
 
 Coop::~Coop() {}
 
-std::shared_ptr<TileImpl> Coop::getImpl() {
-
-}
-
-std::shared_ptr<Player> Coop::getOwner() {
-
-}
-
-void Coop::setOwner(std::shared_ptr<Player> player) {
-
-}
-
-int Coop::getImprovement() { // returns the improvement #
-
-} 
-
-void Coop::setImprovement(int x) {
-
-}
-
 void Coop::action(shared_ptr<Player> player) {
-
-}
-
-void Coop::mortgage(std::shared_ptr<Player> player) {
-
-}
-
-void Coop::auction() {
-
-}
-
-bool Coop::isMortgaged() {
-
-}
-
-bool Coop::isOwned() {
-
-}
-
-int Coop::getPos() {
-    return impl->pos;
-}
-
-int Coop::getPrice() {
-
-}
-
-string Coop::getName() {
-    return impl->name;
-}
-
-void improveBuy(std::shared_ptr<Player> player) {
-
-}
-
-void improveSell(std::shared_ptr<Player> player) {
-    
-}
-
-int getImproveCost() {
-    
-}
-
-std::string getMonopolyName() {
-    
-}
-
-void unmortgage(std::shared_ptr<Player> player) {
-
-}
-
-void improveBuy(std::shared_ptr<Player> player) {
-
-}
-
-void improveSell(std::shared_ptr<Player> player) {
-    
-}
-
-int getImproveCost() {
-    
-}
-
-std::string getMonopolyName() {
-    
-}
-
-void unmortgage(std::shared_ptr<Player> player) {
-
+    cout << "You've landed on Coop. You must pay the Coop fee of $150." << endl; 
+    if (player->getMoney() < 150){
+    cout << "You do not have enough to pay the $150 fee. You now have the ability to declare bankruptcy."
+    player->setAlmostBankruptStatus(true);
+    player->setMoneyOwed(150);
+}  else{ 
+    player->subtractMoney(150);
+    }
 }

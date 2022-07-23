@@ -7,81 +7,82 @@ class Board;
 
 using namespace std;
 
-GoToTims::GoToTims(int position, string blockName) : impl{make_shared<TileImpl>()} {
-    impl->pos = position;
-    impl->name = blockName;
-}
+GoToTims::GoToTims(int position, string blockName) : Tile{blockName, false, false, position, 0} {}
 
 GoToTims::~GoToTims() {}
 
-std::shared_ptr<TileImpl> GoToTims::getImpl() {
+void GoToTims::action(std::shared_ptr<Player> player) {
 
 }
 
-std::shared_ptr<Player> GoToTims::getOwner() {
+// std::shared_ptr<TileImpl> GoToTims::getImpl() {
 
-}
+// }
 
+<<<<<<< HEAD
 void GoToTims::setOwner(std::shared_ptr<Player> player) {
+=======
+// std::shared_ptr<Player> GoToTims::getOwner() {
+>>>>>>> main
 
-}
+// }
 
-int GoToTims::getImprovement() { // returns the improvement #
+// void GoToTims::setOwner(std::shared_ptr<Player> player) {
 
-} 
+// }
 
-void GoToTims::setImprovement(int x) {
+// int GoToTims::getImprovement() { // returns the improvement #
 
-}
+// } 
 
-void GoToTims::action(shared_ptr<Player> player) {
+// void GoToTims::setImprovement(int x) {
 
-}
+// }
 
-void GoToTims::mortgage(shared_ptr<Player> player) {
+// void GoToTims::mortgage(std::shared_ptr<Player> player) {
 
-}
+// }
 
-void GoToTims::auction() {
+// void GoToTims::auction() {
 
-}
+// }
 
-bool GoToTims::isMortgaged() {
+// bool GoToTims::isMortgaged() {
 
-}
+// }
 
-bool GoToTims::isOwned() {
+// bool GoToTims::isOwned() {
 
-}
+// }
 
-int GoToTims::getPos() {
-    return impl->pos;
-}
+// int GoToTims::getPos() {
+//     return impl->pos;
+// }
 
-int GoToTims::getPrice() {
+// int GoToTims::getPrice() {
 
-}
+// }
 
-string GoToTims::getName() {
-    return impl->name;
-}
+// string GoToTims::getName() {
+//     return impl->name;
+// }
 
-void improveBuy(std::shared_ptr<Player> player) {
+// void GoToTims::improveBuy(std::shared_ptr<Player> player) {
 
-}
+// }
 
-void improveSell(std::shared_ptr<Player> player) {
+// void GoToTims::improveSell(std::shared_ptr<Player> player) {
     
-}
+// }
 
-int getImproveCost() {
+// int GoToTims::getImproveCost() {
     
-}
+// }
 
-std::string getMonopolyName() {
+// std::string GoToTims::getMonopolyName() {
     
-}
+// }
 
-void unmortgage(std::shared_ptr<Player> player) {
+// void GoToTims::unmortgage(std::shared_ptr<Player> player) {
 
-}
+// }
