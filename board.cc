@@ -41,6 +41,12 @@ void Board::trade(std::vector<std::string> commands, int currPlayerIndex) {
 
     if (otherPlayerIndex == -1) {
         cout << "The player, " << commands[1] << ", you want to trade with doesn't exist" << endl;
+        return;
+    }
+
+    if (players[currPlayerIndex]->getName() == players[otherPlayerIndex]->getName()) {
+        cout << "You can't trade with yourself" << endl;
+        return;
     }
 
     shared_ptr<Player> currPlayer = players[currPlayerIndex];
@@ -78,21 +84,24 @@ void Board::trade(std::vector<std::string> commands, int currPlayerIndex) {
             cout << "You don't own the building " << giveBuilding << "." << endl;
         }
         
-        string monopoloyName = board[tilePos]->getMonopolyName();
-        for (int i = 0; i < numSquares; i++) {
-            if (monopoloyName == board[i]->getMonopolyName() && board[i]->getImprovement() > 0) {
-                cout << giveBuilding << " is in a monopoly and one of the buildings in the monopoly has improvements." << endl;
-                cout << "Therefore, you can't trade " << giveBuilding << "." << endl;
-                return;
-            } 
+        if (board[tilePos]->isImprovable()) {
+            string monopoloyName = board[tilePos]->getMonopolyName();
+            for (int i = 0; i < numSquares; i++) {
+                if (monopoloyName == board[i]->getMonopolyName() && board[i]->getImprovement() > 0) {
+                    cout << giveBuilding << " is in a monopoly and one of the buildings in the monopoly has improvements." << endl;
+                    cout << "Therefore, you can't trade " << giveBuilding << "." << endl;
+                    return;
+                } 
+            }
         }
 
         if (otherPlayer->getMoney() < receive) {
             cout << otherPlayer->getName() << " does not have enough money to trade." << endl;
+            return;
         }
 
         string response;
-        cout << otherPlayer->getName() << " would you like to accept? Enter 'accept' to accept and any other word to decline" << endl;
+        cout << otherPlayer->getName() << " would you like to accept the trade? Enter 'accept' to accept and any other word to decline." << endl;
         cin >> response;
 
         if (response != "accept") {
@@ -102,6 +111,126 @@ void Board::trade(std::vector<std::string> commands, int currPlayerIndex) {
         currPlayer->transferProp(otherPlayer, board[tilePos]);
         otherPlayer->subtractMoney(receive);
         currPlayer->addMoney(receive);
+        return;
+    } else if (give > -1) {
+        // give money and receive a building
+        string receiveBuilding = commands[3];
+        string s{};
+        int tilePos = -1;
+        
+        vector<shared_ptr<Tile>> otherOwnedTiles = otherPlayer->getTiles();
+        size = otherOwnedTiles.size();
+        for (int i = 0; i < size; i++) {
+            s = otherOwnedTiles[i]->getName();
+            if (s == receiveBuilding) {
+                tilePos = otherOwnedTiles[i]->getPos();
+                break;
+            }
+        }
+
+        if (tilePos == -1) {
+            cout << otherPlayer->getName() << " doesn't own the building " << receiveBuilding << "." << endl;
+            return;
+        }
+
+        if (board[tilePos]->isImprovable()) {
+            string monopoloyName = board[tilePos]->getMonopolyName();
+            for (int i = 0; i < numSquares; i++) {
+                if (monopoloyName == board[i]->getMonopolyName() && board[i]->getImprovement() > 0) {
+                    cout << receiveBuilding << " is in a monopoly and one of the buildings in the monopoly has improvements." << endl;
+                    cout << "Therefore, you can't trade " << receiveBuilding << "." << endl;
+                    return;
+                } 
+            }
+        }
+
+        if (currPlayer->getMoney() < give) {
+            cout << currPlayer->getName() << " does not have enough money to trade." << endl;
+            return;
+        }
+
+        string response;
+        cout << otherPlayer->getName() << " would you like to accept the trade? Enter 'accept' to accept and any other word to decline." << endl;
+        cin >> response;
+
+        if (response != "accept") {
+            cout << otherPlayer->getName() << " has rejected the trade." << endl;
+            return;
+        }
+        otherPlayer->transferProp(currPlayer, board[tilePos]); // other player transfer prop to currPlayer
+        currPlayer->subtractMoney(receive);
+        otherPlayer->addMoney(receive);
+        return;
+    } else {
+        // trade square for square
+        giveBuilding = commands[2];
+        receiveBuilding = commands[3];
+        string s{};
+        int currPlayerPos = -1;
+        int otherPlayerPos = -1;
+        
+        // check if currPlayer and otherPlayer own the buildings
+        vector<shared_ptr<Tile>> ownedTiles = currPlayer->getTiles();
+        size = ownedTiles.size();
+        for (int i = 0; i < size; i++) {
+            s = ownedTiles[i]->getName();
+            if (s == giveBuilding) {
+                currPlayerPos = ownedTiles[i]->getPos();
+                break;
+            }
+        }
+
+        vector<shared_ptr<Tile>> otherOwnedTiles = otherPlayer->getTiles();
+        size = otherOwnedTiles.size();
+        for (int i = 0; i < size; i++) {
+            s = otherOwnedTiles[i]->getName();
+            if (s == receiveBuilding) {
+                otherPlayerPos = otherOwnedTiles[i]->getPos();
+                break;
+            }
+        }
+
+        if (currPlayerPos == -1) {
+            cout << currPlayer->getName() << " doesn't own the building " << giveBuilding << "." << endl;
+        }
+
+        if (otherPlayerPos == -1) {
+            cout << otherPlayer->getName() << " doesn't own the building " << receiveBuilding << "." << endl;
+        }
+
+        // check if the building's monopoly have improvements (if they do, trade cancelled)
+        if (board[currPlayerPos]->isImprovable()) {
+            string monopoloyName = board[currPlayerPos]->getMonopolyName();
+            for (int i = 0; i < numSquares; i++) {
+                if (monopoloyName == board[i]->getMonopolyName() && board[i]->getImprovement() > 0) {
+                    cout << giveBuilding << " is in a monopoly and one of the buildings in the monopoly has improvements." << endl;
+                    cout << "Therefore, you can't trade " << giveBuilding << "." << endl;
+                    return;
+                } 
+            }
+        }
+
+        if (board[otherPlayerPos]->isImprovable()) {
+            string monopoloyName = board[otherPlayerPos]->getMonopolyName();
+            for (int i = 0; i < numSquares; i++) {
+                if (monopoloyName == board[i]->getMonopolyName() && board[i]->getImprovement() > 0) {
+                    cout << receiveBuilding << " is in a monopoly and one of the buildings in the monopoly has improvements." << endl;
+                    cout << "Therefore, you can't trade " << receiveBuilding << "." << endl;
+                    return;
+                } 
+            }
+        }
+
+        string response;
+        cout << otherPlayer->getName() << " would you like to accept the trade? Enter 'accept' to accept and any other word to decline." << endl;
+        cin >> response;
+
+        if (response != "accept") {
+            cout << otherPlayer->getName() << " has rejected the trade." << endl;
+            return;
+        }
+        currPlayer->transferProp(otherPlayer, board[currPlayerPos]);
+        otherPlayer->transferProp(currPlayer, board[otherPlayerPos]);
         return;
     }
 }
@@ -377,7 +506,7 @@ void Board::play() {
                 }
             }
 
-            if (pos == -1 || board[pos]->isMortgaged() == true) {
+            if (pos == -1 || board[pos]->isMortgaged() == true || board[pos]->getImprovement > 0) {
                 cout << "You can't mortgage this building. Please enter another comand" << endl;
                 continue;
             }
