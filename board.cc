@@ -23,12 +23,12 @@ Board::Board() {}
 
 Board::~Board() {}
 
-/*
+
 std::vector<std::shared_ptr<Tile>> Board::getBoard(){
     return board;
-}*/
+}
 
-/*
+
 void Board::trade(std::vector<std::string> commands, int currPlayerIndex) {
     int otherPlayerIndex = -1;
     int size = players.size();
@@ -107,7 +107,7 @@ void Board::trade(std::vector<std::string> commands, int currPlayerIndex) {
         currPlayer->addMoney(receive);
         return;
     }
-}*/
+}
 
 std::vector<std::shared_ptr<Player>> Board::getPlayers(){
     return players;

@@ -41,7 +41,7 @@ void Academic::setImprovement(int x) {
     impl->improvement = x;
 }
 
-void Academic::action(shared_ptr<Player> player) {
+void Academic::action(std::shared_ptr<Player> player) {
     // Check if tile is owned
         // If is owned, Pay Tuition
 

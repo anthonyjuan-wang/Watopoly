@@ -6,7 +6,7 @@
 class Player;
 class Board;
 
-class Residences : Tile {
+class Residences : public Tile {
     
     std::shared_ptr<TileImpl> impl;
 

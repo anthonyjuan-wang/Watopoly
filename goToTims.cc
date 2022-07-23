@@ -1,6 +1,7 @@
 #include "goToTims.h"
 #include "tile.h"
 #include <string>
+#include <memory>
 class Player;
 class Board;
 
@@ -21,7 +22,7 @@ std::shared_ptr<Player> GoToTims::getOwner() {
 
 }
 
-void GoToTims::setOwner(shared_ptr<Player> player) {
+void GoToTims::setOwner(std::shared_ptr<Player> player) {
 
 }
 

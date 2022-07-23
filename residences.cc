@@ -6,6 +6,7 @@ class Player;
 class Board;
 
 using namespace std;
+
 Residences::Residences(int position, string blockName) : impl{make_shared<TileImpl>()} {
     impl->pos = position;
     impl->name = blockName;
@@ -33,7 +34,7 @@ void Residences::setImprovement(int x) {
 
 }
 
-void Residences::action(shared_ptr<Player> player) {
+void Residences::action(std::shared_ptr<Player> player) {
 
 }
 

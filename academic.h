@@ -32,13 +32,6 @@ public:
     void improveSell(std::shared_ptr<Player> player) override;
     int getImproveCost() override;
     std::string getMonopolyName() override;
-<<<<<<< HEAD
-=======
-    void improveBuy(std::shared_ptr<Player> player) override;
-    void improveSell(std::shared_ptr<Player> player) override;
-    int getImproveCost() override;
-    std::string getMonopolyName() override;
->>>>>>> main
     void unmortgage(std::shared_ptr<Player> player) override;
 };
 
