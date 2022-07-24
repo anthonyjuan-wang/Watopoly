@@ -1,1 +1,1 @@
-slc.o: slc.cc slc.h tile.h tileimpl.h
+slc.o: slc.cc slc.h tile.h tileimpl.h board.h

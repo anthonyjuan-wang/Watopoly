@@ -52,7 +52,7 @@ void Residences::action(shared_ptr<Player> player) {
 
             std::vector<std::shared_ptr<Tile>> listOfOwnedTiles = getOwner()->getTiles();
             for (int i = 0; i < listOfOwnedTiles.size(); i++) {
-                if (listOfOwnedTiles->isResidence()) {
+                if (listOfOwnedTiles[i]->isResidence()) {
                     residenceCount += 1;
                 }
             }
