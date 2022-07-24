@@ -610,7 +610,7 @@ vector<int> Board::rollDice() {
 
 void Board::initTiles() {
     board.emplace_back(make_shared<Osap>(0, "Osap", shared_ptr<Board>(this), board));
-    /*board.emplace_back(make_shared<Academic>(1, "AL", "Arts1", 40, 50, std::vector<int>{2, 10, 30, 90, 50, 150}, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Academic>(1, "AL", "Arts1", 40, 50, std::vector<int>{2, 10, 30, 90, 50, 150}, shared_ptr<Board>(this), board));
     board.emplace_back(make_shared<Slc>(2, "SLC", shared_ptr<Board>(this), board));
     board.emplace_back(make_shared<Academic>(3, "ML", "Arts1", 60, 50, vector<int>{4, 20, 60, 180, 320, 450}, shared_ptr<Board>(this), board));
     board.emplace_back(make_shared<Tuition>(4, "Tuition", shared_ptr<Board>(this), board));
@@ -649,7 +649,7 @@ void Board::initTiles() {
     board.emplace_back(make_shared<Academic>(37, "MC", "Math", 350, 200, vector<int>{35, 175, 500, 1100, 1300, 1500}, shared_ptr<Board>(this), board));
     board.emplace_back(make_shared<Coop>(38, "Coop", shared_ptr<Board>(this), board));
     board.emplace_back(make_shared<Academic>(39, "DC", "Math", 400, 200, vector<int>{50, 200, 600, 1400, 1700, 2000}, shared_ptr<Board>(this), board));
-*/
+
 }
 
 void Board::print() {
