@@ -28,6 +28,11 @@ std::vector<std::shared_ptr<Tile>> Board::getBoard(){
 }
 
 
+
+void Board::loadGame(std::string input){}
+void Board::saveGame(std::string input){}
+void Board::setTestingMode(){}
+
 void Board::trade(std::vector<std::string> commands, int currPlayerIndex) {
     int otherPlayerIndex = -1;
     int size = players.size();
@@ -673,3 +678,4 @@ int Board::getRollUpCount() {
 void Board::setRollUpCount(int n) {
     rollUpCount = n;
 }
+
