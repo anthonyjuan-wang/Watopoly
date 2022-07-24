@@ -13,7 +13,7 @@ class Academic : public Tile {
 
 public:
     Academic(int position, std::string blockName, std::string monopolyType, int purchaseCost, int improvementCost,
-             std::vector<int> tuitionWithExpenses, std::vector<std::shared_ptr<Tile>> board);
+             std::vector<int> tuitionWithExpenses, std::shared_ptr<Board> board, std::vector<std::shared_ptr<Tile>> boardTiles);
     ~Academic();
 
     void action(std::shared_ptr<Player> player) override;

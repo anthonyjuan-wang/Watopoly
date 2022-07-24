@@ -3,6 +3,7 @@
 #include "tile.h"
 #include <string>
 #include <memory>
+#include <vector>
 class Player;
 class Board;
 
@@ -10,7 +11,7 @@ class Slc : public Tile {
 
 public:
 
-    Slc(int position, std::string blockPosition, std::vector<std::shared_ptr<Tile>> board);
+    Slc(int position, std::string blockPosition, std::shared_ptr<Board> board, std::vector<std::shared_ptr<Tile>> boardTiles);
     ~Slc();
     void action(std::shared_ptr<Player> player) override;
 };

@@ -365,6 +365,7 @@ void Board::play() {
         // switch to check all the possible player command inputs
         if (commands[0] == "roll") {
             if(isTurnOver == true) {
+                cout << "You cannot roll, your turn is over." << endl;
                 continue;
             }
             // checks if your in jail
@@ -376,7 +377,7 @@ void Board::play() {
                     board[jailPos]->action(currPlayer);
                     if (currPlayer->getJailStatus() == true){
                         isTurnOver = true;
-                    continue;
+                        continue;
                     }
                 } else { 
                     currPlayer->setJailCount(0);
@@ -399,6 +400,7 @@ void Board::play() {
                 board[pos]->action(currPlayer);
                 
                 if (currPlayer->getJailStatus() == true) {
+                    isTurnOver = true;
                     continue;
                 }
             } else if (pos == osapPos) {
@@ -434,7 +436,6 @@ void Board::play() {
                     currPlayer->setPos(jailPos);
                     currPlayer->setJailStatus(true);
                     currPlayer->setJailCount(0);
-
                     doubles = 0;
                     isTurnOver = true;
                 }
@@ -608,46 +609,51 @@ vector<int> Board::rollDice() {
 
 
 void Board::initTiles() {
-    board.emplace_back(make_shared<Osap>(0, "Osap", board));
-    board.emplace_back(make_shared<Academic>(1, "AL", "Arts1", 40, 50, std::vector<int>{2, 10, 30, 90, 50, 150}, board));
-    board.emplace_back(make_shared<Slc>(2, "SLC", board));
-    board.emplace_back(make_shared<Academic>(3, "ML", "Arts1", 60, 50, vector<int>{4, 20, 60, 180, 320, 450}, board));
-    board.emplace_back(make_shared<Tuition>(4, "Tuition", board));
-    board.emplace_back(make_shared<Residences>(5, "MKV", true, board));
-    board.emplace_back(make_shared<Academic>(6, "ECH", "Arts2", 100, 50, vector<int>{6, 30, 90, 270, 400, 550}, board));
-    board.emplace_back(make_shared<NeedlesHall>(7, "Neeedles Hall", board));
-    board.emplace_back(make_shared<Academic>(8, "PAS", "Arts2", 100, 50, vector<int>{6, 30, 90, 270, 400, 550}, board));
-    board.emplace_back(make_shared<Academic>(9, "HH", "Arts2", 120, 50, vector<int>{8, 40, 100, 300, 450, 600}, board));
-    board.emplace_back(make_shared<DcTimsLine>(10, "DC Tims Line", board));
-    board.emplace_back(make_shared<Academic>(11, "RCH", "Eng", 140, 100, vector<int>{10, 50, 150, 450, 625, 750}, board));
-    board.emplace_back(make_shared<Gyms>(12, "PAC", board));
-    board.emplace_back(make_shared<Academic>(13, "DWE", "Eng", 140, 100, vector<int>{10, 50, 150, 450, 625, 750}, board));
-    board.emplace_back(make_shared<Academic>(14, "CPH", "Eng", 160, 100, vector<int>{12, 60, 180, 500, 700, 900}, board));
-    board.emplace_back(make_shared<Residences>(15, "UWP", true, board));
-    board.emplace_back(make_shared<Academic>(16, "LHI", "Health", 180, 100, vector<int>{14, 70, 200, 550, 750, 950}, board));
-    board.emplace_back(make_shared<Slc>(17, "SLC", board));
-    board.emplace_back(make_shared<Academic>(18, "BMH", "Health", 180, 100, vector<int>{14, 70, 200, 550, 750, 950}, board));
-    board.emplace_back(make_shared<Academic>(19, "OPT", "Health", 200, 100, vector<int>{16, 80, 220, 600, 800, 1000}, board));
-    board.emplace_back(make_shared<GooseNesting>(20, "Goose Nesting", board));
-    board.emplace_back(make_shared<Academic>(21, "EV1", "Env", 220, 150, vector<int>{18, 90, 250, 700, 875, 1050}, board));
-    board.emplace_back(make_shared<NeedlesHall>(22, "Needles Hall", board));
-    board.emplace_back(make_shared<Academic>(23, "EV2", "Env", 220, 150, vector<int>{18, 90, 250, 700, 875, 1050}, board));
-    board.emplace_back(make_shared<Academic>(24, "EV3", "Env", 240, 150, vector<int>{20, 100, 300, 750, 925, 1100}, board));
-    board.emplace_back(make_shared<Residences>(25, "V1", true, board));
-    board.emplace_back(make_shared<Academic>(26, "PHYS", "Sci1", 260, 150, vector<int>{22, 110, 330, 800, 975, 1150}, board));
-    board.emplace_back(make_shared<Academic>(27, "B1", "Sci1", 260, 150, vector<int>{22, 110, 330, 800, 975, 1150}, board));
-    board.emplace_back(make_shared<Gyms>(28, "CIF", board));
-    board.emplace_back(make_shared<Academic>(29, "B2", "Sci1", 280, 150, vector<int>{24, 120, 360, 850, 1025, 1200}, board));
-    board.emplace_back(make_shared<GoToTims>(30, "Go To Tims", board));
-    board.emplace_back(make_shared<Academic>(31, "EIT", "Sci2", 300, 200, vector<int>{26, 130, 390, 900, 1100, 1275}, board));
-    board.emplace_back(make_shared<Academic>(32, "ESC", "Sci2", 300, 200, vector<int>{26, 130, 390, 900, 1100, 1275}, board));
-    board.emplace_back(make_shared<Slc>(33, "SLC", board));
-    board.emplace_back(make_shared<Academic>(34, "C2", "Sci2", 320, 200, vector<int>{28, 150, 450, 1000, 1200, 1400}, board));
-    board.emplace_back(make_shared<Residences>(35, "REV", true, board));
-    board.emplace_back(make_shared<NeedlesHall>(36, "Needles Hall", board));
-    board.emplace_back(make_shared<Academic>(37, "MC", "Math", 350, 200, vector<int>{35, 175, 500, 1100, 1300, 1500}, board));
-    board.emplace_back(make_shared<Coop>(38, "Coop", board));
-    board.emplace_back(make_shared<Academic>(39, "DC", "Math", 400, 200, vector<int>{50, 200, 600, 1400, 1700, 2000}, board));
+    board.emplace_back(make_shared<Osap>(0, "Osap", shared_ptr<Board>(this), board));
+    /*board.emplace_back(make_shared<Academic>(1, "AL", "Arts1", 40, 50, std::vector<int>{2, 10, 30, 90, 50, 150}, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Slc>(2, "SLC", shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Academic>(3, "ML", "Arts1", 60, 50, vector<int>{4, 20, 60, 180, 320, 450}, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Tuition>(4, "Tuition", shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Residences>(5, "MKV", true, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Academic>(6, "ECH", "Arts2", 100, 50, vector<int>{6, 30, 90, 270, 400, 550}, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<NeedlesHall>(7, "Neeedles Hall", shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Academic>(8, "PAS", "Arts2", 100, 50, vector<int>{6, 30, 90, 270, 400, 550}, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Academic>(9, "HH", "Arts2", 120, 50, vector<int>{8, 40, 100, 300, 450, 600}, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<DcTimsLine>(10, "DC Tims Line", shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Academic>(11, "RCH", "Eng", 140, 100, vector<int>{10, 50, 150, 450, 625, 750}, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Gyms>(12, "PAC", true, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Academic>(13, "DWE", "Eng", 140, 100, vector<int>{10, 50, 150, 450, 625, 750}, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Academic>(14, "CPH", "Eng", 160, 100, vector<int>{12, 60, 180, 500, 700, 900}, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Residences>(15, "UWP", true, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Academic>(16, "LHI", "Health", 180, 100, vector<int>{14, 70, 200, 550, 750, 950}, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Slc>(17, "SLC", shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Academic>(18, "BMH", "Health", 180, 100, vector<int>{14, 70, 200, 550, 750, 950}, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Academic>(19, "OPT", "Health", 200, 100, vector<int>{16, 80, 220, 600, 800, 1000}, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<GooseNesting>(20, "Goose Nesting", shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Academic>(21, "EV1", "Env", 220, 150, vector<int>{18, 90, 250, 700, 875, 1050}, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<NeedlesHall>(22, "Needles Hall", shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Academic>(23, "EV2", "Env", 220, 150, vector<int>{18, 90, 250, 700, 875, 1050}, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Academic>(24, "EV3", "Env", 240, 150, vector<int>{20, 100, 300, 750, 925, 1100}, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Residences>(25, "V1", true, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Academic>(26, "PHYS", "Sci1", 260, 150, vector<int>{22, 110, 330, 800, 975, 1150}, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Academic>(27, "B1", "Sci1", 260, 150, vector<int>{22, 110, 330, 800, 975, 1150}, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Gyms>(28, "CIF", true, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Academic>(29, "B2", "Sci1", 280, 150, vector<int>{24, 120, 360, 850, 1025, 1200}, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<GoToTims>(30, "Go To Tims", shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Academic>(31, "EIT", "Sci2", 300, 200, vector<int>{26, 130, 390, 900, 1100, 1275}, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Academic>(32, "ESC", "Sci2", 300, 200, vector<int>{26, 130, 390, 900, 1100, 1275}, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Slc>(33, "SLC", shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Academic>(34, "C2", "Sci2", 320, 200, vector<int>{28, 150, 450, 1000, 1200, 1400}, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Residences>(35, "REV", true, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<NeedlesHall>(36, "Needles Hall", shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Academic>(37, "MC", "Math", 350, 200, vector<int>{35, 175, 500, 1100, 1300, 1500}, shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Coop>(38, "Coop", shared_ptr<Board>(this), board));
+    board.emplace_back(make_shared<Academic>(39, "DC", "Math", 400, 200, vector<int>{50, 200, 600, 1400, 1700, 2000}, shared_ptr<Board>(this), board));
+*/
+}
+
+void Board::print() {
+
 }
 
 bool Board::hasMonopoly(std::shared_ptr<Tile> currTile) {

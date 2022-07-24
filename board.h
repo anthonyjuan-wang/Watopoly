@@ -34,7 +34,7 @@ public:
     void play();
     std::vector<int> rollDice();        // maybe virtual // maybe virtual
     void setTestingMode();
-    virtual void print() = 0; // calls board display
+    virtual void print(); // calls board display
     bool hasMonopoly(std::shared_ptr<Tile> currTile);
     int getRollUpCount();
     void setRollUpCount(int n);

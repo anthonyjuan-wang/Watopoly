@@ -6,13 +6,12 @@
 #include <vector>
 
 #include "player.h"
-//#include "board.h"
-class Board;
+#include "board.h"
 
 using namespace std;
 
 Academic::Academic(int position, string blockName, string monopolyType, int purchaseCost, int improvementCost,
-                   vector<int> tuitionCost, vector<shared_ptr<Tile>> board) : Tile{blockName, true, true, position, purchaseCost, board} {
+                   vector<int> tuitionCost, shared_ptr<Board> board, vector<shared_ptr<Tile>> boardTiles) : Tile{blockName, true, true, position, purchaseCost, board, boardTiles} {
     tuition = tuitionCost;
     improvement = improvementCost;
     monopoly = monopolyType;
@@ -41,7 +40,7 @@ void Academic::action(std::shared_ptr<Player> player) {
                     break;
                  } else {
                     player->subtractMoney(getPrice());
-                    vector<shared_ptr<Tile>> currBoard = getBoard();
+                    vector<shared_ptr<Tile>> currBoard = getBoardTiles();
                     int currPos = getPos();
                     player->addTile(currBoard[currPos]);
                     setOwner(player);

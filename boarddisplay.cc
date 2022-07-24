@@ -19,7 +19,7 @@ for (int i = 0; i < 7; i++){
 }
 void BoardDisplay::printPlayers(std::vector<std::shared_ptr<Player>> players, int index){
     int counter = 0;
-    for (int i = 0; i < players.size(); i++){
+    for (unsigned int i = 0; i < players.size(); i++){
       if (players[i]->getPos() == index){
             cout << players[i]->getPiece();
             counter++;

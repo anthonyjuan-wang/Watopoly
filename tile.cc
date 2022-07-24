@@ -8,17 +8,19 @@
 
 using namespace std;
 
-Tile::Tile(string name, bool ownable, bool improvable, int position, int price, vector<shared_ptr<Tile>> board) : impl{make_shared<TileImpl>()} {
+Tile::Tile(string name, bool ownable, bool improvable, int position, int price, shared_ptr<Board> board, vector<shared_ptr<Tile>> boardTiles) : impl{make_shared<TileImpl>()} {
     //impl->theBoard = board;
     impl->owner = nullptr;
     impl->name = name;
     impl->ownable = ownable;
     impl->residence = false;
+    impl->gym = false;
     impl->improvable = improvable; 
     impl->mortgaged = false;
     impl->pos = position;
     impl->purchase = price;
     impl->theBoard = board;
+    impl->boardTiles = boardTiles;
 }
 
 Tile::~Tile() {}
@@ -27,8 +29,12 @@ std::shared_ptr<Player> Tile::getOwner() {
     return impl->owner;
 }
 
-vector<shared_ptr<Tile>> Tile::getBoard(){
+shared_ptr<Board> Tile::getBoard(){
     return impl->theBoard;
+}
+
+vector<shared_ptr<Tile>> Tile::getBoardTiles() {
+    return impl->boardTiles;
 }
 
 void Tile::setOwner(std::shared_ptr<Player> player) {
@@ -57,6 +63,10 @@ bool Tile::isOwnable() {
 
 bool Tile::isResidence() {
     return impl->residence;
+}
+
+bool Tile::isGym() {
+    return impl->gym;
 }
 
 bool Tile::isMortgaged() {

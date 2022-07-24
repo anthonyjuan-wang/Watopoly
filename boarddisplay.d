@@ -1,2 +1,2 @@
-boarddisplay.o: boarddisplay.cc boarddisplay.h tile.h tileimpl.h player.h \
- board.h
+boarddisplay.o: boarddisplay.cc boarddisplay.h tile.h tileimpl.h board.h \
+ player.h
