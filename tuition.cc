@@ -6,7 +6,7 @@ class Board;
 
 using namespace std;
 
-Tuition::Tuition(int position, string blockName) : Tile{blockName, false, false, position, 0} {}
+Tuition::Tuition(int position, string blockName, vector<shared_ptr<Tile>> board) : Tile{blockName, false, false, position, 0, board} {}
 
 Tuition::~Tuition() {}
 
@@ -29,7 +29,7 @@ void Tuition::action(std::shared_ptr<Player> player) {
 
     cout << "You must pay the bank. Choose one of the options '1' or '2':" << endl;
     cout << "1. Pay $300" << endl;
-    cout << "2. Pay 10%/ of your total worth (including savings, prices of each building owned, and costs of each improvement)."
+    cout << "2. Pay 10%/ of your total worth (including savings, prices of each building owned, and costs of each improvement)." << endl;
     cout << "Your total worth is $ " << totalWorth << endl;
 
     int response = 0;
@@ -37,9 +37,9 @@ void Tuition::action(std::shared_ptr<Player> player) {
     cin >> response;
 
     while (true) {
-        if (response == "1" ) {
+        if (response == 1 ) {
             cost = 300;
-        } else if (response == "2") {
+        } else if (response == 2) {
             cost = totalWorth;
         } else {
             cout << "Invalid, please enter a valid command" << endl;
@@ -53,71 +53,3 @@ void Tuition::action(std::shared_ptr<Player> player) {
         player->subtractMoney(cost);
     }
 }
-
-// std::shared_ptr<TileImpl> Tuition::getImpl() {
-
-// }
-
-// std::shared_ptr<Player> Tuition::getOwner() {
-
-// }
-
-// void Tuition::setOwner(std::shared_ptr<Player> player) {
-
-// }
-
-// int Tuition::getImprovement() { // returns the improvement #
-
-// } 
-
-// void Tuition::setImprovement(int x) {
-
-// }
-
-// void Tuition::mortgage(std::shared_ptr<Player> player) {
-
-// }
-
-// void Tuition::auction() {
-
-// }
-
-// bool Tuition::isMortgaged() {
-
-// }
-
-// bool Tuition::isOwned() {
-
-// }
-
-// int Tuition::getPos() {
-//     return impl->pos;
-// }
-
-// int Tuition::getPrice() {
-
-// }
-
-// string Tuition::getName() {
-//     return impl->name;
-// }
-
-// void Tuition::improveBuy(std::shared_ptr<Player> player) {
-
-// }
-
-// void Tuition::improveSell(std::shared_ptr<Player> player) {
-    
-// }
-
-// int Tuition::getImproveCost() {
-    
-// }
-
-// std::string Tuition::getMonopolyName() {
-    
-// }
-
-// void Tuition::unmortgage(std::shared_ptr<Player> player) {
-
-// }

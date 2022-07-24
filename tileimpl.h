@@ -3,12 +3,11 @@
 #include <vector>
 #include <string>
 #include <memory>
-// class Board;
+class Tile;
 class Player;
 class Board;
-struct TileImpl
-{
-    Board *theBoard;
+struct TileImpl {
+    std::vector<std::shared_ptr<Tile>> theBoard;
     std::shared_ptr<Player> owner;
     std::string name;
     bool ownable;
