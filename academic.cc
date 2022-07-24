@@ -3,14 +3,16 @@
 #include <string>
 #include <memory>
 #include <iostream>
+#include <vector>
 
 #include "player.h"
+//#include "board.h"
 class Board;
 
 using namespace std;
 
 Academic::Academic(int position, string blockName, string monopolyType, int purchaseCost, int improvementCost,
-                   vector<int> tuitionCost) :  Tile{blockName, true, true, position, purchaseCost} {
+                   vector<int> tuitionCost, vector<shared_ptr<Tile>> board) : Tile{blockName, true, true, position, purchaseCost, board} {
     tuition = tuitionCost;
     improvement = improvementCost;
     monopoly = monopolyType;
@@ -19,42 +21,60 @@ Academic::Academic(int position, string blockName, string monopolyType, int purc
 Academic::~Academic() {}
 
 void Academic::action(std::shared_ptr<Player> player) {
-    cout << "You have landed on " << Academic->getName() << endl;
-    if (Academic->isOwnable()) {
+    cout << "You have landed on " << getName() << endl;
+    if (isOwnable()) {
         // Do you have enough money to buy
 
-        cout << "Would you like to buy " << Academic->getName() << " for " << Academic->getPrice() << "?" << endl;
+        cout << "Would you like to buy " << getName() << " for " << getPrice() << "?" << endl;
 
+        // Look for "yes" or "no"
         string answer;
         cin >> answer;
         while(1) {
-            if (cin == "yes") {
+            if (answer == "yes") {
                 // Check if almost bankrupt
-                int remaining = player->getMoney() - Academic->getPrice();
+                int remaining = player->getMoney() - getPrice();
                 if (remaining < 0) {
-                    // SET MONEYOWED TO FOR PLAYER
-                    cout << "You don't have enough to purchase this property. Broke ass bitch. Would you like to sell some property" << endl;
-                    // Do you want to sell some property?
-                    while(1) {
-                        cin >> answer;
-                        if (answer == "yes") {
-                            // Start selling some property
-                            break;
-                        } else {
-                            Academic->auction();
-                            break;
-                        } else {
-                            cout << "Please enter either \"yes\" or \"no\": Would you like to sell some property?" << endl;
-                        }
-                    }
+                    cout << "You don't have enough to purchase this building." << endl;
+                    cout << getName() <<  " will now go up for auction" << endl;
+                    auction();
+                    break;
+                 } else {
+                    player->subtractMoney(getPrice());
+                    vector<shared_ptr<Tile>> currBoard = getBoard();
+                    int currPos = getPos();
+                    player->addTile(currBoard[currPos]);
+                    setOwner(player);
                  }
                 break;
-            } else if (cin == "no") {
-                Academic->auction();
+            } else if (answer == "no") {
+                cout << getName() <<  " is now going to be auctioned" << endl;
+                auction();
                 break;
             } else {
-                cout << "Please enter either \"yes\" or \"no\": Would you like to purchase this propertly" << endl;
+                cout << "Please enter either \"yes\" or \"no\": Would you like to purchase this building for " << getPrice() << endl;
+                cin >> answer;
             }
-        }        
+        }
+        // Player lands on an already owner academic building
+    } else {
+        // Check that the player does not already own this spot
+        if (getOwner() != player) {
+            cout << "This building is owned by " << getOwner() << ". You will need to pay $" << tuition[getImprovement()] << endl;
+            // Get the cost of tuition based on # of improvements
+            int cost = tuition[getImprovement()];
+            int remaining = player->getMoney() - cost;
+            // Check the player is bankrupt after paying for tuition
+            if (remaining < 0) {
+                cout << "You do not have enough to pay for tution. Find a way to pay for this property or you must drop out" << endl;
+                player->setAlmostBankruptStatus(true);
+                player->setMoneyOwed(cost);
+            } else {
+                // Pay for the tuition cost
+                player->subtractMoney(cost);
+            }
+        } else {
+            cout << "Nice, you own this property!" << endl;
+        }
     }
 }

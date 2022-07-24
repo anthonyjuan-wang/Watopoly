@@ -18,6 +18,7 @@ private:
     int goToJailPos = 30;
     int numSquares = 40;
     bool isTurnOver = false;
+    int rollUpCount = 0;
     std::vector<std::shared_ptr<Tile>> board;
     std::vector<std::shared_ptr<Player>> players;
 public:
@@ -35,6 +36,8 @@ public:
     void setTestingMode();
     virtual void print() = 0; // calls board display
     bool hasMonopoly(std::shared_ptr<Tile> currTile);
+    int getRollUpCount();
+    void setRollUpCount(int n);
 };
 
 #endif

@@ -35,8 +35,11 @@ public:
     int getJailCount();
     void setJailCount(int n);
     bool getAlmostBankruptStatus();
+    void setAlmostBankruptStatus(bool status);
     bool getBankruptStatus();
     void setBankruptStatus(bool status, int owed);
+    bool getMoneyOwed();
+    void setMoneyOwed(int n);
     void addTile(std::shared_ptr<Tile> t);
     std::vector<std::shared_ptr<Tile>> getTiles();
     void transferProp(std::shared_ptr<Player> otherPlayer, std::shared_ptr<Tile> tile);

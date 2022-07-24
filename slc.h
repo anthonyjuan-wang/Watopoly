@@ -9,7 +9,8 @@ class Board;
 class Slc : public Tile {
 
 public:
-    Slc(int position, std::string blockPosition);
+
+    Slc(int position, std::string blockPosition, std::vector<std::shared_ptr<Tile>> board);
     ~Slc();
     void action(std::shared_ptr<Player> player) override;
 };

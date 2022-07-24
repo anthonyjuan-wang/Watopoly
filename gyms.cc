@@ -7,78 +7,24 @@ class Board;
 
 using namespace std;
 
-Gyms::Gyms(int position, string blockName) : Tile{blockName, true, false, position, 150} {}
+Gyms::Gyms(int position, string blockName, vector<shared_ptr<Tile>> board) : Tile{blockName, true, false, position, 150, board} {}
 
 Gyms::~Gyms() {}
 
 void Gyms::action(std::shared_ptr<Player> player) {
-
+    // Daniel: I fucked up and added gym logic to residence cuz mimss jym
+    // else {
+    //     int gymCount = 0;
+    //     std::vector<std::shared_ptr<Tile>> listOfOwner = getOwner()->getTiles();
+    //     if (find(listOfOwner.begin(), listOfOwner.end(), "PAC") != listOfOwner.end()) {
+    //         gymCount += 1;
+    //     }
+    //     if (find(listOfOwner.begin(), listOfOwner.end(), "CIF") != listOfOwner.end()) {
+    //         gymCount += 1;
+    //     }
+        
+    //     cout << "This gym is owned by" << getOwner() << ". Since " << getOwner() << "has " << gymCount << " properties,  you must pay $" 
+    //     << PRICEOFTHEPAYMENT << endl;
+    // }
 }
 
-// std::shared_ptr<TileImpl> Gyms::getImpl() {
-
-// }
-
-// std::shared_ptr<Player> Gyms::getOwner() {
-
-// }
-
-// void Gyms::setOwner(std::shared_ptr<Player> player) {
-//     impl->Owner = player;
-// }
-
-// int Gyms::getImprovement() { // returns the improvement #
-
-// }
-
-// void Gyms::setImprovement(int x) {
-
-// }
-
-// void Gyms::mortgage(std::shared_ptr<Player> player) {
-
-// }
-
-// void Gyms::auction() {
-
-// }
-
-// bool Gyms::isMortgaged() {
-
-// }
-
-// bool Gyms::isOwned() {
-//     return impl->isOwnable;
-// }
-
-// int Gyms::getPos() {
-//     return impl->pos;
-// }
-
-// int Gyms::getPrice() {
-//     return impl->purchase;
-// }
-
-// string Gyms::getName() {
-//     return impl->name;
-// }
-
-// void improveBuy(std::shared_ptr<Player> player) {
-
-// }
-
-// void improveSell(std::shared_ptr<Player> player) {
-    
-// }
-
-// int getImproveCost() {
-    
-// }
-
-// std::string getMonopolyName() {
-    
-// }
-
-// void unmortgage(std::shared_ptr<Player> player) {
-
-// }

@@ -27,9 +27,16 @@ Player::~Player() {}
 
 void Player::move(int n) {
     impl->pos += n;
+
+    if (n < 0) {
+        if (impl->pos < 0) {
+            impl->pos += 40;
+        }
+        return;
+    }
+
     if (impl->pos >= 40) {
         impl->pos -= 40;
-        // if tile is not dcTimsLine, collect $200 from OSAP (maybe could check this in play tho)
     }
 }
 
@@ -126,6 +133,10 @@ bool Player::getAlmostBankruptStatus() {
     return impl->almostBankrupt;
 }
 
+void Player::setAlmostBankruptStatus(bool status) {
+    impl->almostBankrupt = status;
+}
+
 bool Player::getBankruptStatus() {
     return impl->bankrupt;
 }
@@ -133,6 +144,14 @@ bool Player::getBankruptStatus() {
 void Player::setBankruptStatus(bool status, int owed) {
     impl->bankrupt = status;
     impl->moneyOwed = owed;
+}
+
+bool Player::getMoneyOwed() {
+    return impl->moneyOwed;
+}
+
+void Player::setMoneyOwed(int n) {
+    impl->moneyOwed = n;
 }
 
 void Player::addTile(std::shared_ptr<Tile> t) {
