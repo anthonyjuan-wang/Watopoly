@@ -5,28 +5,30 @@
 #include <string>
 #include <memory>
 #include "tileimpl.h"
-
+#include "board.h"
 class Player;
-class Board;
+//class Board;
 // class TileImpl;
 
 class Tile {
     std::shared_ptr<TileImpl> impl;
 
 public:
-    Tile(std::string name, bool ownable, bool improvable, int position, int price, std::vector<std::shared_ptr<Tile>> board);
+    Tile(std::string name, bool ownable, bool improvable, int position, int price, 
+         std::shared_ptr<Board> board);
     virtual ~Tile();
     
     // General methods
     std::shared_ptr<Player> getOwner();
     void setOwner(std::shared_ptr<Player> player);
-    std::vector<std::shared_ptr<Tile>> getBoard();
+    std::shared_ptr<Board> getBoard(); // gets the *board object
     int getPos();
     int getPrice();
     std::string getName();
     bool isImprovable();
     bool isOwnable();
     bool isResidence();
+    bool isGym();
     bool isMortgaged();
     bool isOwned();
     void auction();

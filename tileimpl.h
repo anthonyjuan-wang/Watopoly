@@ -3,14 +3,18 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include "board.h"
 class Tile;
 class Player;
-class Board;
+//class Board;
+
 struct TileImpl {
-    std::vector<std::shared_ptr<Tile>> theBoard;
+    std::shared_ptr<Board> theBoard;
     std::shared_ptr<Player> owner;
     std::string name;
     bool ownable;
+    bool residence;
+    bool gym;
     bool improvable;
     bool mortgaged;
     int pos;

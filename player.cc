@@ -10,7 +10,7 @@ Player::Player(string name, char piece, int money = 1500, int pos = 0) :
 impl {new PlayerImpl{name, piece, money, pos, false, false, 0, false, 0, 0}} {}
 */
 
-Player::Player(string name, char piece, int money = 1500, int pos = 0) : impl{make_shared<PlayerImpl>()} {
+Player::Player(string name, char piece, int money = 1500, int pos = 0) : impl{make_shared<PlayerImpl>()}{ 
     impl->name = name;
     impl->piece = piece;
     impl->money = money;
@@ -55,14 +55,14 @@ void Player::addMoney(int n) {
 }
 
 void Player::subtractMoney(int n) {
-    if (n >= impl->money) {
+    if (impl->money >= n) {
         impl->money -= n;
         cout << "You have successfully subtracted $" << n << " from your account. You now have $" << impl->money << endl;
     }
     else {
         impl->moneyOwed = n;
         impl->almostBankrupt = true;
-        cout << "You do not have enough impl->money to pay back $" << n << endl;
+        cout << "You do not have enough money to pay back $" << n << endl;
     }
 }
 

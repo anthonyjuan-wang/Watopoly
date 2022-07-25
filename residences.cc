@@ -9,7 +9,7 @@
 #include "board.h"
 
 using namespace std;
-Residences::Residences(int position, string blockName, bool residence, vector<shared_ptr<Tile>> board) : Tile{blockName, true, false, position, 200, board} {
+Residences::Residences(int position, string blockName, bool residence, shared_ptr<Board> board) : Tile{blockName, true, false, position, 200, board} {
     isResidence = residence;
 }
 
@@ -19,7 +19,9 @@ void Residences::action(shared_ptr<Player> player) {
     cout << "You have landed on " << getName() << endl;
 
     if (isOwnable()) {
+        // Player has the option to buy this house
         cout << "Would you like to buy " << getName() << " for " << getPrice() << "?" << endl;
+        cout << "Types \"yes\" to buy or \"no\" to not buy" << endl;
         string answer;
         while(1) {
             cin >> answer;
@@ -32,7 +34,7 @@ void Residences::action(shared_ptr<Player> player) {
                     break;
                 } else {
                     player->subtractMoney(getPrice());
-                    vector<shared_ptr<Tile>> currBoard = getBoard();
+                    vector<shared_ptr<Tile>> currBoard = getBoard()->getTiles();
                     int currPos = getPos();
                     player->addTile(currBoard[currPos]);
                     setOwner(player);
@@ -47,16 +49,18 @@ void Residences::action(shared_ptr<Player> player) {
             }
         }
     } else {
+        // Player lands on anther players tile
         if (getOwner() != player) {
             int residenceCount = 0;
 
             std::vector<std::shared_ptr<Tile>> listOfOwnedTiles = getOwner()->getTiles();
-            for (int i = 0; i < listOfOwnedTiles.size(); i++) {
+            for (unsigned int i = 0; i < listOfOwnedTiles.size(); i++) {
                 if (listOfOwnedTiles[i]->isResidence()) {
                     residenceCount += 1;
                 }
             }
             
+            // Determine how much the fee is based on the other player's owned residence's
             int payment = 0;
             if (residenceCount == 1) {
                 payment = 25;
@@ -68,18 +72,30 @@ void Residences::action(shared_ptr<Player> player) {
                 payment = 200;
             }
 
+            // Make the player pay the toll
             cout << "This residence is owned by" << getOwner() << ". Since " << getOwner() << "has " << residenceCount 
             << " properties,  you must pay $" << payment << endl;
             int remaining = player->getMoney() - payment;
-            if (remaining < 0) {
-                cout << "You do not have enough to pay for these fees. Find a way to pay for this property or you must drop out" << endl;
-                player->setAlmostBankruptStatus(true);
-                player->setMoneyOwed(payment);
-            } else {
-                player->subtractMoney(payment);
+            cout << "Please type \"pay\" to pay for these fines" << endl;
+            string response;
+            while (1) {
+                cin >> response;
+                if (response == "pay") {
+                    if (remaining < 0) {
+                        cout << "You do not have enough to pay for these fees. Find a way to pay for this property or you must drop out" << endl;
+                        player->setAlmostBankruptStatus(true);
+                        player->setMoneyOwed(payment);
+                    } else {
+                        player->subtractMoney(payment);
+                        cout << "You have successfully paid the fee of " << payment << endl;
+                    }
+                } else {
+                    cout << "Please type \"pay\" to pay for these fines" << endl;
+                    cin >> response;
+                }
             }
-            
         } else {
+            // When the player lands on their own residencec square
             cout << "Wow you own this residence! :o" << endl;
         }
     }

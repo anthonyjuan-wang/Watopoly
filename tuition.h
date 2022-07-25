@@ -11,7 +11,7 @@ class Tuition : public Tile {
     std::shared_ptr<TileImpl> impl;
 
 public:
-    Tuition(int position, std::string blockName, std::vector<std::shared_ptr<Tile>> board);
+    Tuition(int position, std::string blockName, std::shared_ptr<Board> board);
     ~Tuition();
     void action(std::shared_ptr<Player> player) override;
 };

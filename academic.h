@@ -8,15 +8,23 @@ class Board;
 
 class Academic : public Tile {
     std::string monopoly;
-    int improvement;
+    int improvementCost;
     std::vector<int> tuition;
+    int improvementNum;
 
 public:
-    Academic(int position, std::string blockName, std::string monopolyType, int purchaseCost, int improvementCost,
-             std::vector<int> tuitionWithExpenses, std::vector<std::shared_ptr<Tile>> board);
+    Academic(int position, std::string blockName, std::string monopolyType, int purchaseCost, int improvementCost, int improvementNum,
+             std::vector<int> tuitionWithExpenses, std::shared_ptr<Board> board);
     ~Academic();
 
+    virtual int getImprovement();
+    virtual void setImprovement(int x);
+    virtual int getImproveCost();
+    virtual std::string getMonopolyName();
+    virtual void improveBuy(std::shared_ptr<Player> player);
+    virtual void improveSell(std::shared_ptr<Player> player);
     void action(std::shared_ptr<Player> player) override;
+    
 };
 
 #endif

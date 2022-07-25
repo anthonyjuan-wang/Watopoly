@@ -11,7 +11,7 @@ class GooseNesting : public Tile {
     std::shared_ptr<TileImpl> impl;
 
 public:
-    GooseNesting(int position, std::string blockName, std::vector<std::shared_ptr<Tile>> board);
+    GooseNesting(int position, std::string blockName, std::shared_ptr<Board> board);
     ~GooseNesting();
     void action(std::shared_ptr<Player> player) override;
 };
