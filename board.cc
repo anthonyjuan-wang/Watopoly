@@ -28,7 +28,15 @@ std::vector<std::shared_ptr<Tile>> Board::getTiles(){
 }
 
 void Board::loadGame(string input){
-    ifstream file;
+    ifstream loadedFile;
+    string line;
+    getline(loadedFile, line);
+    int numPlayers = stoi (line);
+    if (numPlayers < 2 || numPlayers > 8){
+        throw invalid_argument("")
+    }    
+
+
 }
 void Board::saveGame(string fileName, int index){
     ofstream file;
@@ -57,7 +65,7 @@ void Board::saveGame(string fileName, int index){
         }  file << playerInfo << endl;
     }
         // save Buildings and owners, by looping through academic squares 
-        for (int i = 0; i < board.size(); i++ ){
+        for (unsigned int i = 0; i < board.size(); i++ ){
             shared_ptr<Tile> tile = board[i];
             string tileInfo = "";
             tileInfo += tile->getName();
@@ -394,15 +402,15 @@ void Board::play() {
         string cmd;
         vector<string> commands{};
         vector<string> cmdInterpreter = {
-            "roll",
-            "next",
-            "trade <name> <give> <receive>",
-            "improve <property> buy/sell",
-            "mortgage <property>",
-            "unmortgage <property>",
-            "bankrupt",
-            "assets",
-            "all",
+            "roll", "\n",
+            "next", "\n",
+            "trade <name> <give> <receive>", "\n",
+            "improve <property> buy/sell", "\n",
+            "mortgage <property>", "\n",
+            "unmortgage <property>", "\n",
+            "bankrupt", "\n",
+            "assets", "\n",
+            "all", "\n",
             "save <filename>"
         };
 
@@ -421,6 +429,8 @@ void Board::play() {
             }
             cout << endl;
         }
+        // ADDED SPACES HERE
+        cout << "\n\n\n\n\n\n\n\n\n";
 
         // stores the line of input into a vector 'commands'
         getline(cin, input);
@@ -428,13 +438,12 @@ void Board::play() {
         while (iss >> cmd) {
             commands.emplace_back(cmd);
         }
-
+        
         if (commands.size() < 1) { // user needs to enter command again
-            cout << commands.size() << endl;
             cout << "Please enter a non-empty command" << endl;
             continue;
         }
-    
+        
         // switch to check all the possible player command inputs
         if (commands[0] == "roll") {
             if(isTurnOver == true) {
@@ -498,6 +507,8 @@ void Board::play() {
 
             if (dice[0] != dice[1] || currPlayer->getJailStatus() || currPlayer->getBankruptStatus()) { // idk if the last two checks are needed
                 cout << currPlayer->getName() << ", your turn is now finished. Please enter 'next'." << endl;
+                // ADDED SPACES HERE
+                cout << "\n\n\n\n\n\n\n\n\n";
                 doubles = 0;
                 isTurnOver = true;
                 //print();
@@ -527,7 +538,10 @@ void Board::play() {
                 cout << "You still need to roll. You cannot give control to the next player." << endl;
             }
             else {
+                
                 cout << currPlayer->getName() << ", your turn is now finished." << endl;
+                // ADDED SPACES HERE
+                cout << "\n\n\n\n\n\n\n\n\n";
                 doubles = 0;
                 currPlayerIndex = (currPlayerIndex + 1) % playersCount;
                 isTurnOver = false;
@@ -563,19 +577,21 @@ void Board::play() {
                 cout << "You can't improve this building. Please enter another comand" << endl;
                 continue;
             }
-            cout << "hello" << endl;
 
             if (commands[2] == "buy") {
                 if (board[pos]->isMortgaged()) {
                     cout << "The building is mortgaged so it cannot be improved." << endl;
+                    continue;
                 }
                 
                 if (board[pos]->getImprovement() >= 5) {
                     cout << "The builidng already has 5 improvements." << endl;
+                    continue;
                 }
                 
                 if (!hasMonopoly(board[pos])) {
                     cout << "You don't own the monopoly so you can't improve the building." << endl;
+                    continue;
                 }
                 
                 cout << "The cost for the improvement is " << board[pos]->getImproveCost() << "." << endl;
@@ -736,7 +752,6 @@ void Board::print() {
 
 bool Board::hasMonopoly(std::shared_ptr<Tile> currTile) {
     string monopolyName = currTile->getMonopolyName();
-    cout << monopolyName << endl;
 
     for (int i = 0; i < numSquares; i++) {
         if (board[i]->isImprovable()) {
@@ -755,4 +770,3 @@ int Board::getRollUpCount() {
 void Board::setRollUpCount(int n) {
     rollUpCount = n;
 }
-

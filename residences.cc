@@ -22,6 +22,8 @@ void Residences::action(shared_ptr<Player> player) {
         // Player has the option to buy this house
         cout << "Would you like to buy " << getName() << " for " << getPrice() << "?" << endl;
         cout << "Types \"yes\" to buy or \"no\" to not buy" << endl;
+        // ADDED SPACES HERE
+        cout << "\n\n\n\n\n\n\n\n\n";
         string answer;
         while(1) {
             cin >> answer;
@@ -37,14 +39,17 @@ void Residences::action(shared_ptr<Player> player) {
                     vector<shared_ptr<Tile>> currBoard = getBoard()->getTiles();
                     int currPos = getPos();
                     player->addTile(currBoard[currPos]);
+                    cout << "You have successfully bought " << getName() << " for" << getPrice() << endl;
                     setOwner(player);
+                    // setOwnable(false);
+                    break;
                 }
             } else if (answer == "no") {
                 cout << getName() << " is now going up for auction" << endl;
                 auction();
                 break;
             } else {
-                cout << "Please enter either \"yes\" or \"no\": Would you like to purchase" << getName() << " for " << getPrice() << "?" << endl;
+                cout << "Please enter either \"yes\" or \"no\": Would you like to purchase " << getName() << " for " << getPrice() << "?" << endl;
                 cin >> answer;
             }
         }

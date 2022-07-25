@@ -56,11 +56,12 @@ void Academic::improveSell(shared_ptr<Player> player) {
 }
 
 void Academic::action(std::shared_ptr<Player> player) {
-    if (isOwnable()) {
+    if (!isOwned()) {
         // Do you have enough money to buy
 
         cout << "Would you like to buy " << getName() << " for " << getPrice() << "? Enter 'yes' or 'no'." << endl;
-
+        // ADDED SPACES HERE
+        cout << "\n\n\n\n\n\n\n\n\n";
         // Look for "yes" or "no"
         string answer;
         cin >> answer;

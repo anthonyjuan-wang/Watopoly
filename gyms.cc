@@ -23,9 +23,10 @@ vector<int> Gyms::rollDice() {
 }
 
 void Gyms::action(std::shared_ptr<Player> player) {
-    cout << "You have landed on " << getName() << endl;
     if (isOwnable()) {
-        cout << "Would you like to buy " << getName() << " for " << getPrice() << "?" << endl;
+        cout << "Would you like to buy " << getName() << " for " << getPrice() << "? Please enter \"yes\n or \"no\"" << endl;
+        // ADDED SPACES HERE
+        cout << "\n\n\n\n\n\n\n\n\n";
         string answer;
         cin >> answer;
         while(1) {
@@ -42,6 +43,7 @@ void Gyms::action(std::shared_ptr<Player> player) {
                     int currPos = getPos();
                     player->addTile(currBoard[currPos]);
                     setOwner(player);
+                    break;
                 }
             } else if (answer == "no") {
                 cout << getName() << " is now going up for auction" << endl;

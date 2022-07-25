@@ -14,7 +14,6 @@ DcTimsLine::DcTimsLine(int position, string blockName, shared_ptr<Board> board) 
 DcTimsLine::~DcTimsLine() {}
 
 void DcTimsLine::action(shared_ptr<Player> player) {
-    cout << "You have landed on the DcTimsLine square" << endl;
 if (player->getJailStatus() == true) {  
     while (true) {
             // If player is in last turn
