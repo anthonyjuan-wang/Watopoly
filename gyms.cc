@@ -9,7 +9,7 @@
 
 using namespace std;
 
-Gyms::Gyms(int position, string blockName, bool gym, shared_ptr<Board> board, vector<shared_ptr<Tile>> boardTiles) : Tile{blockName, true, false, position, 150, board, boardTiles} {
+Gyms::Gyms(int position, string blockName, bool gym, shared_ptr<Board> board) : Tile{blockName, true, false, position, 150, board} {
     isGym = gym;
 }
 
@@ -38,7 +38,7 @@ void Gyms::action(std::shared_ptr<Player> player) {
                     break;
                 } else {
                     player->subtractMoney(getPrice());
-                    vector<shared_ptr<Tile>> currBoard = getBoardTiles();
+                    vector<shared_ptr<Tile>> currBoard = getBoard()->getTiles();
                     int currPos = getPos();
                     player->addTile(currBoard[currPos]);
                     setOwner(player);

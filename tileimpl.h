@@ -11,7 +11,6 @@ class Player;
 struct TileImpl {
     std::shared_ptr<Board> theBoard;
     std::shared_ptr<Player> owner;
-    std::vector<std::shared_ptr<Tile>> boardTiles;
     std::string name;
     bool ownable;
     bool residence;

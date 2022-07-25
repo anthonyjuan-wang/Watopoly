@@ -9,7 +9,7 @@ class Board;
 class DcTimsLine : public Tile {
     
 public:
-    DcTimsLine(int position, std::string blockName, std::shared_ptr<Board> board, std::vector<std::shared_ptr<Tile>> boardTiles);
+    DcTimsLine(int position, std::string blockName, std::shared_ptr<Board> board);
     ~DcTimsLine();
     void action(std::shared_ptr<Player> player) override;
 

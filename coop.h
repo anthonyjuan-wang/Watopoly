@@ -9,7 +9,7 @@ class Board;
 class Coop : public Tile {
 
 public:
-    Coop(int position, std::string blockName, std::shared_ptr<Board> board, std::vector<std::shared_ptr<Tile>> boardTiles);
+    Coop(int position, std::string blockName, std::shared_ptr<Board> board);
     ~Coop();
     
     void action(std::shared_ptr<Player> player) override;

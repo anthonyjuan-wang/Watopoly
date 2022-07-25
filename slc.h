@@ -11,7 +11,7 @@ class Slc : public Tile {
 
 public:
 
-    Slc(int position, std::string blockPosition, std::shared_ptr<Board> board, std::vector<std::shared_ptr<Tile>> boardTiles);
+    Slc(int position, std::string blockPosition, std::shared_ptr<Board> board);
     ~Slc();
     void action(std::shared_ptr<Player> player) override;
 };

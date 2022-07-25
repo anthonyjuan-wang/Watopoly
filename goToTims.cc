@@ -7,7 +7,7 @@
 
 using namespace std;
 
-GoToTims::GoToTims(int position, string blockName, shared_ptr<Board> board, vector<shared_ptr<Tile>> boardTiles) : Tile{blockName, false, false, position, 0, board, boardTiles} {}
+GoToTims::GoToTims(int position, string blockName, shared_ptr<Board> board) : Tile{blockName, false, false, position, 0, board} {}
 
 GoToTims::~GoToTims() {}
 

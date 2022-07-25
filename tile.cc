@@ -8,7 +8,7 @@
 
 using namespace std;
 
-Tile::Tile(string name, bool ownable, bool improvable, int position, int price, shared_ptr<Board> board, vector<shared_ptr<Tile>> boardTiles) : impl{make_shared<TileImpl>()} {
+Tile::Tile(string name, bool ownable, bool improvable, int position, int price, shared_ptr<Board> board) : impl{make_shared<TileImpl>()} {
     //impl->theBoard = board;
     impl->owner = nullptr;
     impl->name = name;
@@ -20,7 +20,6 @@ Tile::Tile(string name, bool ownable, bool improvable, int position, int price, 
     impl->pos = position;
     impl->purchase = price;
     impl->theBoard = board;
-    impl->boardTiles = boardTiles;
 }
 
 Tile::~Tile() {}
@@ -31,10 +30,6 @@ std::shared_ptr<Player> Tile::getOwner() {
 
 shared_ptr<Board> Tile::getBoard(){
     return impl->theBoard;
-}
-
-vector<shared_ptr<Tile>> Tile::getBoardTiles() {
-    return impl->boardTiles;
 }
 
 void Tile::setOwner(std::shared_ptr<Player> player) {
@@ -98,9 +93,9 @@ void Tile::unmortgage(shared_ptr<Player> player) {
 }
 
 void Tile::action(std::shared_ptr<Player> player){}
-int Tile::getImprovement(){ return -1; }
+int Tile::getImprovement(){}
 void Tile::setImprovement(int x){}
-int Tile::getImproveCost(){ return -1; }
-std::string Tile::getMonopolyName(){ return "noMonopoly"; }
+int Tile::getImproveCost(){}
+std::string Tile::getMonopolyName(){}
 void Tile::improveBuy(std::shared_ptr<Player> player){}
 void Tile::improveSell(std::shared_ptr<Player> player){}

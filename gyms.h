@@ -14,7 +14,7 @@ class Gyms : public Tile
     bool isGym;
     
 public:
-    Gyms(int position, std::string blockName, bool gym, std::shared_ptr<Board> board, std::vector<std::shared_ptr<Tile>> boardTiles);
+    Gyms(int position, std::string blockName, bool gym, std::shared_ptr<Board> board);
     ~Gyms();
     std::vector<int> rollDice();
     void action(std::shared_ptr<Player> player) override;

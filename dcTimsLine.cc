@@ -9,14 +9,14 @@
 
 using namespace std;
 
-DcTimsLine::DcTimsLine(int position, string blockName, shared_ptr<Board> board, vector<shared_ptr<Tile>> boardTiles) : Tile{blockName, false, false, position, 0, board, boardTiles} {}
+DcTimsLine::DcTimsLine(int position, string blockName, shared_ptr<Board> board) : Tile{blockName, false, false, position, 0, board} {}
 
 DcTimsLine::~DcTimsLine() {}
 
 void DcTimsLine::action(shared_ptr<Player> player) {
     cout << "You have landed on the DcTimsLine square" << endl;
+if (player->getJailStatus() == true) {  
     while (true) {
-        if (player->getJailStatus() == true) {  
             // If player is in last turn
              if (player->getJailCount() == 2) {
                             cout << "This is your last turn in jail. You must use a roll up the rim cup or pay up." << endl;

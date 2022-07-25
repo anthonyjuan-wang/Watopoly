@@ -15,14 +15,13 @@ class Tile {
 
 public:
     Tile(std::string name, bool ownable, bool improvable, int position, int price, 
-         std::shared_ptr<Board> board, std::vector<std::shared_ptr<Tile>> boardTiles);
+         std::shared_ptr<Board> board);
     virtual ~Tile();
     
     // General methods
     std::shared_ptr<Player> getOwner();
     void setOwner(std::shared_ptr<Player> player);
     std::shared_ptr<Board> getBoard(); // gets the *board object
-    std::vector<std::shared_ptr<Tile>> getBoardTiles();
     int getPos();
     int getPrice();
     std::string getName();

@@ -6,7 +6,7 @@ class Board;
 
 using namespace std;
 
-Tuition::Tuition(int position, string blockName, shared_ptr<Board> board, vector<shared_ptr<Tile>> boardTiles) : Tile{blockName, false, false, position, 0, board, boardTiles} {}
+Tuition::Tuition(int position, string blockName, shared_ptr<Board> board) : Tile{blockName, false, false, position, 0, board} {}
 
 Tuition::~Tuition() {}
 

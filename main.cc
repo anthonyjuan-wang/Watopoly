@@ -5,8 +5,10 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
+
         cout << "Welcome to Waterloo's spin on monopoly, Watopoly." << endl;
         cin.exceptions(ios::eofbit | ios::failbit);
+        srand (time(NULL));
         string cmd;
         Board theGame{};
         bool testing = false;
@@ -14,7 +16,7 @@ int main(int argc, char *argv[]) {
        for (int i=0; i < argc; i++){
 		string command = argv[i];
 		if (command == "-testing"){
-			testingMode = true;
+			testing = true;
 		}
 		else if (command == "-load"){
 			if ((i+1) <  argc){
@@ -27,16 +29,13 @@ int main(int argc, char *argv[]) {
                 cout << "Entering Testing Mode." << endl;
                 theGame.setTestingMode();
         }
-        int players;
-        cout << "Please enter the number of players that will be playing." << endl;
-        cin >> players;
-        theGame.init(players);
-        theGame.initTiles();
-        theGame.play();
-
-
 
         
-
+        //int players;
+        //cout << "Please enter the number of players that will be playing." << endl;
+        //cin >> players;
+        //theGame.init(players);
+        theGame.initTiles();
+        theGame.play();
 
 }

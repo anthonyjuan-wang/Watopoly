@@ -9,7 +9,7 @@ class Board;
 
 using namespace std;
 
-NeedlesHall::NeedlesHall(int position, string blockName, shared_ptr<Board> board, vector<shared_ptr<Tile>> boardTiles) : Tile{blockName, false, false, position, 0, board, boardTiles} {}
+NeedlesHall::NeedlesHall(int position, string blockName, shared_ptr<Board> board) : Tile{blockName, false, false, position, 0, board} {}
 
 NeedlesHall::~NeedlesHall() {}
 
@@ -27,25 +27,25 @@ void NeedlesHall::action(std::shared_ptr<Player> player) {
 
     value = rand() % 18 + 1;
     if (value == 1) {
-        cout << "You will lose $200.";
+        cout << "You will lose $200. ";
         player->subtractMoney(200);
     } else if (value >= 2 && value <= 3) {
-        cout << "You will lose $100.";
+        cout << "You will lose $100. ";
         player->subtractMoney(100);
     } else if (value >= 4 && value <= 6) {
-        cout << "You will lose $50.";
+        cout << "You will lose $50. ";
         player->subtractMoney(50);
     } else if (value >= 7 && value <= 12) {
-        cout << "You will gain $25.";
+        cout << "You will gain $25. ";
         player->addMoney(25);
     } else if (value >= 13 && value <= 15) {
-        cout << "You will gain $50.";
+        cout << "You will gain $50. ";
         player->addMoney(50);
     } else if (value >= 16 && value <= 17) {
-        cout << "You will gain $100.";
+        cout << "You will gain $100. ";
         player->addMoney(100);
     } else if (value == 18) {
-        cout << "You will gain $200.";
+        cout << "You will gain $200. ";
         player->addMoney(200);
     }
 }

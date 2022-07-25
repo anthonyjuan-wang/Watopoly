@@ -11,7 +11,7 @@ class Osap : public Tile {
     std::shared_ptr<TileImpl> impl;
 
 public:
-    Osap(int position, std::string str, std::shared_ptr<Board> board, std::vector<std::shared_ptr<Tile>> boardTiles);
+    Osap(int position, std::string str, std::shared_ptr<Board> board);
     ~Osap();
 
     void action(std::shared_ptr<Player> player) override;

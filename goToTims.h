@@ -11,7 +11,7 @@ class GoToTims : public Tile
     std::shared_ptr<TileImpl> impl;
 
 public:
-    GoToTims(int position, std::string blockName, std::shared_ptr<Board> board, std::vector<std::shared_ptr<Tile>> boardTiles);
+    GoToTims(int position, std::string blockName, std::shared_ptr<Board> board);
     ~GoToTims();
     
     void action(std::shared_ptr<Player> player) override;

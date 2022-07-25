@@ -1,5 +1,5 @@
-#ifndef __BOARD_DISPLAY_H_
-#define __BOARD_DISPLAY_H_
+#ifndef __BOARD_DISPLAY_H__
+#define __BOARD_DISPLAY_H__
 #include <memory>
 #include <vector>
 
@@ -8,10 +8,10 @@ class Tile;
 class Player;
 class BoardDisplay {
     std::shared_ptr<Board> theBoard;
-    void printImprovements(std::shared_ptr<Tile> tile);
-    void printPlayers(std::vector<std::shared_ptr<Player>> players, int index);
+    
     public:
-        void print();
+        void print();  
+        BoardDisplay(std::shared_ptr<Board> theBoard);
 };
 
 #endif

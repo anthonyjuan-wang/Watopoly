@@ -7,7 +7,7 @@
 #include "player.h"
 
 using namespace std;
-Slc::Slc(int position, string blockName, shared_ptr<Board> board, vector<shared_ptr<Tile>> boardTiles) : Tile{blockName, false, false, position, 0, board, boardTiles} {}
+Slc::Slc(int position, string blockName, shared_ptr<Board> board) : Tile{blockName, false, false, position, 0, board} {}
 
 Slc::~Slc() {}
 
@@ -25,36 +25,36 @@ void Slc::action(std::shared_ptr<Player> player) {
 
     value = rand() % 24 + 1;
     if (value >= 1 && value <= 3) {
-        cout << "You moved back 3 spaces ";
+        cout << "You moved back 3 spaces. ";
         player->move(-3);
     } else if (value >= 4 && value <= 7) {
-        cout << "You moved back 2 spaces ";
+        cout << "You moved back 2 spaces. ";
         player->move(-2);
     } else if (value >= 8 && value <= 11) {
-        cout << "You moved back 1 space ";
+        cout << "You moved back 1 space. ";
         player->move(-1);
     } else if (value >= 12 && value <= 14) {
-        cout << "You moved forward 1 space ";
+        cout << "You moved forward 1 space. ";
         player->move(1);
     } else if (value >= 15 && value <= 18) {
-        cout << "You moved forward 2 spaces ";
+        cout << "You moved forward 2 spaces. ";
         player->move(2);
     } else if (value >= 19 && value <= 22) {
-        cout << "You moved forward 3 spaces ";
+        cout << "You moved forward 3 spaces. ";
         player->move(3);
     } else if (value == 23) {
-        cout << "You were moved to the Go To DC Tims Line tile." << endl;
+        cout << "You were moved to the Go To DC Tims Line tile. " << endl;
         player->setPos(10);
         player->setJailStatus(true);
         player->setJailCount(0);
         return;
     } else if (value == 24) {
-        cout << "You were moved forward to 'Collect Osap'";
+        cout << "You were moved forward to 'Collect Osap'. ";
         player->setPos(0);
     }
 
     int currPos = player->getPos();
-    vector<shared_ptr<Tile>> boardTiles = getBoardTiles();
-    cout << "You have landed on " << boardTiles[currPos]->getName() << "." << endl;
+    vector<shared_ptr<Tile>> boardTiles = getBoard()->getTiles();
+    cout << "You have landed on " << boardTiles[currPos]->getName() << ". " << endl;
     boardTiles[currPos]->action(player);
 }

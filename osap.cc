@@ -8,7 +8,7 @@
 
 using namespace std;
 
-Osap::Osap(int position, string blockName, shared_ptr<Board> board, vector<shared_ptr<Tile>> boardTiles) : Tile{blockName, false, false, position, 0, board, boardTiles} {}
+Osap::Osap(int position, string blockName, shared_ptr<Board> board) : Tile{blockName, false, false, position, 0, board} {}
 
 Osap::~Osap() {}
 
