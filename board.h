@@ -22,6 +22,7 @@ private:
     int playersCount = 0;
     std::vector<std::shared_ptr<Tile>> board;
     std::vector<std::shared_ptr<Player>> players;
+    std::vector<std::string> pieces = {"G: Goose", "B: GRT Bus", "D: Tim Hortons Doughnut", "P: Professor", "S: Student", "M: Money", "L: Laptop", "T: Pink Tie"};
     const std::vector<int> ownableSquares = {1, 3, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 19, 21, 
     23, 24, 25, 26, 27, 28, 29, 31, 32, 34, 35, 37, 39};
 public:
@@ -32,7 +33,7 @@ public:
     std::vector<std::shared_ptr<Tile>> getTiles();
     void loadGame(std::string fileName);
     void saveGame(std::string fileName, int index);
-    void init(int input);
+    void init(int input); 
     void initTiles();
     void play();
     std::vector<int> rollDice();        // maybe virtual // maybe virtual

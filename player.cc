@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <memory>
+#include <iomanip>
 using namespace std;
 
 /*
@@ -93,7 +94,7 @@ void Player::displayAssets() {
     std::vector<shared_ptr<Tile>> myTiles = getTiles();
     int size = myTiles.size();
     for (int i = 0; i < size; i++) {
-        cout << myTiles[i]->getName() << ": " << myTiles[i]->getPrice() << "\t Improvements: " << myTiles[i]->getImprovement() << endl;
+        cout << myTiles[i]->getName() << ": " << setw(10) << myTiles[i]->getPrice() << "     Improvements: " << myTiles[i]->getImprovement() << endl;
     }
 }
 

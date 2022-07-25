@@ -39,8 +39,10 @@ void Tuition::action(std::shared_ptr<Player> player) {
     while (true) {
         if (response == 1 ) {
             cost = 300;
+            break;
         } else if (response == 2) {
             cost = totalWorth;
+            break;
         } else {
             cout << "Invalid, please enter a valid command" << endl;
         }

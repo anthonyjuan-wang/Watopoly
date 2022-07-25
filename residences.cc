@@ -16,14 +16,12 @@ Residences::Residences(int position, string blockName, bool residence, shared_pt
 Residences::~Residences() {}
 
 void Residences::action(shared_ptr<Player> player) {
-    cout << "You have landed on " << getName() << endl;
-
     if (isOwnable()) {
         // Player has the option to buy this house
         cout << "Would you like to buy " << getName() << " for " << getPrice() << "?" << endl;
         cout << "Types \"yes\" to buy or \"no\" to not buy" << endl;
         // ADDED SPACES HERE
-        cout << "\n\n\n\n\n\n\n\n\n";
+        cout << "\n\n\n\n\n\n";
         string answer;
         while(1) {
             cin >> answer;

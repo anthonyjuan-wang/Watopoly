@@ -74,7 +74,7 @@ bool Tile::isOwned() {
 }
 
 void Tile::auction() {
-    cout << "We are now auctioning the buidling " << getName() << "." << endl;
+    cout << "We are now auctioning the building " << getName() << "." << endl;
     if (isImprovable()) {
         setImprovement(0);
     }
@@ -82,28 +82,31 @@ void Tile::auction() {
     vector<shared_ptr<Player>> players = getBoard()->getPlayers();
     vector<bool> withdraw;
     int playersCount = players.size();
+    const int numOfPlayers = players.size();
     int currIndex = 0;
     int currBid = 0;
     string response;
 
+    for (int i = 0; i < playersCount; i++) {
+        withdraw.emplace_back(false);
+    }
+
     while (true) {
         if (playersCount == 1) {
-            cout << "Congratulations " << players[currIndex]->getName() << " you have won the bid for $" << currBid << "." << endl;
             break;
         }
         cout << "The current bid on the building is $" << currBid << "." << endl;
 
         while (true) {
             if (players[currIndex]->getMoney() <= currBid) {
-                cout << players[currIndex]->getName() << ", you do not have enough money to continue participating in the bid. You will now be removed from the auction." << endl;
+                cout << players[currIndex]->getName() << ", you do not have enough money to continue participating in the bid. \nYou will now be removed from the auction." << endl;
                 playersCount--;
                 withdraw[currIndex] = true;
                 break;
             }
 
-            cout << players[currIndex]->getName() << " enter 'withdraw' to withdraw from the auction or 'bid' to bid. ";
+            cout << "\nIt is now " << players[currIndex]->getName() << "'s turn to bid.\nPlease enter 'withdraw' to withdraw from the auction or 'bid' to bid. ";
             cin >> response;
-            cout << endl;
 
             if (response == "withdraw") {
                 playersCount--;
@@ -113,20 +116,16 @@ void Tile::auction() {
                 cout << "Enter how much you'd like to bid: ";
                 string bidStr;
                 cin >> bidStr;
-
                 try {
                     int newBid = stoi(bidStr);
-
                     if (newBid > players[currIndex]->getMoney()) {
-                        cout << "You do not have enough money to bid " << newBid << "." << endl;
+                        cout << "You do not have enough money to bid $" << newBid << "." << endl;
                         continue;
                     }
-
                     if (newBid <= currBid) {
                         cout << "Your new bid needs to be higher than the current bid." << endl;
                         continue;
                     }
-
                     currBid = newBid;
                     break;
                 }  catch (invalid_argument &ia) {
@@ -134,30 +133,35 @@ void Tile::auction() {
                     continue;
                 }
 
+            } else {
+                cout << "Invalid command. Enter 'withdraw' or 'bid'." << endl;
             }
-
         }
-        currIndex = (currIndex + 1) % playersCount;
+        
         if (playersCount <= 1) {
             continue;
         }
-
-        while (withdraw[index]) {
-            index = (index + 1) % playersCount;
+        
+        currIndex = (currIndex + 1) % numOfPlayers;
+        while (withdraw[currIndex]) {
+            currIndex = (currIndex + 1) % numOfPlayers;
         }
+        cout << currIndex << endl;
+        
     }
 
     int winnerIndex = 0;
     playersCount = players.size();
+
     for (int i = 0; i < playersCount; i++) {
         if (withdraw[i] == false) {
             winnerIndex = i;
             break;
         }
     }
-
-    cout << "Congrats " << players[winnerIndex]->getName() << "you have won the auction. You've purchased " << getName() << " for $" << currBid << "." << endl;
-    players[winnerIndex]->subtractMoney(getPrice());
+    
+    cout << "Congrats " << players[winnerIndex]->getName() << "! You have won the auction :) You've purchased " << getName() << " for $" << currBid << "." << endl;
+    players[winnerIndex]->subtractMoney(currBid);
     vector<shared_ptr<Tile>> boardTiles = getBoard()->getTiles();
     int currPos = getPos();
     players[winnerIndex]->addTile(boardTiles[currPos]);

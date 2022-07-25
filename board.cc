@@ -31,12 +31,81 @@ void Board::loadGame(string input){
     ifstream loadedFile;
     string line;
     getline(loadedFile, line);
-    int numPlayers = stoi (line);
-    if (numPlayers < 2 || numPlayers > 8){
-        throw invalid_argument("")
-    }    
-
-
+    int playerCount = stoi (line);
+    if (playerCount < 2 || playerCount > 8){
+        throw invalid_argument("Input file must have in between 2 - 7 players!");
+    }
+    Board theGame{};
+    theGame.initTiles();       
+    for (int i = 0; i < playerCount; i++){
+        getline(loadedFile, line);
+        stringstream playerInfo(line);
+        string cmd;
+        vector <string> playersInfo;
+        while (playerInfo >> cmd){
+            playersInfo.emplace_back(cmd);
+        }
+        string playerName = playersInfo[0];
+        if (playerName == "BANK"){
+            throw invalid_argument("Players cannot be named BANK.");
+        }
+        // check for duplciated names
+        for (int j = 0; j < i; j++){
+            if (playerName == players[i]->getName()){
+                throw invalid_argument("Two players cannot have the same name.");
+            }   
+        }
+        string temp = playersInfo[1];
+        char piece = temp[0];
+        // check if this piece is valid.      
+        bool validPiece;       
+        for (int j = 0; j < 8; i++){
+            if (pieces[j][0] == piece)
+                validPiece = true;
+        }
+        if (!validPiece){
+            throw invalid_argument ("A players' piece must be one of the 8 valid pieces.");
+        }
+        // check for duplication
+        for (int j = 0; j < playerCount; j++){
+            if (players[j]->getPiece() == piece){
+				throw invalid_argument("It is invalid for more than one player to have the same piece.");
+			}
+        }   
+       // cups error checking
+        int cups = stoi(playersInfo[2]);
+        if (cups + rollUpCount > 4){
+                throw invalid_argument("There may not be more than 4 total roll up the rim cups available at a time.");
+        }
+        int money = stoi(playersInfo[3]);
+        if (money < 0 ){
+                throw invalid_argument ("A player cannot have negative money.");
+        }
+        int pos = stoi(playersInfo[4]);
+        if (pos == goToJailPos){
+            throw invalid_argument ("A player cannot start the game on the GoToTims tile.");
+        }
+       
+        int jailStatus = 0;
+        int jailTurns = 0;
+        if (pos == jailPos){
+            jailStatus = stoi(playersInfo[5]);
+            if (jailStatus != 0 || jailStatus != 1){
+                throw invalid_argument("Jail status must be 0 or 1.");
+            }
+            if (jailStatus == 1){
+                jailTurns = stoi(playersInfo[6]);
+                if (jailTurns > 2 || jailTurns < 0){  
+                throw invalid_argument("Turns in jail must be between 0-2, inclusive.");
+                }
+            }
+        }
+         if (pos >= 40 || pos < -1){
+            throw invalid_argument ("That position is out of bounds.");
+        }
+        shared_ptr<Player> currPlayer = make_shared<Player> (playerName, piece, money, pos, );
+    
+    }        
 }
 void Board::saveGame(string fileName, int index){
     ofstream file;
@@ -312,7 +381,6 @@ void Board::init(int input) {
         players.clear();
     }
 
-    vector<string> pieces = {"G: Goose", "B: GRT Bus", "D: Tim Hortons Doughnut", "P: Professor", "S: Student", "M: Money", "L: Laptop", "P: Pink Tie"};
     
     for (int i = 1; i <= input; i++) {
         string playerName;
@@ -414,6 +482,9 @@ void Board::play() {
             "save <filename>"
         };
 
+        // ADDED SPACES HERE
+        cout << "\n\n\n\n\n\n";
+
         // checks if the # of players are < 2
         if (playersCount < 2) {
             cout << "Congratulations " << players[0]->getName() << " you are the winner! The game is now over" << endl;
@@ -429,8 +500,6 @@ void Board::play() {
             }
             cout << endl;
         }
-        // ADDED SPACES HERE
-        cout << "\n\n\n\n\n\n\n\n\n";
 
         // stores the line of input into a vector 'commands'
         getline(cin, input);
@@ -438,11 +507,14 @@ void Board::play() {
         while (iss >> cmd) {
             commands.emplace_back(cmd);
         }
-        
+
         if (commands.size() < 1) { // user needs to enter command again
             cout << "Please enter a non-empty command" << endl;
             continue;
         }
+        
+        // ADDED SPACES HERE
+        cout << "\n\n\n\n\n\n";
         
         // switch to check all the possible player command inputs
         if (commands[0] == "roll") {
@@ -507,8 +579,6 @@ void Board::play() {
 
             if (dice[0] != dice[1] || currPlayer->getJailStatus() || currPlayer->getBankruptStatus()) { // idk if the last two checks are needed
                 cout << currPlayer->getName() << ", your turn is now finished. Please enter 'next'." << endl;
-                // ADDED SPACES HERE
-                cout << "\n\n\n\n\n\n\n\n\n";
                 doubles = 0;
                 isTurnOver = true;
                 //print();
@@ -538,14 +608,12 @@ void Board::play() {
                 cout << "You still need to roll. You cannot give control to the next player." << endl;
             }
             else {
-                
                 cout << currPlayer->getName() << ", your turn is now finished." << endl;
-                // ADDED SPACES HERE
-                cout << "\n\n\n\n\n\n\n\n\n";
                 doubles = 0;
                 currPlayerIndex = (currPlayerIndex + 1) % playersCount;
                 isTurnOver = false;
                 print();
+                continue;
             }
         } else if (commands[0] == "trade" && commands.size() == 4) {
             if (currPlayer->getBankruptStatus() == true) {
@@ -591,6 +659,11 @@ void Board::play() {
                 
                 if (!hasMonopoly(board[pos])) {
                     cout << "You don't own the monopoly so you can't improve the building." << endl;
+                    continue;
+                }
+
+                if (!board[pos]->isImprovable()) {
+                    cout << "This tile is not improveable" << endl;
                     continue;
                 }
                 
@@ -698,6 +771,9 @@ vector<int> Board::rollDice() {
     
     int die1 = (rand() % 6) + 1;
     int die2 = (rand() % 6) + 1;
+    //TESTING PURPOSES
+    die1 = 1;
+    die2 = 1;
     vector<int> dice = {die1, die2};
     return dice;
 }

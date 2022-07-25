@@ -24,9 +24,9 @@ vector<int> Gyms::rollDice() {
 
 void Gyms::action(std::shared_ptr<Player> player) {
     if (isOwnable()) {
-        cout << "Would you like to buy " << getName() << " for " << getPrice() << "? Please enter \"yes\n or \"no\"" << endl;
+        cout << "Would you like to buy " << getName() << " for " << getPrice() << "? Please enter \"yes\" or \"no\"" << endl;
         // ADDED SPACES HERE
-        cout << "\n\n\n\n\n\n\n\n\n";
+        cout << "\n\n\n\n\n\n";
         string answer;
         cin >> answer;
         while(1) {
