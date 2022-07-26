@@ -13,8 +13,6 @@ Tile::Tile(string name, bool ownable, bool improvable, int position, int price, 
     impl->owner = nullptr;
     impl->name = name;
     impl->ownable = ownable;
-    impl->residence = false;
-    impl->gym = false;
     impl->improvable = improvable; 
     impl->mortgaged = false;
     impl->pos = position;
@@ -54,14 +52,6 @@ bool Tile::isImprovable() {
 
 bool Tile::isOwnable() {
     return impl->ownable;
-}
-
-bool Tile::isResidence() {
-    return impl->residence;
-}
-
-bool Tile::isGym() {
-    return impl->gym;
 }
 
 bool Tile::isMortgaged() {
@@ -177,14 +167,14 @@ void Tile::auction() {
 
 void Tile::mortgage(shared_ptr<Player> player) {
     int purchase = getPrice();
-    cout << "You receive " << purchase << "$ from mortgaging " << getName() << endl;
+    cout << "You receive $" << purchase / 2 << " from mortgaging " << getName() << endl;
     player->addMoney(purchase / 2);
     impl->mortgaged = true;
 }
 
 void Tile::unmortgage(shared_ptr<Player> player) {
     int purchase = getPrice();
-    cout << "You pay " << purchase/2 << "$ + " << purchase*0.1 << "to unmortgage your property" << getName() <<  endl;
+    cout << "You pay $" << purchase/2 << " + " << purchase*0.1 << " to unmortgage your property" << getName() <<  endl;
     player->subtractMoney(purchase*0.6);
     impl->mortgaged = false;
     

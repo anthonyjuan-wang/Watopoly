@@ -9,8 +9,7 @@
 
 using namespace std;
 
-Gyms::Gyms(int position, string blockName, bool gym, shared_ptr<Board> board) : Tile{blockName, true, false, position, 150, board} {
-    isGym = gym;
+Gyms::Gyms(int position, string blockName, shared_ptr<Board> board) : Tile{blockName, true, false, position, 150, board} {
 }
 
 Gyms::~Gyms() {}
@@ -59,8 +58,7 @@ void Gyms::action(std::shared_ptr<Player> player) {
             int gymCount = 0;
             vector<shared_ptr<Tile>> listOfOwnedTiles = getOwner()->getTiles();
             for (unsigned int i = 0; i < listOfOwnedTiles.size(); i++) {
-                cout << "List of Owned Tiles: " << listOfOwnedTiles[i]->isGym() << endl;
-                if (listOfOwnedTiles[i]->isGym()) {  
+                if (listOfOwnedTiles[i]->getName() == "PAC" || listOfOwnedTiles[i]->getName() == "CIF") {  
                     gymCount += 1;
                 }
             }    

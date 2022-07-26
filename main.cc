@@ -49,6 +49,8 @@ int main(int argc, char *argv[]) {
         }
         
        if (!errorRaised && filename != "N/A"){
+                cout << "File successfully loaded." << endl;
+                theGame.initTiles();
                 theGame.play();
         }
 
@@ -68,6 +70,8 @@ int main(int argc, char *argv[]) {
                         cout << "The number of players you entered is invalid" << endl;
                }
         }
+        theGame.initTiles();
+        theGame.print();
         theGame.play();
         }
 }

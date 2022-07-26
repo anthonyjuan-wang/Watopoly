@@ -12,7 +12,7 @@ Coop::Coop(int position, string blockName, shared_ptr<Board> board) : Tile{block
 Coop::~Coop() {}
 
 void Coop::action(shared_ptr<Player> player) {
-    cout << "You've landed on Coop. You must pay the Coop fee of $150." << endl; 
+    cout << "You must pay the Coop fee of $150 :(" << endl; 
     
     if (player->getMoney() < 150) {
         cout << "You do not have enough to pay the $150 fee. You now have the ability to declare bankruptcy." << endl;

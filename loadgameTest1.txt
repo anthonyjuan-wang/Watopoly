@@ -1,6 +1,11 @@
-2
+5
 player1 B 0 1500 11
 player2 G 1 1000 20
+player3 D 0 1100 1
+player4 T 0 1000 4
+player5 P 1 900 34
 AL player1 0
 ML player1 2
 ECH player2 0
+PAS player2 3
+HH player2 4
