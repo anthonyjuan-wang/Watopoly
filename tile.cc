@@ -174,7 +174,7 @@ void Tile::mortgage(shared_ptr<Player> player) {
 
 void Tile::unmortgage(shared_ptr<Player> player) {
     int purchase = getPrice();
-    cout << "You pay " << purchase/2 << "$ + " << purchase*0.1 << "to unmortgage your property" << getName() <<  endl;
+    cout << "You pay $" << purchase/2 << " + " << purchase*0.1 << " to unmortgage your property" << getName() <<  endl;
     player->subtractMoney(purchase*0.6);
     impl->mortgaged = false;
     

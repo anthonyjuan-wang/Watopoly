@@ -620,9 +620,11 @@ void Board::play() {
             cout << "You rolled " << dice[0] << " and " << dice[1] << endl;
             cout << "You just landed on " << board[pos]->getName() << endl;
 
-            if (pos != osapPos && pos != goToJailPos) {
+            if (pos != osapPos && ppay
+            os != goToJailPos) {
                 // add $200 if you pass osap
                 if (total > 40 && currPlayer->getJailStatus() == false) {
+                    cout << "You have passed osap" << endl;
                     currPlayer->addMoney(200);
                 }
                 board[pos]->action(currPlayer);
@@ -632,6 +634,7 @@ void Board::play() {
                     continue;
                 }
             } else if (pos == osapPos) {
+                cout << "You have landed on the osap square [̲̅$̲̅(̲̅•◡•)̲̅$̲̅]" << endl;
                 currPlayer->addMoney(200);
             } else if (pos == goToJailPos) {
                 currPlayer->setPos(jailPos);
