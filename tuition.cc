@@ -30,13 +30,13 @@ void Tuition::action(std::shared_ptr<Player> player) {
     cout << "You must pay the bank. Choose one of the options '1' or '2':" << endl;
     cout << "1. Pay $300" << endl;
     cout << "2. Pay 10%/ of your total worth (including savings, prices of each building owned, and costs of each improvement)." << endl;
-    cout << "Your total worth is $ " << totalWorth << endl;
+    cout << "Your total worth is $" << totalWorth << endl;
 
     int response = 0;
     int cost = 0;
-    cin >> response;
 
     while (true) {
+        cin >> response;
         if (response == 1 ) {
             cost = 300;
             break;
@@ -44,7 +44,7 @@ void Tuition::action(std::shared_ptr<Player> player) {
             cost = totalWorth;
             break;
         } else {
-            cout << "Invalid, please enter a valid command" << endl;
+            cout << "Invalid, please enter a valid command. Enter '1' or '2'." << endl;
         }
     }
 

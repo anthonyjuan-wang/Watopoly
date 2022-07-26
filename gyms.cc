@@ -23,7 +23,7 @@ vector<int> Gyms::rollDice() {
 }
 
 void Gyms::action(std::shared_ptr<Player> player) {
-    if (isOwnable()) {
+    if (!isOwned()) {
         cout << "Would you like to buy " << getName() << " for " << getPrice() << "? Please enter \"yes\" or \"no\"" << endl;
         // ADDED SPACES HERE
         cout << "\n\n\n\n\n\n";
@@ -57,23 +57,24 @@ void Gyms::action(std::shared_ptr<Player> player) {
     } else {
         if (getOwner() != player) {
             int gymCount = 0;
-            std::vector<std::shared_ptr<Tile>> listOfOwnedTiles = getOwner()->getTiles();
+            vector<shared_ptr<Tile>> listOfOwnedTiles = getOwner()->getTiles();
             for (unsigned int i = 0; i < listOfOwnedTiles.size(); i++) {
                 if (listOfOwnedTiles[i]->isGym()) {
                     gymCount += 1;
                 }
             }    
-            cout << "This Gym is owned by" << getOwner() << " who owns " << gymCount << endl;
+            cout << "This Gym is owned by " << getOwner()->getName() << " who owns " << gymCount << " gyms" << endl;
             // Roll of dice to get payment
             int diceSum = 0;
             cout << "Please type \"roll\" to roll two dices to determine your usage fees: 4x the sum of the dices if only 1 gym. 10x sum of dices if 2 gyms are owned" << endl;
             string answer;
             cin >> answer;
             while (1) {
-                if (answer == "yes") {
+                if (answer == "roll") {
                     vector<int> diceVal = rollDice();
                     cout << "You rolled a " << diceVal[0] << " and " << diceVal[1] << endl;
                     diceSum = diceVal[0] + diceVal[1];
+                    break;
                 } else {
                     cout << "Please type \"roll\" to roll two dices" << endl;
                     cin >> answer;
@@ -87,7 +88,7 @@ void Gyms::action(std::shared_ptr<Player> player) {
                 payment = 10 * diceSum;
             }
 
-            cout << "Please type \"Pay\" to pay for your fees" << endl;
+            cout << "Please type \"pay\" to pay for your fees" << endl;
             while(1) {
                 cin >> answer;
                 if (answer == "pay") {
@@ -98,12 +99,12 @@ void Gyms::action(std::shared_ptr<Player> player) {
                         player->setMoneyOwed(payment);
                         break;
                     } else {
-                        cout << "You have successfully paid your gym fees" << payment << endl;
+                        cout << "You have successfully paid your gym fees of $" << payment << endl;
                         player->subtractMoney(payment);
                         break;
                     }
                 } else {
-                    cout << "Please type \"Pay\" to pay for your fees." << endl;
+                    cout << "Please type \"pay\" to pay for your fees." << endl;
                 }
             }
             

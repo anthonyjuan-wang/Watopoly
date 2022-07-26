@@ -4,14 +4,16 @@
 #include <vector>
 #include <sstream>
 #include <memory>
+
 // #include "tile.h"
 // #include "player.h"
 class Tile;
 class Player;
-
+class BoardDisplay;
 class Board
 {
 private:
+    std::shared_ptr<BoardDisplay> td;
     int doubles = 0;
     const int osapPos = 0;
     const int jailPos = 10;
@@ -23,7 +25,7 @@ private:
     std::vector<std::shared_ptr<Tile>> board;
     std::vector<std::shared_ptr<Player>> players;
     std::vector<std::string> pieces = {"G: Goose", "B: GRT Bus", "D: Tim Hortons Doughnut", "P: Professor", "S: Student", "M: Money", "L: Laptop", "T: Pink Tie"};
-    const std::vector<int> ownableSquares = {1, 3, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 19, 21, 
+    const std::vector<int> ownableTiles = {1, 3, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 19, 21, 
     23, 24, 25, 26, 27, 28, 29, 31, 32, 34, 35, 37, 39};
 public:
     Board();

@@ -98,6 +98,13 @@ void Tile::auction() {
         cout << "The current bid on the building is $" << currBid << "." << endl;
 
         while (true) {
+            if (players[currIndex]->getBankruptStatus()) {
+                cout << players[currIndex]->getName() << ", you are bankrupt so you can't participate in the auction." << endl;
+                playersCount--;
+                withdraw[currIndex] = true;
+                break;
+            }
+
             if (players[currIndex]->getMoney() <= currBid) {
                 cout << players[currIndex]->getName() << ", you do not have enough money to continue participating in the bid. \nYou will now be removed from the auction." << endl;
                 playersCount--;
@@ -181,6 +188,10 @@ void Tile::unmortgage(shared_ptr<Player> player) {
     player->subtractMoney(purchase*0.6);
     impl->mortgaged = false;
     
+}
+
+void Tile::setMortgaged(bool status) {
+    impl->mortgaged = status;
 }
 
 void Tile::action(std::shared_ptr<Player> player){}

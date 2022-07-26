@@ -106,8 +106,16 @@ void Academic::action(std::shared_ptr<Player> player) {
                 player->setAlmostBankruptStatus(true);
                 player->setMoneyOwed(cost);
             } else {
-                // Pay for the tuition cost
-                player->subtractMoney(cost);
+                // Pay for the tution cost
+                string answerpay;
+                while(1) {
+                    cout << "Please type \"pay\" to pay for your tuition" << endl;
+                    cin >> answerpay;
+                    if (answerpay == "pay") {
+                        player->subtractMoney(cost);
+                        break;
+                    }
+                }
             }
         } else {
             // Player lands on their own tile
