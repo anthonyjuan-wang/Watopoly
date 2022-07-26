@@ -23,6 +23,7 @@ using namespace std;
 Board::Board() {
     initTiles();
     td = make_shared<BoardDisplay>(this);
+    print();
 }
 
 Board::~Board() {}
@@ -40,8 +41,7 @@ void Board::loadGame(string input){
     if (playerCount < 2 || playerCount > 8){
         throw invalid_argument("Input file must have in between 2 - 7 players!");
     }
-    Board theGame{};
-    theGame.initTiles();       
+
     for (int i = 0; i < playerCount; i++){
         getline(loadedFile, line);
         stringstream ss(line);
@@ -57,27 +57,31 @@ void Board::loadGame(string input){
         }
         // check for duplciated names
         for (int j = 0; j < i; j++){
-            if (playerName == players[i]->getName()){
+            if (playerName == players[j]->getName()) {
                 throw invalid_argument("Two players cannot have the same name.");
             }   
         }
+
         string temp = playerInfo[1];
         char piece = temp[0];
         // check if this piece is valid.      
         bool validPiece;       
-        for (int j = 0; j < 8; i++){
-            if (pieces[j][0] == piece)
+        for (int j = 0; j < 8; j++) {
+            if (pieces[j][0] == piece) {
                 validPiece = true;
+            }
         }
+
         if (!validPiece){
             throw invalid_argument ("A players' piece must be one of the 8 valid pieces.");
         }
         // check for duplication
-        for (int j = 0; j < playerCount; j++){
+        for (int j = 0; j < i; j++){ // changed to j < i, instead of j < playerCount
             if (players[j]->getPiece() == piece){
 				throw invalid_argument("It is invalid for more than one player to have the same piece.");
 			}
-        }   
+        }  
+
        // cups error checking
         int cups = stoi(playerInfo[2]);
         if (cups + rollUpCount > 4){
@@ -91,7 +95,7 @@ void Board::loadGame(string input){
         if (pos == goToJailPos){
             throw invalid_argument ("A player cannot start the game on the GoToTims tile.");
         }
-       
+
         int jailStatus = 0;
         int jailTurns = 0;
         if (pos == jailPos){
@@ -102,27 +106,27 @@ void Board::loadGame(string input){
             if (jailStatus == 1){
                 jailTurns = stoi(playerInfo[6]);
                 if (jailTurns > 2 || jailTurns < 0){  
-                throw invalid_argument("Turns in jail must be between 0-2, inclusive.");
+                    throw invalid_argument("Turns in jail must be between 0-2, inclusive.");
                 }
             }
         }
          if (pos >= 40 || pos < -1){
             throw invalid_argument ("That position is out of bounds.");
         }
+
         shared_ptr<Player> currPlayer = make_shared<Player> (playerName, piece, money, pos, cups);
         if (jailStatus == 1){
             currPlayer->setJailStatus(true);
             currPlayer->setJailCount(jailTurns);
         }
         rollUpCount += cups;
-        players.emplace_back (currPlayer);
-    }        
-
+        players.emplace_back(currPlayer);
+    }
         // Give ownership of tiles to players
-    initTiles();  
+    initTiles();
     for (unsigned int i = 0; i < ownableTiles.size(); i++){
-        if (board[i]->isOwnable()){
-            shared_ptr<Tile> tile = board[i];
+        if (board[ownableTiles[i]]->isOwnable()) {
+            
             getline (loadedFile, line);
             stringstream ss(line);
             string cmd;
@@ -130,45 +134,59 @@ void Board::loadGame(string input){
             while (ss >> cmd){
                 tileInfo.emplace_back(cmd);
             }
-            if (tileInfo[0] == tile->getName()){
-                string owner = tileInfo[1];
-                if (owner != "BANK"){
-                    bool validOwner = false;
-                    for (unsigned int j = 0; j < players.size(); j++) {
-                        if (owner == players[j]->getName()){
-                            tile->setOwner(players[j]);
-                            validOwner = true;  
-                            players[j]->addTile(tile);
-                            break;
+
+            while(true) {
+                shared_ptr<Tile> tile = board[ownableTiles[i]];
+                if (tileInfo[0] == tile->getName()){
+                    string owner = tileInfo[1];
+                    if (owner != "BANK"){
+                        bool validOwner = false;
+                        for (unsigned int j = 0; j < players.size(); j++) {
+                            if (owner == players[j]->getName()){
+                                tile->setOwner(players[j]);
+                                validOwner = true;  
+                                players[j]->addTile(tile);
+                                break;
+                            }
+                        }
+                        if (!validOwner){
+                            throw invalid_argument("Not a valid owner.");                    
                         }
                     }
-                    if (!validOwner){
-                        throw invalid_argument("Not a valid owner.");                    
+                    int improvements = stoi(tileInfo[2]);
+                    if (improvements > 5 || improvements < -1 ){
+                        throw invalid_argument("Improvements for a building must be between -1 and 5.");                   
+                    }
+                    if (!tile->isImprovable() && improvements == -1 ){
+                        throw invalid_argument("A non improvable building must have an improvement level of 0.");                   
+                    }
+                    if (tile->isImprovable()){
+                        tile->setImprovement(improvements);
+                    } 
+                    break; 
+                } else {
+                    i++;
+                    if (i >= ownableTiles.size()) {
+                        break;
                     }
                 }
-                int improvements = stoi(tileInfo[2]);
-                if (improvements > 5 || improvements < -1 ){
-                        throw invalid_argument("Improvements for a building must be between -1 and 5.");                   
-                }
-                if (!tile->isImprovable() && improvements == -1 ){
-                        throw invalid_argument("A non improvable building must have an improvement level of 0.");                   
-                }
-                if (tile->isImprovable()){
-                        tile->setImprovement(improvements);
-                }    
             }
         }
     }
+    cout << "hello" << endl;
     for (unsigned int i = 0; i < board.size(); i++){
+            cout << "loop1" << endl;
             if (board[i]->getImprovement() > 0){
                 string tileOwner = board[i]->getOwner()->getName();
                 string monopolyBlock = board[i]->getMonopolyName();
                 // throw exception if not all owned
+                cout << "1" << endl;
                 for (unsigned i = 0; i < board.size(); i++){
                     if (board[i]->getMonopolyName() == monopolyBlock && board[i]->getOwner()->getName()!= tileOwner){
                         throw invalid_argument("All tiles of a monopoly must be owned by the same pereson in order to make improvements.");
                     }
                 }
+                cout << "2" << endl;
         }
     }   cout << "Your game has been loaded, welcome to Watopoly. " << endl;
 }

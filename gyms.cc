@@ -59,7 +59,8 @@ void Gyms::action(std::shared_ptr<Player> player) {
             int gymCount = 0;
             vector<shared_ptr<Tile>> listOfOwnedTiles = getOwner()->getTiles();
             for (unsigned int i = 0; i < listOfOwnedTiles.size(); i++) {
-                if (listOfOwnedTiles[i]->isGym()) {
+                cout << "List of Owned Tiles: " << listOfOwnedTiles[i]->isGym() << endl;
+                if (listOfOwnedTiles[i]->isGym()) {  
                     gymCount += 1;
                 }
             }    
