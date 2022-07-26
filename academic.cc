@@ -64,8 +64,8 @@ void Academic::action(std::shared_ptr<Player> player) {
         cout << "\n\n\n\n\n\n";
         // Look for "yes" or "no"
         string answer;
-        cin >> answer;
         while(1) {
+            cin >> answer;
             if (answer == "yes") {
                 // Check if almost bankrupt
                 int remaining = player->getMoney() - getPrice();
@@ -89,7 +89,6 @@ void Academic::action(std::shared_ptr<Player> player) {
                 break;
             } else {
                 cout << "Please enter either \"yes\" or \"no\": Would you like to purchase this building for " << getPrice() << endl;
-                cin >> answer;
             }
         }
     } else {

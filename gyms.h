@@ -11,10 +11,9 @@ class Board;
 class Gyms : public Tile
 {
     std::shared_ptr<TileImpl> impl;
-    bool isGym;
     
 public:
-    Gyms(int position, std::string blockName, bool gym, std::shared_ptr<Board> board);
+    Gyms(int position, std::string blockName, std::shared_ptr<Board> board);
     ~Gyms();
     std::vector<int> rollDice();
     void action(std::shared_ptr<Player> player) override;

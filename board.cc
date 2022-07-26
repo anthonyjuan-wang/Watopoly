@@ -21,9 +21,7 @@
 using namespace std;
 
 Board::Board() {
-    initTiles();
     td = make_shared<BoardDisplay>(this);
-    print();
 }
 
 Board::~Board() {}
@@ -38,11 +36,13 @@ void Board::loadGame(string input){
     string line;
     getline(loadedFile, line);
     int playerCount = stoi (line);
+    cout << "1" << endl;
     if (playerCount < 2 || playerCount > 8){
         throw invalid_argument("Input file must have in between 2 - 7 players!");
     }
-
+        //cout << "2" << endl;
     for (int i = 0; i < playerCount; i++){
+       // cout << "3" << endl;
         getline(loadedFile, line);
         stringstream ss(line);
         string cmd;
@@ -51,7 +51,9 @@ void Board::loadGame(string input){
         while (ss >> cmd){
             playerInfo.emplace_back(cmd);
         }
+      // cout << "4" << endl;
         string playerName = playerInfo[0];
+           //cout << "5" << endl;
         if (playerName == "BANK"){
             throw invalid_argument("Players cannot be named BANK.");
         }
@@ -122,11 +124,10 @@ void Board::loadGame(string input){
         rollUpCount += cups;
         players.emplace_back(currPlayer);
     }
-        // Give ownership of tiles to players
+        // Give owners  hip of tiles to players
     initTiles();
     for (unsigned int i = 0; i < ownableTiles.size(); i++){
         if (board[ownableTiles[i]]->isOwnable()) {
-            
             getline (loadedFile, line);
             stringstream ss(line);
             string cmd;
@@ -137,7 +138,12 @@ void Board::loadGame(string input){
 
             while(true) {
                 shared_ptr<Tile> tile = board[ownableTiles[i]];
+                if (tileInfo.empty()) {
+                    cout << "hello" << endl;
+                    break;
+                }
                 if (tileInfo[0] == tile->getName()){
+                    cout << tile->getName() << endl;
                     string owner = tileInfo[1];
                     if (owner != "BANK"){
                         bool validOwner = false;
@@ -152,8 +158,10 @@ void Board::loadGame(string input){
                         if (!validOwner){
                             throw invalid_argument("Not a valid owner.");                    
                         }
-                    }
+                    }   
+    
                     int improvements = stoi(tileInfo[2]);
+         
                     if (improvements > 5 || improvements < -1 ){
                         throw invalid_argument("Improvements for a building must be between -1 and 5.");                   
                     }
@@ -166,6 +174,7 @@ void Board::loadGame(string input){
                     break; 
                 } else {
                     i++;
+                    cout << i << endl;
                     if (i >= ownableTiles.size()) {
                         break;
                     }
@@ -173,22 +182,22 @@ void Board::loadGame(string input){
             }
         }
     }
-    cout << "hello" << endl;
     for (unsigned int i = 0; i < board.size(); i++){
-            cout << "loop1" << endl;
             if (board[i]->getImprovement() > 0){
                 string tileOwner = board[i]->getOwner()->getName();
                 string monopolyBlock = board[i]->getMonopolyName();
                 // throw exception if not all owned
-                cout << "1" << endl;
-                for (unsigned i = 0; i < board.size(); i++){
-                    if (board[i]->getMonopolyName() == monopolyBlock && board[i]->getOwner()->getName()!= tileOwner){
-                        throw invalid_argument("All tiles of a monopoly must be owned by the same pereson in order to make improvements.");
+                for (unsigned j = 0; j < board.size(); j++){
+                    if (board[j]->isImprovable()) {
+                        if (board[j]->getMonopolyName() == monopolyBlock && board[j]->getOwner()->getName() != tileOwner){
+                            throw invalid_argument("All tiles of a monopoly must be owned by the same pereson in order to make improvements.");
+                        }
                     }
                 }
-                cout << "2" << endl;
+
         }
-    }   cout << "Your game has been loaded, welcome to Watopoly. " << endl;
+    }
+    cout << "Your game has been loaded, welcome to Watopoly. " << endl;
 }
 
 void Board::saveGame(string fileName, int index) {
@@ -532,11 +541,11 @@ void Board::play() {
     int currPlayerIndex = 0;
     int totalPlayers = players.size();
     const int playersCount = totalPlayers;
-    //print();
+    print();
     // play game - continues until there are > 2 players
     while (true) {
         shared_ptr<Player> currPlayer = players[currPlayerIndex];
-        string input{};
+        string input = "";
         string cmd;
         vector<string> commands{};
         vector<string> cmdInterpreter = {
@@ -551,9 +560,6 @@ void Board::play() {
             "all",
             "save <filename>"
         };
-
-        // ADDED SPACES HERE
-        cout << "\n\n\n\n\n\n";
 
         // checks if the # of players are < 2
         if (totalPlayers < 2) {
@@ -577,12 +583,9 @@ void Board::play() {
         }
 
         if (commands.size() < 1) { // user needs to enter command again
-            cout << "Please enter a non-empty command" << endl;
+            //cout << "Please enter a non-empty command" << endl;
             continue;
         }
-        
-        // ADDED SPACES HERE
-        cout << "\n\n\n\n\n\n";
         cout << endl;
         
         // switch to check all the possible player command inputs
@@ -756,7 +759,7 @@ void Board::play() {
                 cout << currPlayer->getName() << ", your turn is now finished. Please enter 'next'." << endl;
                 doubles = 0;
                 isTurnOver = true;
-                //print();
+                print();
             } else {
                 doubles++;
 
@@ -772,7 +775,8 @@ void Board::play() {
                     cout << "You have rolled doubles. It is your turn again." << endl;
                 }
             }
-            //print();
+            // DANIEL DID THIS
+           //  print();
         } else if (commands[0] == "next") {
             if (currPlayer->getBankruptStatus() == true) {
                 cout << "You are bankrupt. The next command you need to type is 'bankrupt'." << endl;
@@ -788,7 +792,8 @@ void Board::play() {
                 doubles = 0;
                 currPlayerIndex = (currPlayerIndex + 1) % playersCount;
                 isTurnOver = false;
-                //print();
+                // DANIEL DID THIS
+              //  print();
                 continue;
             }
         } else if (commands[0] == "trade" && commands.size() == 4) {
@@ -922,7 +927,7 @@ void Board::play() {
                 doubles = 0;
                 currPlayerIndex = (currPlayerIndex + 1) % playersCount;
                 isTurnOver = false;
-                //print();
+                print();
             } else {
                 cout << "You can't declare bankrupcy" << endl;
             }
@@ -935,20 +940,15 @@ void Board::play() {
             }
         } else if (commands[0] == "save" && commands.size() == 2) {
             //saveGame(commands[1]);
-        }
-
-        else {
+        } else {
             cout << "Please enter a valid command" << endl;
         }
     }
 }
 
 vector<int> Board::rollDice() {
-    
     int die1 = (rand() % 6) + 1;
     int die2 = (rand() % 6) + 1;
-    die1 = 6;
-    die2 = 6;
     vector<int> dice = {die1, die2};
     return dice;
 }
@@ -960,17 +960,17 @@ void Board::initTiles() {
     board.emplace_back(make_shared<Slc>(2, "SLC", shared_ptr<Board>(this)));
     board.emplace_back(make_shared<Academic>(3, "ML", "Arts1", 60, 50, 0, vector<int>{4, 20, 60, 180, 320, 450}, shared_ptr<Board>(this)));
     board.emplace_back(make_shared<Tuition>(4, "Tuition", shared_ptr<Board>(this)));
-    board.emplace_back(make_shared<Residences>(5, "MKV", true, shared_ptr<Board>(this)));
+    board.emplace_back(make_shared<Residences>(5, "MKV", shared_ptr<Board>(this)));
     board.emplace_back(make_shared<Academic>(6, "ECH", "Arts2", 100, 50, 0, vector<int>{6, 30, 90, 270, 400, 550}, shared_ptr<Board>(this)));
     board.emplace_back(make_shared<NeedlesHall>(7, "Neeedles Hall", shared_ptr<Board>(this)));
     board.emplace_back(make_shared<Academic>(8, "PAS", "Arts2", 100, 50, 0, vector<int>{6, 30, 90, 270, 400, 550}, shared_ptr<Board>(this)));
     board.emplace_back(make_shared<Academic>(9, "HH", "Arts2", 120, 50, 0, vector<int>{8, 40, 100, 300, 450, 600}, shared_ptr<Board>(this)));
     board.emplace_back(make_shared<DcTimsLine>(10, "DC Tims Line", shared_ptr<Board>(this)));
     board.emplace_back(make_shared<Academic>(11, "RCH", "Eng", 140, 100, 0, vector<int>{10, 50, 150, 450, 625, 750}, shared_ptr<Board>(this)));
-    board.emplace_back(make_shared<Gyms>(12, "PAC", true, shared_ptr<Board>(this)));
+    board.emplace_back(make_shared<Gyms>(12, "PAC", shared_ptr<Board>(this)));
     board.emplace_back(make_shared<Academic>(13, "DWE", "Eng", 140, 100, 0, vector<int>{10, 50, 150, 450, 625, 750}, shared_ptr<Board>(this)));
     board.emplace_back(make_shared<Academic>(14, "CPH", "Eng", 160, 100, 0, vector<int>{12, 60, 180, 500, 700, 900}, shared_ptr<Board>(this)));
-    board.emplace_back(make_shared<Residences>(15, "UWP", true, shared_ptr<Board>(this)));
+    board.emplace_back(make_shared<Residences>(15, "UWP", shared_ptr<Board>(this)));
     board.emplace_back(make_shared<Academic>(16, "LHI", "Health", 180, 100, 0, vector<int>{14, 70, 200, 550, 750, 950}, shared_ptr<Board>(this)));
     board.emplace_back(make_shared<Slc>(17, "SLC", shared_ptr<Board>(this)));
     board.emplace_back(make_shared<Academic>(18, "BMH", "Health", 180, 100, 0, vector<int>{14, 70, 200, 550, 750, 950}, shared_ptr<Board>(this)));
@@ -980,17 +980,17 @@ void Board::initTiles() {
     board.emplace_back(make_shared<NeedlesHall>(22, "Needles Hall", shared_ptr<Board>(this)));
     board.emplace_back(make_shared<Academic>(23, "EV2", "Env", 220, 150, 0, vector<int>{18, 90, 250, 700, 875, 1050}, shared_ptr<Board>(this)));
     board.emplace_back(make_shared<Academic>(24, "EV3", "Env", 240, 150, 0, vector<int>{20, 100, 300, 750, 925, 1100}, shared_ptr<Board>(this)));
-    board.emplace_back(make_shared<Residences>(25, "V1", true, shared_ptr<Board>(this)));
+    board.emplace_back(make_shared<Residences>(25, "V1", shared_ptr<Board>(this)));
     board.emplace_back(make_shared<Academic>(26, "PHYS", "Sci1", 260, 150, 0, vector<int>{22, 110, 330, 800, 975, 1150}, shared_ptr<Board>(this)));
     board.emplace_back(make_shared<Academic>(27, "B1", "Sci1", 260, 150, 0, vector<int>{22, 110, 330, 800, 975, 1150}, shared_ptr<Board>(this)));
-    board.emplace_back(make_shared<Gyms>(28, "CIF", true, shared_ptr<Board>(this)));
+    board.emplace_back(make_shared<Gyms>(28, "CIF", shared_ptr<Board>(this)));
     board.emplace_back(make_shared<Academic>(29, "B2", "Sci1", 280, 150, 0, vector<int>{24, 120, 360, 850, 1025, 1200}, shared_ptr<Board>(this)));
     board.emplace_back(make_shared<GoToTims>(30, "Go To Tims", shared_ptr<Board>(this)));
     board.emplace_back(make_shared<Academic>(31, "EIT", "Sci2", 300, 200, 0, vector<int>{26, 130, 390, 900, 1100, 1275}, shared_ptr<Board>(this)));
     board.emplace_back(make_shared<Academic>(32, "ESC", "Sci2", 300, 200, 0, vector<int>{26, 130, 390, 900, 1100, 1275}, shared_ptr<Board>(this)));
     board.emplace_back(make_shared<Slc>(33, "SLC", shared_ptr<Board>(this)));
     board.emplace_back(make_shared<Academic>(34, "C2", "Sci2", 320, 200, 0, vector<int>{28, 150, 450, 1000, 1200, 1400}, shared_ptr<Board>(this)));
-    board.emplace_back(make_shared<Residences>(35, "REV", true, shared_ptr<Board>(this)));
+    board.emplace_back(make_shared<Residences>(35, "REV", shared_ptr<Board>(this)));
     board.emplace_back(make_shared<NeedlesHall>(36, "Needles Hall", shared_ptr<Board>(this)));
     board.emplace_back(make_shared<Academic>(37, "MC", "Math", 350, 200, 0, vector<int>{35, 175, 500, 1100, 1300, 1500}, shared_ptr<Board>(this)));
     board.emplace_back(make_shared<Coop>(38, "Coop", shared_ptr<Board>(this)));

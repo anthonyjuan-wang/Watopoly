@@ -13,8 +13,6 @@ struct TileImpl {
     std::shared_ptr<Player> owner;
     std::string name;
     bool ownable;
-    bool residence;
-    bool gym;
     bool improvable;
     bool mortgaged;
     int pos;

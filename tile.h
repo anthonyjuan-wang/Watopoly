@@ -27,8 +27,6 @@ public:
     std::string getName();
     bool isImprovable();
     bool isOwnable();
-    bool isResidence();
-    bool isGym();
     bool isMortgaged();
     bool isOwned();
     void auction();

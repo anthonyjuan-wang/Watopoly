@@ -13,7 +13,6 @@ class BoardDisplay {
     void printPlayers(std::vector<std::shared_ptr<Player>> players, int index);
     public:
         void print();  
-        void update();
         BoardDisplay(Board* b);
 };
 
