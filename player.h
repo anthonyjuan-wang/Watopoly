@@ -15,7 +15,7 @@ class Player
     std::shared_ptr<PlayerImpl> impl;
 
 public:
-    Player(std::string name, char piece, int money, int pos);
+    Player(std::string name, char piece, int money = 1500, int pos = 0, int rollup = 0);
     ~Player();
     void move(int n);
     int getMoney();
@@ -37,7 +37,7 @@ public:
     bool getAlmostBankruptStatus();
     void setAlmostBankruptStatus(bool status);
     bool getBankruptStatus();
-    void setBankruptStatus(bool status, int owed);
+    void setBankruptStatus(bool status);
     bool getMoneyOwed();
     void setMoneyOwed(int n);
     void addTile(std::shared_ptr<Tile> t);

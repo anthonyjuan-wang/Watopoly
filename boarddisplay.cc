@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <fstream>
 #include "tile.h"
 #include "player.h"
 #include "board.h"
@@ -10,33 +11,44 @@
 
 using namespace std;
 
-BoardDisplay::BoardDisplay(std::shared_ptr<Board> theBoard){
-    // Initialize the boardDisplay 
-
+BoardDisplay::BoardDisplay(Board *b): theBoard{b} {
+    ifstream td("board.txt");
+    string line;
+    while (getline(td, line)){
+        vector <char> row;
+        for (unsigned int i = 0; i < line.length(); i++){
+            row.emplace_back(line[i]);        
+        }  theDisplay.emplace_back(row);
+    }
 }
 
-// void BoardDisplay::printImprovements(std::shared_ptr<Tile> tile){
-// int improvement = tile->getImprovement();
-// for (int i = 0; i < 7; i++){
-//    if (i < improvement) cout << "X";
-//    else cout << "_";
-//     } cout << " ";   
-// }
-// void BoardDisplay::printPlayers(std::vector<std::shared_ptr<Player>> players, int index){
-//     int counter = 0;
-//     for (unsigned int i = 0; i < players.size(); i++){
-//       if (players[i]->getPos() == index){
-//             cout << players[i]->getPiece();
-//             counter++;
-//         } 
-//     } while (counter < 7) {
-//             cout << " ";
-//             counter++;
-//         }
-// }
+/*
+void BoardDisplay::printImprovements(std::shared_ptr<Tile> tile){
+    int improvement = tile->getImprovement();
+    for (int i = 0; i < 7; i++){
+        if (i < improvement) cout << "X";
+        else cout << "_";
+    } cout << " ";   
+}
+*/
+
+
+
+void BoardDisplay::update(){
+    for (unsigned i = 0; i < 3; i++){
+    }
+}   
 
 void BoardDisplay::print() {
- //   for 
+    update();
+    for (unsigned int i = 0; i < theDisplay.size(); i++){
+        for (unsigned int j = 0; j < theDisplay[i].size(); j++){
+            cout << theDisplay[i][j];
+        }
+    }
+}
+
+
 // // Line 1
 //     cout << setfill('_') << setw(90) << "" << endl;
 //     cout << "|Goose  |       |NEEDLES|       |       |V1     |       |       |CIF    |       |GO TO  |" << endl;
@@ -277,4 +289,3 @@ void BoardDisplay::print() {
 //     cout << "                         _|            ____/ " << endl;
 //     */
 
-}

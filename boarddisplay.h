@@ -7,11 +7,14 @@ class Board;
 class Tile;
 class Player;
 class BoardDisplay {
-    std::shared_ptr<Board> theBoard;
-    
+    Board* theBoard;
+    std::vector<std::vector<char>> theDisplay;
+    void printImprovements(std::shared_ptr<Tile> tile);
+    void printPlayers(std::vector<std::shared_ptr<Player>> players, int index);
     public:
         void print();  
-        BoardDisplay(std::shared_ptr<Board> theBoard);
+        void update();
+        BoardDisplay(Board* b);
 };
 
 #endif

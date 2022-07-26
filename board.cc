@@ -16,10 +16,15 @@
 #include "residences.h"
 #include "slc.h"
 #include "tuition.h"
+#include "boarddisplay.h"
 
 using namespace std;
 
-Board::Board() {}
+Board::Board() {
+    initTiles();
+    td = make_shared<BoardDisplay>(this);
+    print();
+}
 
 Board::~Board() {}
 
@@ -28,9 +33,167 @@ std::vector<std::shared_ptr<Tile>> Board::getTiles(){
 }
 
 void Board::loadGame(string input){
-    ifstream file;
+
+    ifstream loadedFile(input);
+    string line;
+    getline(loadedFile, line);
+    int playerCount = stoi (line);
+    if (playerCount < 2 || playerCount > 8){
+        throw invalid_argument("Input file must have in between 2 - 7 players!");
+    }
+
+    for (int i = 0; i < playerCount; i++){
+        getline(loadedFile, line);
+        stringstream ss(line);
+        string cmd;
+        vector <string> playerInfo;
+
+        while (ss >> cmd){
+            playerInfo.emplace_back(cmd);
+        }
+        string playerName = playerInfo[0];
+        if (playerName == "BANK"){
+            throw invalid_argument("Players cannot be named BANK.");
+        }
+        // check for duplciated names
+        for (int j = 0; j < i; j++){
+            if (playerName == players[j]->getName()) {
+                throw invalid_argument("Two players cannot have the same name.");
+            }   
+        }
+
+        string temp = playerInfo[1];
+        char piece = temp[0];
+        // check if this piece is valid.      
+        bool validPiece;       
+        for (int j = 0; j < 8; j++) {
+            if (pieces[j][0] == piece) {
+                validPiece = true;
+            }
+        }
+
+        if (!validPiece){
+            throw invalid_argument ("A players' piece must be one of the 8 valid pieces.");
+        }
+        // check for duplication
+        for (int j = 0; j < i; j++){ // changed to j < i, instead of j < playerCount
+            if (players[j]->getPiece() == piece){
+				throw invalid_argument("It is invalid for more than one player to have the same piece.");
+			}
+        }  
+
+       // cups error checking
+        int cups = stoi(playerInfo[2]);
+        if (cups + rollUpCount > 4){
+                throw invalid_argument("There may not be more than 4 total roll up the rim cups available at a time.");
+        }
+        int money = stoi(playerInfo[3]);
+        if (money < 0 ){
+                throw invalid_argument ("A player cannot have negative money.");
+        }
+        int pos = stoi(playerInfo[4]);
+        if (pos == goToJailPos){
+            throw invalid_argument ("A player cannot start the game on the GoToTims tile.");
+        }
+
+        int jailStatus = 0;
+        int jailTurns = 0;
+        if (pos == jailPos){
+            jailStatus = stoi(playerInfo[5]);
+            if (jailStatus != 0 || jailStatus != 1){
+                throw invalid_argument("Jail status must be 0 or 1.");
+            }
+            if (jailStatus == 1){
+                jailTurns = stoi(playerInfo[6]);
+                if (jailTurns > 2 || jailTurns < 0){  
+                    throw invalid_argument("Turns in jail must be between 0-2, inclusive.");
+                }
+            }
+        }
+         if (pos >= 40 || pos < -1){
+            throw invalid_argument ("That position is out of bounds.");
+        }
+
+        shared_ptr<Player> currPlayer = make_shared<Player> (playerName, piece, money, pos, cups);
+        if (jailStatus == 1){
+            currPlayer->setJailStatus(true);
+            currPlayer->setJailCount(jailTurns);
+        }
+        rollUpCount += cups;
+        players.emplace_back(currPlayer);
+    }
+        // Give ownership of tiles to players
+    initTiles();
+    for (unsigned int i = 0; i < ownableTiles.size(); i++){
+        if (board[ownableTiles[i]]->isOwnable()) {
+            
+            getline (loadedFile, line);
+            stringstream ss(line);
+            string cmd;
+            vector<string> tileInfo;
+            while (ss >> cmd){
+                tileInfo.emplace_back(cmd);
+            }
+
+            while(true) {
+                shared_ptr<Tile> tile = board[ownableTiles[i]];
+                if (tileInfo[0] == tile->getName()){
+                    string owner = tileInfo[1];
+                    if (owner != "BANK"){
+                        bool validOwner = false;
+                        for (unsigned int j = 0; j < players.size(); j++) {
+                            if (owner == players[j]->getName()){
+                                tile->setOwner(players[j]);
+                                validOwner = true;  
+                                players[j]->addTile(tile);
+                                break;
+                            }
+                        }
+                        if (!validOwner){
+                            throw invalid_argument("Not a valid owner.");                    
+                        }
+                    }
+                    int improvements = stoi(tileInfo[2]);
+                    if (improvements > 5 || improvements < -1 ){
+                        throw invalid_argument("Improvements for a building must be between -1 and 5.");                   
+                    }
+                    if (!tile->isImprovable() && improvements == -1 ){
+                        throw invalid_argument("A non improvable building must have an improvement level of 0.");                   
+                    }
+                    if (tile->isImprovable()){
+                        tile->setImprovement(improvements);
+                    } 
+                    break; 
+                } else {
+                    i++;
+                    if (i >= ownableTiles.size()) {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    cout << "hello" << endl;
+    for (unsigned int i = 0; i < board.size(); i++){
+            cout << "loop1" << endl;
+            if (board[i]->getImprovement() > 0){
+                string tileOwner = board[i]->getOwner()->getName();
+                string monopolyBlock = board[i]->getMonopolyName();
+                // throw exception if not all owned
+                cout << "1" << endl;
+                for (unsigned i = 0; i < board.size(); i++){
+                    if (board[i]->isImprovable()) {
+                        if (board[i]->getMonopolyName() == monopolyBlock && board[i]->getOwner()->getName()!= tileOwner){
+                            throw invalid_argument("All tiles of a monopoly must be owned by the same pereson in order to make improvements.");
+                        }
+                    }
+                }
+                cout << "2" << endl;
+        }
+    }   cout << "Your game has been loaded, welcome to Watopoly. " << endl;
 }
-void Board::saveGame(string fileName, int index){
+
+void Board::saveGame(string fileName, int index) {
     ofstream file;
     file.open(fileName);
     int num = players.size();
@@ -57,7 +220,7 @@ void Board::saveGame(string fileName, int index){
         }  file << playerInfo << endl;
     }
         // save Buildings and owners, by looping through academic squares 
-        for (int i = 0; i < board.size(); i++ ){
+        for (unsigned int i = 0; i < board.size(); i++ ){
             shared_ptr<Tile> tile = board[i];
             string tileInfo = "";
             tileInfo += tile->getName();
@@ -65,7 +228,7 @@ void Board::saveGame(string fileName, int index){
                 if (tile->getOwner()){
                     tileInfo += " " + tile->getOwner()->getName();  
                 }   
-                else{
+                else {
                      tileInfo += " BANK";
                 }
                 if (tile->isMortgaged()){
@@ -304,7 +467,6 @@ void Board::init(int input) {
         players.clear();
     }
 
-    vector<string> pieces = {"G: Goose", "B: GRT Bus", "D: Tim Hortons Doughnut", "P: Professor", "S: Student", "M: Money", "L: Laptop", "P: Pink Tie"};
     
     for (int i = 1; i <= input; i++) {
         string playerName;
@@ -362,30 +524,16 @@ void Board::init(int input) {
                 cout << "The piece doesn't exist or has already been chosen." << endl;
             }
         }
-        shared_ptr<Player> person = make_shared<Player>(playerName, playerPiece, 1500, 0);
+        shared_ptr<Player> person = make_shared<Player>(playerName, playerPiece, 1500, 0, 0);
         players.emplace_back(person);
     }
 }
 
 
 void Board::play() {
-    int playersCount = 0;
     int currPlayerIndex = 0;
-
-    // ask the user for the number of players
-    while (true) {
-        cout << "How many players are there? ";
-        cin >> playersCount;
-
-        if (playersCount >= 2 && playersCount <= 8) {
-            init(playersCount);
-            break;
-        }
-        else {
-            cout << "The number of players you entered is invalid" << endl;
-        }
-    }
-    
+    int totalPlayers = players.size();
+    const int playersCount = totalPlayers;
     //print();
     // play game - continues until there are > 2 players
     while (true) {
@@ -406,8 +554,11 @@ void Board::play() {
             "save <filename>"
         };
 
+        // ADDED SPACES HERE
+        cout << "\n\n\n\n\n\n";
+
         // checks if the # of players are < 2
-        if (playersCount < 2) {
+        if (totalPlayers < 2) {
             cout << "Congratulations " << players[0]->getName() << " you are the winner! The game is now over" << endl;
             break;
         }
@@ -416,10 +567,8 @@ void Board::play() {
         if (isTurnOver == false) {
             cout << "It is " << currPlayer->getName() << "'s turn. Enter a command from the following: " << endl;
             for (auto i : cmdInterpreter) {
-               //cout << i << endl;
-               cout << i;
+               cout << i << endl;
             }
-            cout << endl;
         }
 
         // stores the line of input into a vector 'commands'
@@ -430,11 +579,14 @@ void Board::play() {
         }
 
         if (commands.size() < 1) { // user needs to enter command again
-            cout << commands.size() << endl;
             cout << "Please enter a non-empty command" << endl;
             continue;
         }
-    
+        
+        // ADDED SPACES HERE
+        cout << "\n\n\n\n\n\n";
+        cout << endl;
+        
         // switch to check all the possible player command inputs
         if (commands[0] == "roll") {
             if(isTurnOver == true) {
@@ -444,22 +596,24 @@ void Board::play() {
             // checks if your in jail
             vector<int> dice = rollDice();
             if (currPlayer->getJailStatus() == true) {
-                if (dice[1] != dice[2]) {
+                if (dice[0] != dice[1]) {
                     cout << "You rolled " << dice[0] << " and " << dice[1] << endl;
                     cout << "You did not roll doubles so you are still in jail. Here are your options:" << endl;
                     board[jailPos]->action(currPlayer);
                     if (currPlayer->getJailStatus() == true){
+                        cout << "You are still in jail and your turn is over. Please enter 'next'." << endl;
                         isTurnOver = true;
                         continue;
                     }
                 } else { 
+                    cout << "You rolled doubles and you are now out of jail!" << endl;
                     currPlayer->setJailCount(0);
                     currPlayer->setJailStatus(false);
                 }
             } 
 
             int total = currPlayer->getPos() + dice[0] + dice[1];
-            currPlayer->move(total);
+            currPlayer->move(dice[0] + dice[1]);
             int pos = currPlayer->getPos();
 
             cout << "You rolled " << dice[0] << " and " << dice[1] << endl;
@@ -486,14 +640,118 @@ void Board::play() {
                 continue;
             }
 
-            // check if the player is almostBankrupt or Bankrupt
+            // check if the player is almostBankrupt
             if (currPlayer->getAlmostBankruptStatus() == true) {
                 // ADD CODE - NOT FINISHED
+                int moneyOwed = currPlayer->getMoneyOwed();
+                int totalWorth = 0; // including mortgaged building prices and half improvement costs
+                vector<shared_ptr<Tile>> ownedTiles = currPlayer->getTiles();
+                int size = ownedTiles.size();
+
+                totalWorth += currPlayer->getMoney();
+                for (int i = 0; i < size; i++) {
+                    if (!ownedTiles[i]->isMortgaged()) {
+                        totalWorth += (0.5 * ownedTiles[i]->getPrice());
+                    }
+
+                    if (ownedTiles[i]->isImprovable()) {
+                        int improvementNum = ownedTiles[i]->getImprovement();
+                        int improvementCost = ownedTiles[i]->getImproveCost() / 2;
+                        totalWorth += (improvementNum * improvementCost);
+                    }
+                }
+
+                if (totalWorth < moneyOwed) {
+                    cout << "If you sold all your improvements, mortgaged all your properties and added that to your current money balance, you would have $" << totalWorth << "." << endl;
+                    cout << "You owe $" << moneyOwed << " and so you are bankrupt." << endl;
+                    currPlayer->setBankruptStatus(true);
+                } else {
+                    int currMoney = currPlayer->getMoney();
+                    while (currMoney < moneyOwed) {
+                        currPlayer->displayAssets();
+                        cout << "You must sell improvements or mortgage your properties." << endl;
+                        cout << "Enter 'mortgage <property>' or 'improvement <property>' to choose to mortgage/sell and what building." << endl;
+                        string input;
+                        string prop;
+                        cin >> input;
+                        cin >> prop;
+
+                        string s;
+                        int pos = -1;
+                        int size = ownedTiles.size();
+                        for (int i = 0; i < size; i++) {
+                            s = ownedTiles[i]->getName();
+                            if (s == prop) {
+                                pos = ownedTiles[i]->getPos();
+                                break;
+                            }
+                        }
+
+                        if (pos == -1) {
+                            cout << "You do not own " << prop << ". Please enter another building." << endl;
+                            continue;
+                        }
+                        
+                        if (input == "mortgage") {
+                            if (board[pos]->isMortgaged() || board[pos]->getImprovement() > 0) {
+                                cout << "You can't mortgage " << prop << ". Please enter another building." << endl;
+                                continue;
+                            }
+                            board[pos]->mortgage(currPlayer);
+                        } else if (input == "improvement") {
+                            if (!board[pos]->isImprovable()) {
+                                cout << prop << " is not improvable. Please enter another building." << endl;
+                                continue;
+                            }
+                            
+                            if (board[pos]->getImprovement() <= 0) {
+                                cout << "You don't have any improvements to sell." << endl;
+                                continue;
+                            }
+                            board[pos]->improveSell(currPlayer);
+                        } else {
+                            cout << "Enter a valid command." << endl;
+                        }
+                        currMoney = currPlayer->getMoney();
+                    }
+                    currPlayer->subtractMoney(moneyOwed);
+                    currPlayer->setAlmostBankruptStatus(false);
+                    currPlayer->setMoneyOwed(0);
+                }
             }
 
             if (currPlayer->getBankruptStatus() == true) {
-                // ADD CODE - NOT FINISHED
+                cout << "You are now bankrupt. Enter 'bankrupt' and you will be removed from the game." << endl;
                 isTurnOver = true;
+
+                int currPos = currPlayer->getPos();
+                vector<shared_ptr<Tile>> currTiles = currPlayer->getTiles();
+                int length = currTiles.size();
+                if (board[currPos]->isOwned()) {
+                    shared_ptr<Player> owner = board[currPos]->getOwner();
+
+                    for (int i = 0; i < length; i++) {
+                        currPlayer->transferProp(owner, currTiles[i]);
+                    }
+
+                    int currMoney = currPlayer->getMoney();
+                    int currRollUp = currPlayer->getRollUpCount();
+                    owner->addMoney(currMoney);
+
+                    for (int i = 0; i < currRollUp; i++) {
+                        owner->addRollUpCount();
+                    }
+                } else {
+                    for (int i = 0; i < length; i++) {
+                        // currTilesOwned.erase??
+                        currTiles[i]->setOwner(nullptr);
+                        currTiles[i]->setMortgaged(false);
+                        currTiles[i]->auction();
+                    }
+                    int currRollUp = currPlayer->getRollUpCount();
+                    setRollUpCount(getRollUpCount() - currRollUp);
+                }
+                continue;
             }
 
             if (dice[0] != dice[1] || currPlayer->getJailStatus() || currPlayer->getBankruptStatus()) { // idk if the last two checks are needed
@@ -505,7 +763,7 @@ void Board::play() {
                 doubles++;
 
                 if (doubles == 3) {
-                    cout << "You have rolled 3 doubles. You are now going to jail." << endl;
+                    cout << "You have rolled 3 doubles. You are now going to jail. Please end your turn with 'next'." << endl;
                     currPlayer->setPos(jailPos);
                     currPlayer->setJailStatus(true);
                     currPlayer->setJailCount(0);
@@ -525,13 +783,15 @@ void Board::play() {
 
             if (isTurnOver != true) {
                 cout << "You still need to roll. You cannot give control to the next player." << endl;
+                continue;
             }
             else {
                 cout << currPlayer->getName() << ", your turn is now finished." << endl;
                 doubles = 0;
                 currPlayerIndex = (currPlayerIndex + 1) % playersCount;
                 isTurnOver = false;
-                print();
+                //print();
+                continue;
             }
         } else if (commands[0] == "trade" && commands.size() == 4) {
             if (currPlayer->getBankruptStatus() == true) {
@@ -559,23 +819,30 @@ void Board::play() {
                 }
             }
 
-            if (pos == -1) {
+            if (pos == -1 || !board[pos]->isImprovable()) {
                 cout << "You can't improve this building. Please enter another comand" << endl;
                 continue;
             }
-            cout << "hello" << endl;
 
             if (commands[2] == "buy") {
                 if (board[pos]->isMortgaged()) {
                     cout << "The building is mortgaged so it cannot be improved." << endl;
+                    continue;
                 }
                 
                 if (board[pos]->getImprovement() >= 5) {
                     cout << "The builidng already has 5 improvements." << endl;
+                    continue;
                 }
                 
                 if (!hasMonopoly(board[pos])) {
                     cout << "You don't own the monopoly so you can't improve the building." << endl;
+                    continue;
+                }
+
+                if (!board[pos]->isImprovable()) {
+                    cout << "This tile is not improveable" << endl;
+                    continue;
                 }
                 
                 cout << "The cost for the improvement is " << board[pos]->getImproveCost() << "." << endl;
@@ -590,7 +857,7 @@ void Board::play() {
                     cout << "You don't have any improvements to sell." << endl;
                     continue;
                 }
-                board[pos]->improveSell(currPlayer); // GET HALF THE COST OF THE IMPROVEMENT BACK
+                board[pos]->improveSell(currPlayer);
             } else {
                 cout << "This was an invalid command. Please enter another command" << endl;
             }
@@ -650,14 +917,14 @@ void Board::play() {
                 // ADD THE CODE HERE
                 
                 cout << currPlayer->getName() << " you will now be removed from the game." << endl;
-                playersCount--;
+                totalPlayers--;
                 players.erase(players.begin() + currPlayerIndex);
                 
                 cout << "It is now the next player's turn." << endl;
                 doubles = 0;
                 currPlayerIndex = (currPlayerIndex + 1) % playersCount;
                 isTurnOver = false;
-                print();
+                //print();
             } else {
                 cout << "You can't declare bankrupcy" << endl;
             }
@@ -682,6 +949,8 @@ vector<int> Board::rollDice() {
     
     int die1 = (rand() % 6) + 1;
     int die2 = (rand() % 6) + 1;
+    die1 = 6;
+    die2 = 6;
     vector<int> dice = {die1, die2};
     return dice;
 }
@@ -731,12 +1000,11 @@ void Board::initTiles() {
 }
 
 void Board::print() {
-
+    td->print();
 }
 
 bool Board::hasMonopoly(std::shared_ptr<Tile> currTile) {
     string monopolyName = currTile->getMonopolyName();
-    cout << monopolyName << endl;
 
     for (int i = 0; i < numSquares; i++) {
         if (board[i]->isImprovable()) {
@@ -755,4 +1023,3 @@ int Board::getRollUpCount() {
 void Board::setRollUpCount(int n) {
     rollUpCount = n;
 }
-

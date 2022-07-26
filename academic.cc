@@ -56,11 +56,12 @@ void Academic::improveSell(shared_ptr<Player> player) {
 }
 
 void Academic::action(std::shared_ptr<Player> player) {
-    if (isOwnable()) {
+    if (!isOwned()) {
         // Do you have enough money to buy
 
-        cout << "Would you like to buy " << getName() << " for " << getPrice() << "? Enter 'yes' or 'no'." << endl;
-
+        cout << "Would you like to buy " << getName() << " for $" << getPrice() << "? Enter 'yes' or 'no'." << endl;
+        // ADDED SPACES HERE
+        cout << "\n\n\n\n\n\n";
         // Look for "yes" or "no"
         string answer;
         cin >> answer;
@@ -69,21 +70,21 @@ void Academic::action(std::shared_ptr<Player> player) {
                 // Check if almost bankrupt
                 int remaining = player->getMoney() - getPrice();
                 if (remaining < 0) {
-                    cout << "You don't have enough to purchase this building." << endl;
+                    cout << "You don't have enough money to purchase this building." << endl;
                     cout << getName() <<  " will now go up for auction" << endl;
                     auction();
                     break;
                  } else {
-                    player->subtractMoney(getPrice());
                     vector<shared_ptr<Tile>> boardTiles = getBoard()->getTiles();
                     int currPos = getPos();
                     player->addTile(boardTiles[currPos]);
+                    cout << "You have successfuly purchased " << boardTiles[currPos]->getName() << " for $" << getPrice() << endl;
+                    player->subtractMoney(getPrice());
                     setOwner(player);
-                    cout << "You have successfuly purchased " << boardTiles[currPos]->getName() << "." << endl;
+                    break;
                  }
-                break;
             } else if (answer == "no") {
-                cout << getName() <<  " is now going to be auctioned" << endl;
+                cout << getName() <<  " will now go up for auction" << endl;
                 auction();
                 break;
             } else {
@@ -95,7 +96,7 @@ void Academic::action(std::shared_ptr<Player> player) {
         // Player lands on an already owner academic building
         // Check that the player does not already own this spot
         if (getOwner() != player) {
-            cout << "This building is owned by " << getOwner() << ". You will need to pay $" << tuition[getImprovement()] << endl;
+            cout << "This building is owned by " << getOwner()->getName() << ". You will need to pay tuition worth $" << tuition[getImprovement()] << endl;
             // Get the cost of tuition based on # of improvements
             int cost = tuition[getImprovement()];
             int remaining = player->getMoney() - cost;
@@ -105,8 +106,16 @@ void Academic::action(std::shared_ptr<Player> player) {
                 player->setAlmostBankruptStatus(true);
                 player->setMoneyOwed(cost);
             } else {
-                // Pay for the tuition cost
-                player->subtractMoney(cost);
+                // Pay for the tution cost
+                string answerpay;
+                while(1) {
+                    cout << "Please type \"pay\" to pay for your tuition" << endl;
+                    cin >> answerpay;
+                    if (answerpay == "pay") {
+                        player->subtractMoney(cost);
+                        break;
+                    }
+                }
             }
         } else {
             // Player lands on their own tile

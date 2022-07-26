@@ -1,0 +1,6 @@
+2
+player1 B 0 1500 11
+player2 G 1 1000 20
+AL player1 0
+ML player1 2
+ECH player2 0

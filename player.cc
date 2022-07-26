@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <memory>
+#include <iomanip>
 using namespace std;
 
 /*
@@ -10,14 +11,14 @@ Player::Player(string name, char piece, int money = 1500, int pos = 0) :
 impl {new PlayerImpl{name, piece, money, pos, false, false, 0, false, 0, 0}} {}
 */
 
-Player::Player(string name, char piece, int money = 1500, int pos = 0) : impl{make_shared<PlayerImpl>()}{ 
+Player::Player(string name, char piece, int money , int pos, int rollup) : impl{make_shared<PlayerImpl>()}{ 
     impl->name = name;
     impl->piece = piece;
     impl->money = money;
     impl->pos = pos;
     impl->bankrupt = false;
     impl->almostBankrupt = false;
-    impl->rollUpCount = 0;
+    impl->rollUpCount = rollup;
     impl->isInJail = false;
     impl->inJailCounter = 0;
     impl->moneyOwed = 0;
@@ -93,7 +94,7 @@ void Player::displayAssets() {
     std::vector<shared_ptr<Tile>> myTiles = getTiles();
     int size = myTiles.size();
     for (int i = 0; i < size; i++) {
-        cout << myTiles[i]->getName() << ": " << myTiles[i]->getPrice() << "\t Improvements: " << myTiles[i]->getImprovement() << endl;
+        cout << myTiles[i]->getName() << ": " << setw(5) << "$" << myTiles[i]->getPrice() << "   Improvements: " << myTiles[i]->getImprovement() << endl;
     }
 }
 
@@ -141,9 +142,8 @@ bool Player::getBankruptStatus() {
     return impl->bankrupt;
 }
 
-void Player::setBankruptStatus(bool status, int owed) {
+void Player::setBankruptStatus(bool status) {
     impl->bankrupt = status;
-    impl->moneyOwed = owed;
 }
 
 bool Player::getMoneyOwed() {
@@ -179,6 +179,13 @@ void Player::transferProp(std::shared_ptr<Player> otherPlayer, std::shared_ptr<T
     if (tile->isMortgaged()) {
         cout << tile->getName() << " is mortgaged so " << otherPlayer->getName() << " must pay 10%." << endl;
         otherPlayer->subtractMoney(0.1 * tile->getPrice());
+        if (getAlmostBankruptStatus()) {
+            impl->tilesOwned.erase(impl->tilesOwned.begin() + tileIndex);
+            tile->setOwner(nullptr);
+            setAlmostBankruptStatus(false);
+            cout << "You don't have enough money to pay mortgage fee. The property will go to the bank." << endl;
+            return;
+        }
     }
 
     impl->tilesOwned.erase(impl->tilesOwned.begin() + tileIndex);
