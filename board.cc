@@ -187,16 +187,9 @@ void Board::loadGame(string input){
                 string tileOwner = board[i]->getOwner()->getName();
                 string monopolyBlock = board[i]->getMonopolyName();
                 // throw exception if not all owned
-<<<<<<< HEAD
-                cout << "1" << endl;
-                for (unsigned i = 0; i < board.size(); i++){
-                    if (board[i]->isImprovable()) {
-                        if (board[i]->getMonopolyName() == monopolyBlock && board[i]->getOwner()->getName()!= tileOwner){
-=======
                 for (unsigned j = 0; j < board.size(); j++){
                     if (board[j]->isImprovable()) {
                         if (board[j]->getMonopolyName() == monopolyBlock && board[j]->getOwner()->getName() != tileOwner){
->>>>>>> main
                             throw invalid_argument("All tiles of a monopoly must be owned by the same pereson in order to make improvements.");
                         }
                     }
