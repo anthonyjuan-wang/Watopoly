@@ -1,0 +1,9 @@
+2
+Player1 G 0 1500 0
+Player2 D 0 1500 20
+AL Player1 0
+ML Player1 2
+ECH Player1 0
+PAS Player2 0
+HH Player2 0
+RCH Player2 0
