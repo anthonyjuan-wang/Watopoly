@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
         
        if (!errorRaised && filename != "N/A"){
                 //cout << "File successfully loaded." << endl;
-                theGame.initTiles();
+                //theGame.initTiles();
                 theGame.play();
         }
 

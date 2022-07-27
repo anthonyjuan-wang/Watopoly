@@ -16,7 +16,7 @@ class Tile {
 public:
     Tile(std::string name, bool ownable, bool improvable, int position, int price, 
          std::shared_ptr<Board> board);
-    virtual ~Tile();
+    ~Tile();
     
     // General methods
     std::shared_ptr<Player> getOwner();

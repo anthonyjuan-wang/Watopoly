@@ -1,0 +1,7 @@
+4
+GymOwner P 0 1500 9
+Player1 G 0 1500 9
+Player2 D 0 1500 9
+Player3 B 0 1500 9
+PAC GymOwner 0
+CIF GymOwner 0

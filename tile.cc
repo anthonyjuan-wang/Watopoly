@@ -168,7 +168,6 @@ void Tile::mortgage(shared_ptr<Player> player) {
     int purchase = getPrice();
     cout << "You receive $" << purchase / 2 << " from mortgaging " << getName() << endl;
     player->addMoney(purchase / 2);
-    setImprovement(-1);
     impl->mortgaged = true;
 }
 
@@ -176,7 +175,6 @@ void Tile::unmortgage(shared_ptr<Player> player) {
     int purchase = getPrice();
     cout << "You pay $" << purchase/2 << " + $" << purchase*0.1 << " to unmortgage your property " << getName() <<  endl;
     player->subtractMoney(purchase*0.6);
-    setImprovement(0);
     impl->mortgaged = false;
     
 }
@@ -192,4 +190,3 @@ int Tile::getImproveCost(){ return 0; }
 std::string Tile::getMonopolyName(){ return "N/A"; }
 void Tile::improveBuy(std::shared_ptr<Player> player){}
 void Tile::improveSell(std::shared_ptr<Player> player){}
-

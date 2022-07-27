@@ -1,0 +1,13 @@
+4
+Player1 G 0 1500 38
+Player2 D 0 1500 37
+Player3 B 0 1500 29
+Player4 P 0 1500 29
+AL Player1 0
+ML Player1 3
+ML Player4 0
+RCH Player3 0
+DWE Player1 0
+EV1 Player2 0
+MC Player4 2
+DC Player4 4

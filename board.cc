@@ -40,9 +40,9 @@ void Board::loadGame(string input){
     if (playerCount < 2 || playerCount > 8){
         throw invalid_argument("Input file must have in between 2 - 7 players!");
     }
-        //cout << "2" << endl;
+       
     for (int i = 0; i < playerCount; i++){
-       // cout << "3" << endl;
+      
         getline(loadedFile, line);
         stringstream ss(line);
         string cmd;
@@ -51,9 +51,9 @@ void Board::loadGame(string input){
         while (ss >> cmd){
             playerInfo.emplace_back(cmd);
         }
-      // cout << "4" << endl;
+      
         string playerName = playerInfo[0];
-           //cout << "5" << endl;
+           
         if (playerName == "BANK"){
             throw invalid_argument("Players cannot be named BANK.");
         }
@@ -224,27 +224,32 @@ void Board::saveGame(string fileName, int index) {
             } else playerInfo += "0";
         }  file << playerInfo << endl;
     }
-        // save Buildings and owners, by looping through academic squares 
-        for (unsigned int i = 0; i < board.size(); i++ ){
-            shared_ptr<Tile> tile = board[i];
-            string tileInfo = "";
-            tileInfo += tile->getName();
-            if (tile->isOwnable()){
-                if (tile->getOwner()){
-                    tileInfo += " " + tile->getOwner()->getName();  
-                }   
-                else {
-                     tileInfo += " BANK";
-                }
-                if (tile->isMortgaged()){
-                    tileInfo += " -1";
-                }  
-                 else if (tile->isImprovable() == false){
-                    tileInfo += " 0";
-                }
-                    tileInfo += " " + to_string(tile->getImprovement());
+        
+    // save Buildings and owners, by looping through academic squares 
+    cout << board.size() << endl;
+    for (unsigned int i = 0; i < board.size(); i++ ) {
+        //cout << "loop1" << endl;
+        shared_ptr<Tile> tile = board[i];
+        string tileInfo = "";
+        tileInfo += tile->getName();
+        if (tile->isOwnable()){
+            //cout << " in loop" << endl;
+            if (tile->getOwner()){
+                tileInfo += " " + tile->getOwner()->getName();  
+            } else {
+                tileInfo += " BANK";
             }
-        }
+            if (tile->isMortgaged()){
+                tileInfo += " -1";
+            } else if (tile->isImprovable() == false){
+                tileInfo += " 0";
+            } else {
+                tileInfo += " " + to_string(tile->getImprovement());
+            }
+            file << tileInfo << endl;
+        } 
+    }
+    cout << "Game saved" << endl;
 }
 
 bool Board::getTestingMode() {
@@ -958,9 +963,10 @@ void Board::play() {
                 players[i]->displayAssets();
                 cout << endl;
             }
-        } else if (commands[0] == "save" && commands.size() == 2) {
-            //saveGame(commands[1]);
+        } else if (commands[0] == "save" && commands.size() == 2) {   
+            saveGame(commands[1], currPlayerIndex);
         } else if (commands[0] == "quit") {
+            
             return;
         } else {
             cout << "Please enter a valid command" << endl;

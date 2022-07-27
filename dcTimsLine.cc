@@ -63,5 +63,3 @@ if (player->getJailStatus() == true) {
         }
     }  
 }
-
-
