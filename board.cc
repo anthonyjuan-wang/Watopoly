@@ -387,8 +387,8 @@ void Board::trade(std::vector<std::string> commands, int currPlayerIndex) {
             return;
         }
         otherPlayer->transferProp(currPlayer, board[tilePos]); // other player transfer prop to currPlayer
-        currPlayer->subtractMoney(receive);
-        otherPlayer->addMoney(receive);
+        currPlayer->subtractMoney(give);
+        otherPlayer->addMoney(give);
         return;
     } else {
         // trade square for square

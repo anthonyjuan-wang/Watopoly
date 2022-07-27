@@ -94,7 +94,7 @@ void Player::displayAssets() {
     std::vector<shared_ptr<Tile>> myTiles = getTiles();
     int size = myTiles.size();
     for (int i = 0; i < size; i++) {
-        cout << myTiles[i]->getName() << ": " << setw(5) << "$" << myTiles[i]->getPrice() << "   Improvements: " << myTiles[i]->getImprovement() << endl;
+        cout << myTiles[i]->getName() << ": " << "$" << myTiles[i]->getPrice() << "   Improvements: " << myTiles[i]->getImprovement() << endl;
     }
 }
 
