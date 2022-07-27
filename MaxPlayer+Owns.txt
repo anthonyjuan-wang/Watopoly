@@ -1,0 +1,25 @@
+6
+Player1 G 0 1200 12
+Player2 B 0 200 2
+Player3 D 1 900 14
+Player4 P 1 1500 25
+Player5 S 2 500 31
+Player6 L 0 1125 0
+AL Player1 5
+ML Player1 5
+ECH Player2 5
+PAS Player2 5
+HH Player2 5
+RCH Player3 5
+DWE Player3 5
+CPH Player3 5
+LHI Player4 5
+BMH Player4 5
+OPT Player4 5
+EV1 Player5 5
+EV2 Player5 5
+EV3 Player5 5
+PHYS Player6 5
+B1 Player6 5
+B2 Player6 5
+

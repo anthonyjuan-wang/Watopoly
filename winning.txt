@@ -1,0 +1,13 @@
+2
+Loser S 0 0 2
+Winner P 0 5000 20
+MKV Winner 0
+ECH Winner 0
+PAS Winner 0
+HH Winner 0
+RCH Winner 0
+PAC Winner 0
+DWE Winner 0
+CPh Winner 0
+UWP Winner 0
+LHI Winner 0

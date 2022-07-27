@@ -1,0 +1,5 @@
+4
+NotInJail P 0 1000 10 0
+InJail G 0 1000 10 1 0
+InJail2 D 0 1000 10 1 1
+InJail3 B 0 1000 10 1 2

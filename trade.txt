@@ -1,0 +1,5 @@
+2
+Player1 G 0 1500 10
+Player2 B 0 1000 15
+MC Player1 0
+AL Player2 0
