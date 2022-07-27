@@ -421,10 +421,12 @@ void Board::trade(std::vector<std::string> commands, int currPlayerIndex) {
 
         if (currPlayerPos == -1) {
             cout << currPlayer->getName() << " doesn't own the building " << giveBuilding << "." << endl;
+            return;
         }
 
         if (otherPlayerPos == -1) {
             cout << otherPlayer->getName() << " doesn't own the building " << receiveBuilding << "." << endl;
+            return;
         }
 
         // check if the building's monopoly have improvements (if they do, trade cancelled)
