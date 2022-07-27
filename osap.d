@@ -1,1 +1,2 @@
-osap.o: osap.cc osap.h tile.h tileimpl.h board.h player.h
+osap.o: osap.cc /usr/local/include/pthread.h osap.h tile.h tileimpl.h \
+  board.h player.h

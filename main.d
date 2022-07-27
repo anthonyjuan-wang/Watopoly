@@ -1,1 +1,1 @@
-main.o: main.cc board.h boarddisplay.h
+main.o: main.cc /usr/local/include/pthread.h board.h boarddisplay.h

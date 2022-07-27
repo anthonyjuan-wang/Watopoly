@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
         bool errorRaised = false;
         string filename = "N/A";
       
-         for (int i=0; i < argc; i++){
+         for (int i = 0; i < argc; i++){
 		string command = argv[i];
 		if (command == "-testing"){
 			testing = true;
@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
 
         if (testing){
                 cout << "Entering Testing Mode." << endl;
-                theGame.setTestingMode();
+                theGame.setTestingMode(true);
         } 
 
    
@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
                         cout << "Loading file...." << endl;
                         cout << filename << endl;
                         theGame.loadGame(filename);
-                        cout << "file " << filename  << " successfully loaded" << endl;
+                        cout << "file " << filename  << " successfully loaded. Welcome to Monopoly." << endl;
                 }
                 catch (const invalid_argument& error) {
                         errorRaised  = true;
@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
         }
         
        if (!errorRaised && filename != "N/A"){
-                cout << "File successfully loaded." << endl;
+                //cout << "File successfully loaded." << endl;
                 theGame.initTiles();
                 theGame.play();
         }
@@ -71,7 +71,6 @@ int main(int argc, char *argv[]) {
                }
         }
         theGame.initTiles();
-        theGame.print();
         theGame.play();
         }
 }

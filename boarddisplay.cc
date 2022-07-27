@@ -263,7 +263,7 @@ void BoardDisplay::print() {
     cout << "|       |";
     printImprovements(theBoard->getTiles()[1]);
     cout << "|OSAP   |" << endl;
-    cout << "|       |HH     |PASS   |       |ECH    |       |       |B1     |       |B2     |       |" << endl;  
+    cout << "|       |HH     |PAS    |       |ECH    |       |       |ML     |       |AL     |       |" << endl;  
     for (int i = 10; i >= 0; i--) {
         cout << "|";
         printPlayers(theBoard->getPlayers(), i);  

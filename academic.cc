@@ -44,6 +44,7 @@ void Academic::improveBuy(shared_ptr<Player> player) {
     player->subtractMoney(improvementCost);
     setImprovement(currentImprovement + 1);
 }
+
 void Academic::improveSell(shared_ptr<Player> player) {
     // Get current improvement #
     // Get the improvement cost
@@ -58,10 +59,9 @@ void Academic::improveSell(shared_ptr<Player> player) {
 void Academic::action(std::shared_ptr<Player> player) {
     if (!isOwned()) {
         // Do you have enough money to buy
-
         cout << "Would you like to buy " << getName() << " for $" << getPrice() << "? Enter 'yes' or 'no'." << endl;
         // ADDED SPACES HERE
-        cout << "\n\n\n\n\n\n";
+        cout << "\n";
         // Look for "yes" or "no"
         string answer;
         while(1) {
@@ -84,10 +84,12 @@ void Academic::action(std::shared_ptr<Player> player) {
                     break;
                  }
             } else if (answer == "no") {
+                // Player decides not to buy. Building now goes up for auction
                 cout << getName() <<  " will now go up for auction" << endl;
                 auction();
                 break;
             } else {
+                // Player did not type "yes" or "no"
                 cout << "Please enter either \"yes\" or \"no\": Would you like to purchase this building for " << getPrice() << endl;
             }
         }

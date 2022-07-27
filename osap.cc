@@ -13,6 +13,7 @@ Osap::Osap(int position, string blockName, shared_ptr<Board> board) : Tile{block
 Osap::~Osap() {}
 
 void Osap::action(std::shared_ptr<Player> player) {
+    // User passes OSAP and recieves money
     cout << "Osap bestows you with some grants. Feel blessed upon this joyous day." << endl;
     player->addMoney(200);
 }

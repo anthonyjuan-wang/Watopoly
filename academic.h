@@ -17,12 +17,12 @@ public:
              std::vector<int> tuitionWithExpenses, std::shared_ptr<Board> board);
     ~Academic();
 
-    virtual int getImprovement();
-    virtual void setImprovement(int x);
-    virtual int getImproveCost();
-    virtual std::string getMonopolyName();
-    virtual void improveBuy(std::shared_ptr<Player> player);
-    virtual void improveSell(std::shared_ptr<Player> player);
+    virtual int getImprovement() override;
+    virtual void setImprovement(int x) override;
+    virtual int getImproveCost() override;
+    virtual std::string getMonopolyName() override;
+    virtual void improveBuy(std::shared_ptr<Player> player) override;
+    virtual void improveSell(std::shared_ptr<Player> player) override;
     void action(std::shared_ptr<Player> player) override;
     
 };

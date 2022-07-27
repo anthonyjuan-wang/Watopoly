@@ -15,7 +15,8 @@ void Slc::action(std::shared_ptr<Player> player) {
     int value = rand() % 100 + 1;
     shared_ptr<Board> currBoard = getBoard();
     int totalRollUpCount = currBoard->getRollUpCount();
-
+    
+    // Player's chance of winning a roll up the rim cup
     if (value == 100 &&  totalRollUpCount < 4) {
         currBoard->setRollUpCount(totalRollUpCount + 1);
         player->addRollUpCount();
@@ -23,6 +24,7 @@ void Slc::action(std::shared_ptr<Player> player) {
         cout << "You have " << player->getRollUpCount() << " roll up the rim cups." << endl;
     }
 
+    // "Randomly" generating values to determine how much a player moves forwards or backwards
     value = rand() % 24 + 1;
     if (value >= 1 && value <= 3) {
         cout << "You moved back 3 spaces. ";

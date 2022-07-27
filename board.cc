@@ -36,7 +36,7 @@ void Board::loadGame(string input){
     string line;
     getline(loadedFile, line);
     int playerCount = stoi (line);
-    cout << "1" << endl;
+
     if (playerCount < 2 || playerCount > 8){
         throw invalid_argument("Input file must have in between 2 - 7 players!");
     }
@@ -102,7 +102,7 @@ void Board::loadGame(string input){
         int jailTurns = 0;
         if (pos == jailPos){
             jailStatus = stoi(playerInfo[5]);
-            if (jailStatus != 0 || jailStatus != 1){
+            if (jailStatus != 0 && jailStatus != 1){
                 throw invalid_argument("Jail status must be 0 or 1.");
             }
             if (jailStatus == 1){
@@ -139,11 +139,9 @@ void Board::loadGame(string input){
             while(true) {
                 shared_ptr<Tile> tile = board[ownableTiles[i]];
                 if (tileInfo.empty()) {
-                    cout << "hello" << endl;
                     break;
                 }
                 if (tileInfo[0] == tile->getName()){
-                    cout << tile->getName() << endl;
                     string owner = tileInfo[1];
                     if (owner != "BANK"){
                         bool validOwner = false;
@@ -174,7 +172,6 @@ void Board::loadGame(string input){
                     break; 
                 } else {
                     i++;
-                    cout << i << endl;
                     if (i >= ownableTiles.size()) {
                         break;
                     }
@@ -197,7 +194,7 @@ void Board::loadGame(string input){
 
         }
     }
-    cout << "Your game has been loaded, welcome to Watopoly. " << endl;
+    //cout << "Your game has been loaded, welcome to Watopoly. " << endl;
 }
 
 void Board::saveGame(string fileName, int index) {
@@ -212,7 +209,8 @@ void Board::saveGame(string fileName, int index) {
         shared_ptr<Player> player = players [ (index+i) % num ];
         string playerInfo = "";
         playerInfo += player->getName() + " ";
-        playerInfo += player->getPiece() + " ";
+        playerInfo += player->getPiece();
+        playerInfo += " ";
         s = to_string(player->getRollUpCount());
         playerInfo += s + " ";
         s = to_string (player->getMoney());
@@ -249,10 +247,12 @@ void Board::saveGame(string fileName, int index) {
         }
 }
 
+bool Board::getTestingMode() {
+    return testMode;
+}
 
-
-void Board::setTestingMode(){
-    
+void Board::setTestingMode(bool status){
+    testMode = true;
 }
 
 void Board::trade(std::vector<std::string> commands, int currPlayerIndex) {
@@ -540,7 +540,9 @@ void Board::init(int input) {
 void Board::play() {
     int currPlayerIndex = 0;
     int totalPlayers = players.size();
-    const int playersCount = totalPlayers;
+    bool printed = false;
+    bool testMode = getTestingMode();
+    //const int playersCount = totalPlayers;
     print();
     // play game - continues until there are > 2 players
     while (true) {
@@ -568,7 +570,7 @@ void Board::play() {
         }
     
         // outputs the possible user commands
-        if (isTurnOver == false) {
+        if (isTurnOver == false && printed == false) {
             cout << "It is " << currPlayer->getName() << "'s turn. Enter a command from the following: " << endl;
             for (auto i : cmdInterpreter) {
                cout << i << endl;
@@ -584,18 +586,32 @@ void Board::play() {
 
         if (commands.size() < 1) { // user needs to enter command again
             //cout << "Please enter a non-empty command" << endl;
+            printed = true;
             continue;
         }
         cout << endl;
-        
+        printed = false;
+
         // switch to check all the possible player command inputs
         if (commands[0] == "roll") {
+            vector<int> dice;
             if(isTurnOver == true) {
                 cout << "You cannot roll, your turn is over." << endl;
                 continue;
             }
+            
+            if (testMode) {
+                cout << "You are in test mode. Enter <die1> <die2> that you'd like to roll." << endl;
+                int die1;
+                int die2;
+                cin >> die1 >> die2;
+                dice.emplace_back(die1);
+                dice.emplace_back(die2);
+            } else {
+                dice = rollDice();
+            }
+
             // checks if your in jail
-            vector<int> dice = rollDice();
             if (currPlayer->getJailStatus() == true) {
                 if (dice[0] != dice[1]) {
                     cout << "You rolled " << dice[0] << " and " << dice[1] << endl;
@@ -620,11 +636,10 @@ void Board::play() {
             cout << "You rolled " << dice[0] << " and " << dice[1] << endl;
             cout << "You just landed on " << board[pos]->getName() << endl;
 
-            if (pos != osapPos && ppay
-            os != goToJailPos) {
+            if (pos != osapPos && pos != goToJailPos) {
                 // add $200 if you pass osap
                 if (total > 40 && currPlayer->getJailStatus() == false) {
-                    cout << "You have passed osap" << endl;
+                    cout << "You have passed osap :)" << endl;
                     currPlayer->addMoney(200);
                 }
                 board[pos]->action(currPlayer);
@@ -634,7 +649,7 @@ void Board::play() {
                     continue;
                 }
             } else if (pos == osapPos) {
-                cout << "You have landed on the osap square [̲̅$̲̅(̲̅•◡•)̲̅$̲̅]" << endl;
+                cout << "You have landed on the osap square :)" << endl;
                 currPlayer->addMoney(200);
             } else if (pos == goToJailPos) {
                 currPlayer->setPos(jailPos);
@@ -776,6 +791,7 @@ void Board::play() {
                 }
                 else {
                     cout << "You have rolled doubles. It is your turn again." << endl;
+                    cout << endl;
                 }
             }
             // DANIEL DID THIS
@@ -792,11 +808,12 @@ void Board::play() {
             }
             else {
                 cout << currPlayer->getName() << ", your turn is now finished." << endl;
+                cout << endl;
                 doubles = 0;
-                currPlayerIndex = (currPlayerIndex + 1) % playersCount;
+                currPlayerIndex = (currPlayerIndex + 1) % totalPlayers;
                 isTurnOver = false;
                 // DANIEL DID THIS
-              //  print();
+                //  print();
                 continue;
             }
         } else if (commands[0] == "trade" && commands.size() == 4) {
@@ -919,8 +936,6 @@ void Board::play() {
             board[pos]->unmortgage(currPlayer);
         } else if (commands[0] == "bankrupt") {
             if (currPlayer->getBankruptStatus() == true) {
-                // check what tile the player is on and give the owner the properties/money
-                // ADD THE CODE HERE
                 
                 cout << currPlayer->getName() << " you will now be removed from the game." << endl;
                 totalPlayers--;
@@ -928,7 +943,7 @@ void Board::play() {
                 
                 cout << "It is now the next player's turn." << endl;
                 doubles = 0;
-                currPlayerIndex = (currPlayerIndex + 1) % playersCount;
+                currPlayerIndex = currPlayerIndex % totalPlayers;
                 isTurnOver = false;
                 print();
             } else {
@@ -943,6 +958,8 @@ void Board::play() {
             }
         } else if (commands[0] == "save" && commands.size() == 2) {
             //saveGame(commands[1]);
+        } else if (commands[0] == "quit") {
+            return;
         } else {
             cout << "Please enter a valid command" << endl;
         }

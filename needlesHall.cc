@@ -18,6 +18,7 @@ void NeedlesHall::action(std::shared_ptr<Player> player) {
     shared_ptr<Board> currBoard = getBoard();
     int totalRollUpCount = currBoard->getRollUpCount();
 
+    // When player wins the roll up the rim cup
     if (value == 100 &&  totalRollUpCount < 4) {
         currBoard->setRollUpCount(totalRollUpCount + 1);
         player->addRollUpCount();
@@ -25,6 +26,7 @@ void NeedlesHall::action(std::shared_ptr<Player> player) {
         cout << "You have " << player->getRollUpCount() << " roll up the rim cups." << endl;
     }
 
+    // "Randomly" generating values to determine how much the player gets/pays
     value = rand() % 18 + 1;
     if (value == 1) {
         cout << "You will lose $200. ";

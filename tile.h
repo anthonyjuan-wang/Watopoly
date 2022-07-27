@@ -33,7 +33,7 @@ public:
     void mortgage(std::shared_ptr<Player> player);
     void unmortgage(std::shared_ptr<Player> player);
     void setMortgaged(bool status);
-    virtual void action(std::shared_ptr<Player> player);
+    virtual void action(std::shared_ptr<Player> player) = 0;
 
     virtual int getImprovement();
     virtual void setImprovement(int x);

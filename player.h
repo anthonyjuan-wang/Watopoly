@@ -38,7 +38,7 @@ public:
     void setAlmostBankruptStatus(bool status);
     bool getBankruptStatus();
     void setBankruptStatus(bool status);
-    bool getMoneyOwed();
+    int getMoneyOwed();
     void setMoneyOwed(int n);
     void addTile(std::shared_ptr<Tile> t);
     std::vector<std::shared_ptr<Tile>> getTiles();

@@ -12,5 +12,5 @@ GooseNesting::GooseNesting(int position, string blockName, shared_ptr<Board> boa
 GooseNesting::~GooseNesting() {}
 
 void GooseNesting::action(std::shared_ptr<Player> player) {
-    cout << "Preprare to suck some goose dick" << endl;
+    cout << "You were attacked by a flock of nesting geese. Nothing was lost." << endl;
 }

@@ -21,7 +21,8 @@ private:
     const int numSquares = 40;
     bool isTurnOver = false;
     int rollUpCount = 0;
-    int playersCount = 0;
+    bool testMode = false;
+    //int playersCount = 0;
     std::vector<std::shared_ptr<Tile>> board;
     std::vector<std::shared_ptr<Player>> players;
     std::vector<std::string> pieces = {"G: Goose", "B: GRT Bus", "D: Tim Hortons Doughnut", "P: Professor", "S: Student", "M: Money", "L: Laptop", "T: Pink Tie"};
@@ -39,7 +40,8 @@ public:
     void initTiles();
     void play();
     std::vector<int> rollDice();        // maybe virtual // maybe virtual
-    void setTestingMode();
+    bool getTestingMode();
+    void setTestingMode(bool status);
     virtual void print(); // calls board display
     bool hasMonopoly(std::shared_ptr<Tile> currTile);
     int getRollUpCount();

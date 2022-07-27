@@ -14,6 +14,7 @@ Coop::~Coop() {}
 void Coop::action(shared_ptr<Player> player) {
     cout << "You must pay the Coop fee of $150 :(" << endl; 
     
+    // Check if the player has enough to pay for their coop fee
     if (player->getMoney() < 150) {
         cout << "You do not have enough to pay the $150 fee. You now have the ability to declare bankruptcy." << endl;
         player->setAlmostBankruptStatus(true);

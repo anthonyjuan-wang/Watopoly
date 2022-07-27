@@ -1,1 +1,2 @@
-slc.o: slc.cc slc.h tile.h tileimpl.h board.h player.h
+slc.o: slc.cc slc.h tile.h /usr/local/include/pthread.h tileimpl.h \
+  board.h player.h

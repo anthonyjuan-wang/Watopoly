@@ -20,7 +20,7 @@ void Residences::action(shared_ptr<Player> player) {
         cout << "Would you like to buy " << getName() << " for " << getPrice() << "?" << endl;
         cout << "Types \"yes\" to buy or \"no\" to not buy" << endl;
         // ADDED SPACES HERE
-        cout << "\n\n\n\n\n\n";
+        cout << "\n";
         string answer;
         while(1) {
             cin >> answer;
@@ -76,7 +76,7 @@ void Residences::action(shared_ptr<Player> player) {
             }
 
             // Make the player pay the toll
-            cout << "This residence is owned by" << getOwner()->getName() << ". Since " << getOwner()->getName() << " has " << residenceCount 
+            cout << "This residence is owned by " << getOwner()->getName() << ". Since " << getOwner()->getName() << " has " << residenceCount 
             << " properties,  you must pay $" << payment << endl;
             int remaining = player->getMoney() - payment;
             cout << "Please type \"pay\" to pay for these fines" << endl;

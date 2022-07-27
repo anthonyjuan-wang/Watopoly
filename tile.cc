@@ -143,7 +143,6 @@ void Tile::auction() {
         while (withdraw[currIndex]) {
             currIndex = (currIndex + 1) % numOfPlayers;
         }
-        cout << currIndex << endl;
         
     }
 
@@ -169,13 +168,15 @@ void Tile::mortgage(shared_ptr<Player> player) {
     int purchase = getPrice();
     cout << "You receive $" << purchase / 2 << " from mortgaging " << getName() << endl;
     player->addMoney(purchase / 2);
+    setImprovement(-1);
     impl->mortgaged = true;
 }
 
 void Tile::unmortgage(shared_ptr<Player> player) {
     int purchase = getPrice();
-    cout << "You pay $" << purchase/2 << " + " << purchase*0.1 << " to unmortgage your property" << getName() <<  endl;
+    cout << "You pay $" << purchase/2 << " + $" << purchase*0.1 << " to unmortgage your property " << getName() <<  endl;
     player->subtractMoney(purchase*0.6);
+    setImprovement(0);
     impl->mortgaged = false;
     
 }
@@ -184,10 +185,11 @@ void Tile::setMortgaged(bool status) {
     impl->mortgaged = status;
 }
 
-void Tile::action(std::shared_ptr<Player> player){}
+//void Tile::action(std::shared_ptr<Player> player){}
 int Tile::getImprovement(){ return 0; }
 void Tile::setImprovement(int x){}
 int Tile::getImproveCost(){ return 0; }
 std::string Tile::getMonopolyName(){ return "N/A"; }
 void Tile::improveBuy(std::shared_ptr<Player> player){}
 void Tile::improveSell(std::shared_ptr<Player> player){}
+

@@ -47,23 +47,23 @@ int Player::getMoney() {
 
 void Player::addMoney(int n) {
     if (n < 0) {
-        cout << "You can't add a value that is less than 0. Enter a valid command." << endl;
+        cout << getName() << ", you can't add a value that is less than 0. Enter a valid command." << endl;
     }
     else {
         impl->money += n;
-        cout << "You have succesfully added $" << n << " to your account. You now have $" << impl->money << endl;
+        cout << getName() << ", you have succesfully added $" << n << " to your account. You now have $" << impl->money << endl;
     }
 }
 
 void Player::subtractMoney(int n) {
     if (impl->money >= n) {
         impl->money -= n;
-        cout << "You have successfully subtracted $" << n << " from your account. You now have $" << impl->money << endl;
+        cout << getName() << ", you have successfully subtracted $" << n << " from your account. You now have $" << impl->money << endl;
     }
     else {
         impl->moneyOwed = n;
         impl->almostBankrupt = true;
-        cout << "You do not have enough money to pay back $" << n << endl;
+        cout <<getName() << ", you do not have enough money to pay back $" << n << endl;
     }
 }
 
@@ -146,7 +146,7 @@ void Player::setBankruptStatus(bool status) {
     impl->bankrupt = status;
 }
 
-bool Player::getMoneyOwed() {
+int Player::getMoneyOwed() {
     return impl->moneyOwed;
 }
 
@@ -176,6 +176,7 @@ void Player::transferProp(std::shared_ptr<Player> otherPlayer, std::shared_ptr<T
         cout << "You do not own this property. Transferring property cancelled" << endl;
     }
 
+    // 
     if (tile->isMortgaged()) {
         cout << tile->getName() << " is mortgaged so " << otherPlayer->getName() << " must pay 10%." << endl;
         otherPlayer->subtractMoney(0.1 * tile->getPrice());
